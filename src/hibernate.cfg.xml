@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<hibernate-configuration>
+    <session-factory>
+    
+        <!-- Connections START -->
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.username">postgres</property>
+        <property name="hibernate.connection.password">123456</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/DeliveryDB</property>
+        <property name="connection_pool_size">1</property>
+        <!-- Connections END -->
+
+		<!-- Hibernate properties START -->
+		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="hbm2ddl.auto">create</property>
+        <property name="show_sql">true</property>
+        <!-- Hibernate properties END -->
+
+		<!-- Mapping START -->
+       	<mapping class="org.javabrains.sanjaya.dto.UserDetails"/>
+       	<!-- Mapping END -->
+
+    </session-factory>
+</hibernate-configuration>

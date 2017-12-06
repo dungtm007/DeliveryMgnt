@@ -1,4 +1,4 @@
-package domainclasses;
+package deliverymgnt.domainclasses;
 
 public enum OrderStatus {
 	Entered,

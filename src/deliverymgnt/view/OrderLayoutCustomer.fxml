@@ -18,12 +18,11 @@
       </Button>
       <TableView layoutX="324.0" layoutY="81.0" prefHeight="463.0" prefWidth="866.0" AnchorPane.bottomAnchor="56.0" AnchorPane.leftAnchor="324.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="81.0">
         <columns>
-          <TableColumn prefWidth="78.0" text="#Package" />
-          <TableColumn minWidth="0.0" prefWidth="236.0" text="Product" />
-            <TableColumn minWidth="0.0" prefWidth="63.0" text="Quantity" />
-            <TableColumn prefWidth="75.0" text="Unit Price" />
-            <TableColumn prefWidth="182.0" text="Delivery Status" />
-            <TableColumn prefWidth="231.0" text="Track package" />
+          <TableColumn prefWidth="91.0" text="#Package" />
+          <TableColumn minWidth="0.0" prefWidth="258.0" text="Product" />
+            <TableColumn minWidth="0.0" prefWidth="117.0" text="Quantity" />
+            <TableColumn prefWidth="116.0" text="Unit Price" />
+            <TableColumn prefWidth="283.0" text="Status" />
         </columns>
       </TableView>
       <Label layoutX="936.0" layoutY="48.0" prefHeight="17.0" prefWidth="254.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="48.0">

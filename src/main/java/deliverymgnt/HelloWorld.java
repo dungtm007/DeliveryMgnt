@@ -1,3 +1,5 @@
+package deliverymgnt;
+
 import java.util.List;
 
 import javafx.scene.Parent;
@@ -6,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Configuration;
 
 import deliverymgnt.domainclasses.Customer;
 import deliverymgnt.repositories.CustomerRepository;
@@ -17,14 +20,18 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+@Configuration
 @SpringBootConfiguration
 public class HelloWorld extends Application {
 	
 	private ConfigurableApplicationContext springContext;
 	private Parent rootNode;
 	
-	@Autowired
-	private CustomerRepository repository;
+//	@Autowired
+//	private CustomerRepository1 customerRepository1;
+	
+	//@Autowired
+	//private CustomerService customerService;
 	
 	public static void main(String[] args) {
 		Application.launch(args);
@@ -34,6 +41,7 @@ public class HelloWorld extends Application {
 	public void init() {
 		
 		springContext = SpringApplication.run(HelloWorld.class);
+		//springContext = springBootApplicationContext
 		
 		List<String> cmdlineParams = getParameters().getRaw();
 		if(cmdlineParams.size() > 0) {
@@ -57,9 +65,9 @@ public class HelloWorld extends Application {
 				
 				String result = "";
 				
-				for(Customer cust : repository.findAll()){
-					result += cust.toString() + "<br>";
-				}
+//				for(Customer cust : customerService.getAllCustomers()){
+//					result += cust.toString() + "<br>";
+//				}
 				
 				//System.out.println("Hello " + (username != null ? username : "World") + "!");
 				System.out.println("Hello " + (username != null ? username : "World") + "!");

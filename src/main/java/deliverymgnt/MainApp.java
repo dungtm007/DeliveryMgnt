@@ -1,5 +1,6 @@
 package deliverymgnt;
 
+
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -31,7 +32,7 @@ public class MainApp extends Application {
         try {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
+            loader.setLocation(MainApp.class.getResource("fxml/RootLayout.fxml"));
             rootLayout = (BorderPane) loader.load();
 
             // Show the scene containing the root layout.
@@ -49,7 +50,7 @@ public class MainApp extends Application {
     public void showCreateOrder() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/CreateOrderLayout.fxml"));
+            loader.setLocation(MainApp.class.getResource("fxml/CreateOrderLayout.fxml"));
             AnchorPane createOrderView = (AnchorPane) loader.load();
 
             rootLayout.setCenter(createOrderView);

@@ -1,4 +1,4 @@
-package deliverymgnt.businesslogics;
+package deliverymgnt.services;
 
 import java.util.HashSet;
 import java.util.Set;

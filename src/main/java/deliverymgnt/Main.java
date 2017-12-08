@@ -14,7 +14,7 @@ import deliverymgnt.views.FxmlView;
 public class Main extends Application {
 	
 	protected ConfigurableApplicationContext springContext;
-	protected StageManager stateManager;
+	protected StageManager stageManager;
 	
 	public static void main(final String[] args) {
 		Application.launch(args);
@@ -27,7 +27,7 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage stage) throws Exception {
-		stateManager = springContext.getBean(StageManager.class, stage);
+		stageManager = springContext.getBean(StageManager.class, stage);
 		displayInitialScreen();
 	}
 	
@@ -42,7 +42,7 @@ public class Main extends Application {
      * window.
      */
 	protected void displayInitialScreen() {
-		stateManager.switchScene(FxmlView.LOGIN);
+		stageManager.switchScene(FxmlView.LOGIN);
 	}
 	
 	private ConfigurableApplicationContext springBootApplicationContext() {

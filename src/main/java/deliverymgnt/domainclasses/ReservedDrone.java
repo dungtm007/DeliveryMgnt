@@ -28,10 +28,10 @@ public class ReservedDrone {
 	@JoinColumn(name="delivery_id")
 	private Delivery delivery;
 	
-	@Column(name="from")
+	@Column(name="from_time")
 	private Date from;
 
-	@Column(name="to")
+	@Column(name="to_time")
 	private Date to;
 	
 	@Column(name="status")

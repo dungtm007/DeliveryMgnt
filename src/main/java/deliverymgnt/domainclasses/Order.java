@@ -51,6 +51,10 @@ public class Order {
 	@Column(name = "delivery_address")
 	private String deliveryAddress; // the home address / someone's address or locker's location
 	
+	public Order() {
+		
+	}
+	
 	public Order(Date orderDate, DeliveryOption deliveryOption, Date deliveryDeadline, 
 			DeliveryType deliveryType, String deliveryAddress,
 			OrderStatus orderStatus, Customer customer) {

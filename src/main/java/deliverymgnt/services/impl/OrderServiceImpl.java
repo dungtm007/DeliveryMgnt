@@ -3,11 +3,13 @@ package deliverymgnt.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import deliverymgnt.domainclasses.Order;
 import deliverymgnt.repositories.OrderRepository;
 import deliverymgnt.services.OrderService;
 
+@Service
 public class OrderServiceImpl implements OrderService {
 
 	@Autowired

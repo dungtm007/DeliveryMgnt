@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import javafx.beans.binding.StringBinding;
+
 @Entity
 @Table(name="order_items")
 public class OrderItem {
@@ -33,10 +35,18 @@ public class OrderItem {
 	@JoinColumn(name="product_id")
 	private Product product;
 	
-	public OrderItem(Product product, int amount, double unitPrice, Order order) {
+	public OrderItem() {
+		
+	}
+	
+	public OrderItem(Product product, int amount, double unitPrice) {
 		this.product = product;
 		this.amount = amount;
 		this.unitPrice = unitPrice;
+	}
+	
+	public OrderItem(Product product, int amount, double unitPrice, Order order) {
+		this(product, amount, unitPrice);
 		this.order = order;
 	}
 
@@ -79,6 +89,10 @@ public class OrderItem {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
+	
+//	public StringBinding getProductName() {
+//		return this.getProduct().getName();
+//	}
 
 	public double calculatePrice() {
 		return unitPrice * amount;

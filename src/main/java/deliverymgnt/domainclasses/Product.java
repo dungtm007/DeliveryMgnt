@@ -36,6 +36,10 @@ public class Product {
 	@Column(name = "price")
 	private double price;
 	
+	public Product() {
+		
+	}
+	
 	public Product(String name, double width, double length, double height, double weight, double price) {
 		super();
 		this.name = name;
@@ -111,5 +115,14 @@ public class Product {
 	public double calculateVolumetricWeight() {
 		return calculateVolume() / WEIGHT_DIVISOR; // 139 is divisor used for shipping parcel in domestic US
 	}
+
+	@Override
+	public String toString() {
+		return name + "\n" 
+				+ "W x L x H: " + width + " x " + length + " x " + height + " x " + weight + "\n"
+				+ "Price: $" + price;
+	}
+	
+	
 	
 }

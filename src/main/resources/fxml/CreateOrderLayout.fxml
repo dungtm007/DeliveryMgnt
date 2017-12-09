@@ -77,18 +77,18 @@
       <Label layoutX="474.0" layoutY="614.0" prefHeight="24.0" prefWidth="71.0" text="City" />
       <Label layoutX="474.0" layoutY="661.0" prefHeight="24.0" prefWidth="71.0" text="State" />
       <Label layoutX="474.0" layoutY="691.0" prefHeight="24.0" prefWidth="71.0" text="Zip" />
-      <StackPane alignment="TOP_LEFT" layoutX="52.0" layoutY="400.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="140.0" prefWidth="345.0" />
       <Pane fx:id="pnLocker" layoutX="102.0" layoutY="648.0" prefHeight="108.0" prefWidth="294.0">
          <children>
-            <ChoiceBox fx:id="ddlProducts1" layoutX="14.0" layoutY="62.0" onInputMethodTextChanged="#selectProduct" prefHeight="31.0" prefWidth="200.0" />
-            <Label layoutX="93.0" layoutY="21.0" prefHeight="24.0" prefWidth="200.0" text="Selected locker" />
+            <ChoiceBox fx:id="ddlLocker" layoutX="14.0" layoutY="62.0" onInputMethodTextChanged="#selectProduct" prefHeight="31.0" prefWidth="200.0" />
+            <Label fx:id="lblSelectedLocker" layoutX="93.0" layoutY="21.0" prefHeight="24.0" prefWidth="200.0" text="Selected locker" />
             <Label layoutX="16.0" layoutY="21.0" prefHeight="24.0" prefWidth="71.0" text="Locker" />
          </children>
       </Pane>
-      <TextField fx:id="txtUnitPrice1" layoutX="552.0" layoutY="566.0" prefHeight="27.0" prefWidth="221.0" />
-      <TextField fx:id="txtUnitPrice2" layoutX="552.0" layoutY="601.0" prefHeight="27.0" prefWidth="221.0" />
-      <TextField fx:id="txtUnitPrice3" layoutX="552.0" layoutY="645.0" prefHeight="27.0" prefWidth="221.0" />
-      <TextField fx:id="txtUnitPrice4" layoutX="552.0" layoutY="687.0" prefHeight="27.0" prefWidth="221.0" />
+      <TextField fx:id="txtAddress" layoutX="552.0" layoutY="566.0" prefHeight="27.0" prefWidth="221.0" />
+      <TextField fx:id="txtCity" layoutX="552.0" layoutY="607.0" prefHeight="27.0" prefWidth="221.0" />
+      <TextField fx:id="txtState" layoutX="552.0" layoutY="645.0" prefHeight="27.0" prefWidth="221.0" />
+      <TextField fx:id="txtZip" layoutX="552.0" layoutY="687.0" prefHeight="27.0" prefWidth="221.0" />
+      <CheckBox fx:id="chkUseCustomerAddress" layoutX="474.0" layoutY="524.0" mnemonicParsing="false" text="Use customer address" />
    </children>
    <effect>
       <Blend />

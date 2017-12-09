@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import deliverymgnt.domainclasses.Order;
 import deliverymgnt.domainclasses.OrderItem;
+import deliverymgnt.domainclasses.OrderStatus;
 import deliverymgnt.repositories.OrderItemRepository;
 import deliverymgnt.repositories.OrderRepository;
 import deliverymgnt.services.OrderService;
@@ -61,6 +62,11 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<Order> findAll() {
 		return orderRepository.findAll();
+	}
+
+	@Override
+	public List<Order> findByOrderStatus(OrderStatus orderStatus) {
+		return orderRepository.findByOrderStatus(orderStatus);
 	}
 
 }

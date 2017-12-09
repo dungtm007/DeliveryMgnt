@@ -88,7 +88,7 @@
       <TextField fx:id="txtCity" layoutX="552.0" layoutY="607.0" prefHeight="27.0" prefWidth="221.0" />
       <TextField fx:id="txtState" layoutX="552.0" layoutY="645.0" prefHeight="27.0" prefWidth="221.0" />
       <TextField fx:id="txtZip" layoutX="552.0" layoutY="687.0" prefHeight="27.0" prefWidth="221.0" />
-      <CheckBox fx:id="chkUseCustomerAddress" layoutX="474.0" layoutY="524.0" mnemonicParsing="false" text="Use customer address" />
+      <CheckBox fx:id="chkUseCustomerAddress" layoutX="474.0" layoutY="524.0" mnemonicParsing="false" selected="true" text="Use customer address" />
    </children>
    <effect>
       <Blend />

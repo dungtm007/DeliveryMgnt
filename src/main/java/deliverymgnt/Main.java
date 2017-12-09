@@ -6,11 +6,13 @@ import javafx.stage.Stage;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import deliverymgnt.config.StageManager;
 import deliverymgnt.views.FxmlView;
 
 @SpringBootApplication
+@EnableScheduling
 public class Main extends Application {
 	
 	protected ConfigurableApplicationContext springContext;

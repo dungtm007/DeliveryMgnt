@@ -2,11 +2,17 @@ package deliverymgnt.domainclasses;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -50,8 +56,17 @@ public class Order {
 	@Column(name = "delivery_type")
 	private DeliveryType deliveryType; // what really happens
 	
-	@Column(name = "delivery_address")
-	private String deliveryAddress; // the home address / someone's address or locker's location
+//	@Column(name = "delivery_address")
+//	private String deliveryAddress; // the home address / someone's address or locker's location
+	
+	@Embedded
+	@AttributeOverrides({
+		@AttributeOverride(name = "address", column = @Column(name = "delivery_addr_address")),
+		@AttributeOverride(name = "city", column = @Column(name = "delivery_addr_city")),
+		@AttributeOverride(name = "state", column = @Column(name = "delivery_addr_state")),                       
+        @AttributeOverride(name = "zip", column = @Column(name = "delivery_addr_zip"))
+    })
+	private Address deliveryAddress;
 	
 	public Order() {
 		this.orderItems = new HashSet<>();
@@ -59,7 +74,7 @@ public class Order {
 	}
 	
 	public Order(Date orderDate, DeliveryOption deliveryOption, Date deliveryDeadline, 
-			DeliveryType deliveryType, String deliveryAddress,
+			DeliveryType deliveryType, Address deliveryAddress,
 			OrderStatus orderStatus, Customer customer) {
 		
 		this.orderDate = orderDate;
@@ -144,7 +159,11 @@ public class Order {
 	}
 
 	public double calculateTotalActualWeight() {
-		return 0.0;
+		double total = 0.0;
+		for(OrderItem oi : orderItems) {
+			total += oi.calculateActualWeight();
+		}
+		return total;
 	}
 	
 	public double calculateTotalVolume() {
@@ -160,7 +179,11 @@ public class Order {
 	}
 	
 	public double calculateTotalVolumetricWeight() {
-		return 0.0;
+		double total = 0.0;
+		for(OrderItem oi : orderItems) {
+			total += oi.calculateVolumetricWeight();
+		}
+		return total;
 	}
 	
 	public Set<Delivery> getDeliveries() {
@@ -179,11 +202,11 @@ public class Order {
 		this.deliveryType = deliveryType;
 	}
 
-	public String getDeliveryAddress() {
+	public Address getDeliveryAddress() {
 		return deliveryAddress;
 	}
 
-	public void setDeliveryAddress(String deliveryAddress) {
+	public void setDeliveryAddress(Address deliveryAddress) {
 		this.deliveryAddress = deliveryAddress;
 	}
 	
@@ -199,5 +222,29 @@ public class Order {
 	
 	public void addOrderItem(OrderItem orderItem) {
 		orderItems.add(orderItem);
+	}
+	
+	public List<OrderItem> getSortedOrderItemsByVolumetricWeight() {
+		List<OrderItem> orderItemsList = new ArrayList<>(orderItems);
+		orderItemsList.sort(new Comparator<OrderItem>() {
+			@Override
+			public int compare(OrderItem o1, OrderItem o2) {
+				double diff = o1.calculateVolumetricWeight() - o2.calculateVolumetricWeight();
+				return diff < 0 ? -1 : (diff == 0.0 ? 0 : 1);
+			}
+		});
+		return orderItemsList;
+	}
+	
+	public List<OrderItem> getSortedOrderItemsByActualWeight() {
+		List<OrderItem> orderItemsList = new ArrayList<>(orderItems);
+		orderItemsList.sort(new Comparator<OrderItem>() {
+			@Override
+			public int compare(OrderItem o1, OrderItem o2) {
+				double diff = o1.calculateActualWeight() - o2.calculateActualWeight();
+				return diff < 0 ? -1 : (diff == 0 ? 0 : 1);
+			}
+		});
+		return orderItemsList;
 	}
 }

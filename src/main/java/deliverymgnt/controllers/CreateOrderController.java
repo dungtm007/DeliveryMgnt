@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import antlr.StringUtils;
+import deliverymgnt.domainclasses.Address;
 import deliverymgnt.domainclasses.Customer;
 import deliverymgnt.domainclasses.DeliveryOption;
 import deliverymgnt.domainclasses.Order;
@@ -94,6 +95,18 @@ public class CreateOrderController implements Initializable {
 	@FXML
 	private Button btnPlaceOrder;
 	
+	@FXML
+	private TextField txtAddress;
+	
+	@FXML
+	private TextField txtCity;
+	
+	@FXML
+	private TextField txtState;
+	
+	@FXML
+	private TextField txtZip;
+	
 	@Autowired
 	private CustomerService customerService;
 	
@@ -107,7 +120,7 @@ public class CreateOrderController implements Initializable {
 	private ObservableList<OrderItem> orderItemsList = FXCollections.observableArrayList();
 	
 	private Order order;
-	
+	private Customer customer;
 	
 	@FXML
     private void selectProduct(ActionEvent event) throws IOException {
@@ -123,6 +136,7 @@ public class CreateOrderController implements Initializable {
 		if (order == null)
 		{
 			order = new Order();
+			order.setCustomer(customer);
 		}
 		
 		Product selProduct = ddlProducts.getSelectionModel().getSelectedItem();
@@ -240,6 +254,14 @@ public class CreateOrderController implements Initializable {
 		
 		tableOrderItems.setItems(orderItemsList);
 		setColumnProperties();
+		
+		// Temporary get customer
+		customer = customerService.find(1);
+		Address addr = customer.getAddress();
+		txtAddress.setText(addr.getAddress());
+		txtCity.setText(addr.getCity());
+		txtState.setText(addr.getState());
+		txtZip.setText(addr.getZipCode());
 	}
 	
 	private void setColumnProperties(){
@@ -294,17 +316,12 @@ public class CreateOrderController implements Initializable {
 	private void reviewOrderBeforePlacement() {
 		
 		// Hard code some values now
-		Customer cust = customerService.find(1);
-		order.setCustomer(cust);
 		order.setOrderDate(new Date());
 		setDeliveryDeadlineForOrder();
 		setDeliveryOptionForOrder();
 		
-		Date d = new Date();
-		
-		
 		order.setOrderStatus(OrderStatus.Entered);
-		order.setDeliveryAddress(cust.getAddress()); // hard code value
+		order.setDeliveryAddress(customer.getAddress()); // hard code value
 		
 	}
 	

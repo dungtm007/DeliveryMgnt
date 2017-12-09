@@ -2,9 +2,13 @@ package deliverymgnt.domainclasses;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,8 +32,17 @@ public class Delivery {
 	@Column(name = "delivery_status")
 	private DeliveryStatus deliveryStatus;
 	
-	@Column(name = "delivery_address")
-	private String deliveryAddress;
+//	@Column(name = "delivery_address")
+//	private String deliveryAddress;
+	
+	@Embedded
+	@AttributeOverrides({
+		@AttributeOverride(name = "address", column = @Column(name = "delivery_addr_address")),
+		@AttributeOverride(name = "city", column = @Column(name = "delivery_addr_city")),
+		@AttributeOverride(name = "state", column = @Column(name = "delivery_addr_state")),                       
+        @AttributeOverride(name = "zip", column = @Column(name = "delivery_addr_zip"))
+    })
+	private Address deliveryAddress;
 	
 	@Column(name = "delivery_type")
 	private DeliveryType deliveryType;
@@ -53,14 +66,35 @@ public class Delivery {
 	@OneToMany(mappedBy = "delivery")
 	private Set<Package> packages;
 	
-	public Delivery(DeliveryStatus deliveryStatus, String deliveryAddress, double distance,
-			DeliveryType deliveryType, Order order, Set<Package> packages) {
+	// does not allow to create a Delivery outside of Order
+	Delivery() {
+		this.packages = new HashSet<>();
+	}
+	
+	public Delivery(Order order) {
+		this.order = order;
+		this.packages = new HashSet<>();
+	}
+	
+	public Delivery(Order order, Set<Package> packages, DeliveryStatus deliveryStatus, 
+			Address deliveryAddress, double distance, DeliveryType deliveryType) {
+		
+		this.order = order;
+		this.packages = packages;
 		this.deliveryStatus = deliveryStatus;
 		this.deliveryAddress = deliveryAddress;
 		this.distance = distance;
 		this.deliveryType = deliveryType;
+	}
+	
+	public Delivery(Order order, DeliveryStatus deliveryStatus, 
+			Address deliveryAddress, double distance, DeliveryType deliveryType) {
+		
 		this.order = order;
-		this.packages = packages;
+		this.deliveryStatus = deliveryStatus;
+		this.deliveryAddress = deliveryAddress;
+		this.distance = distance;
+		this.deliveryType = deliveryType;
 	}
 	
 	public Date getStartTime() {
@@ -91,10 +125,10 @@ public class Delivery {
 	public void setDeliveryStatus(DeliveryStatus deliveryStatus) {
 		this.deliveryStatus = deliveryStatus;
 	}
-	public String getDeliveryAddress() {
+	public Address getDeliveryAddress() {
 		return deliveryAddress;
 	}
-	public void setDeliveryAddress(String deliveryAddress) {
+	public void setDeliveryAddress(Address deliveryAddress) {
 		this.deliveryAddress = deliveryAddress;
 	}
 	public DeliveryHandler getDeliveryHandler() {
@@ -130,6 +164,11 @@ public class Delivery {
 
 	public double calculateDeliveryCost() {
 		return deliveryHandler.calculateDeliveryCost(new ArrayList<>(packages), distance);
+	}
+	
+	public void addPackage(Package pkg) {
+		packages.add(pkg);
+		pkg.setDelivery(this);
 	}
 	
 }

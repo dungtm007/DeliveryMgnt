@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,8 +27,12 @@ public class Customer {
 	@Column(name="last_name")
 	private String lastName;
 	
-	@Column(name="address")
-	private String address;
+//	@Column(name="address")
+//	private String address;
+	
+	@Embedded
+	private Address address;
+	
 	
 	@OneToMany(mappedBy="customer")
 	private Set<Order> orders;
@@ -36,7 +41,7 @@ public class Customer {
 		this.orders = new HashSet<>();
 	}
 	
-	public Customer(String firstName, String lastName, String address) {
+	public Customer(String firstName, String lastName, Address address) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
@@ -59,11 +64,19 @@ public class Customer {
 		this.lastName = lastName;
 	}
 
-	public String getAddress() {
+//	public String getAddress() {
+//		return address;
+//	}
+//
+//	public void setAddress(String address) {
+//		this.address = address;
+//	}
+	
+	public Address getAddress() {
 		return address;
 	}
 
-	public void setAddress(String address) {
+	public void setAddress(Address address) {
 		this.address = address;
 	}
 

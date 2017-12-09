@@ -35,8 +35,8 @@ public class Order {
 	@Column(name="order_date")
 	private Date orderDate;
 	
-	@Column(name="delivery_option")
-	private DeliveryOption deliveryOption; // what customer expects
+	@Column(name = "delivery_type")
+	private DeliveryType deliveryType; // what really happens
 	
 	@Column(name="delivery_deadline")
 	private Date deliveryDeadline;
@@ -53,13 +53,7 @@ public class Order {
 	
 	@OneToMany(mappedBy="order")
 	private Set<Delivery> deliveries;
-	
-	@Column(name = "delivery_type")
-	private DeliveryType deliveryType; // what really happens
-	
-//	@Column(name = "delivery_address")
-//	private String deliveryAddress; // the home address / someone's address or locker's location
-	
+
 	@Embedded
 	@AttributeOverrides({
 		@AttributeOverride(name = "address", column = @Column(name = "delivery_addr_address")),
@@ -74,14 +68,13 @@ public class Order {
 		this.deliveries = new HashSet<>();
 	}
 	
-	public Order(Date orderDate, DeliveryOption deliveryOption, Date deliveryDeadline, 
-			DeliveryType deliveryType, Address deliveryAddress,
+	public Order(Date orderDate, DeliveryType deliveryType, 
+			Date deliveryDeadline, Address deliveryAddress,
 			OrderStatus orderStatus, Customer customer) {
 		
 		this.orderDate = orderDate;
-		this.deliveryOption = deliveryOption;
-		this.deliveryDeadline = deliveryDeadline;
 		this.deliveryType = deliveryType;
+		this.deliveryDeadline = deliveryDeadline;
 		this.deliveryAddress = deliveryAddress;
 		this.orderStatus = orderStatus;
 		this.customer = customer;
@@ -95,14 +88,6 @@ public class Order {
 
 	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
-	}
-
-	public DeliveryOption getDeliveryOption() {
-		return deliveryOption;
-	}
-
-	public void setDeliveryOption(DeliveryOption deliveryOption) {
-		this.deliveryOption = deliveryOption;
 	}
 
 	public Date getDeliveryDeadline() {
@@ -154,8 +139,10 @@ public class Order {
 		}
 		orderItemsString += "]";
 		
-		return "Order [id=" + id + ", orderDate=" + orderDate + ", deliveryOption=" + deliveryOption
-				+ ", deliveryDeadline=" + deliveryDeadline + ", orderStatus=" + orderStatus + ", customer=" + customer
+		return "Order [id=" + id + ", orderDate=" + orderDate
+				+ ", deliveryDeadline=" + deliveryDeadline 
+				+ ", orderStatus=" + orderStatus 
+				+ ", customer=" + customer
 				+ ", orderItems=" + orderItemsString + "]";
 	}
 

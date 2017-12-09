@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import deliverymgnt.domainclasses.Delivery;
+import deliverymgnt.domainclasses.DeliveryStatus;
 import deliverymgnt.domainclasses.Order;
 import deliverymgnt.domainclasses.Package;
 import deliverymgnt.repositories.DeliveryRepository;
@@ -65,6 +66,11 @@ public class DeliveryServiceImpl implements DeliveryService {
 	@Override
 	public List<Delivery> findAll() {
 		return deliveryRepository.findAll();
+	}
+
+	@Override
+	public List<Delivery> findByDeliveryStatus(DeliveryStatus deliveryStatus) {
+		return deliveryRepository.findByDeliveryStatus(deliveryStatus);
 	}
 
 }

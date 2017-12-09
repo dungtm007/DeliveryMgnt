@@ -3,19 +3,11 @@ package deliverymgnt.services;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Set;
-
-import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import deliverymgnt.domainclasses.Delivery;
 import deliverymgnt.domainclasses.DeliveryMethod;
-import deliverymgnt.domainclasses.DeliveryOption;
 import deliverymgnt.domainclasses.DeliveryStatus;
 import deliverymgnt.domainclasses.DeliveryType;
 import deliverymgnt.domainclasses.Order;
@@ -24,16 +16,11 @@ import deliverymgnt.domainclasses.OrderStatus;
 import deliverymgnt.domainclasses.Package;
 import deliverymgnt.domainclasses.PackageSize;
 
-@Component
 public class PackagingBusiness {
-
-	@Autowired
-	private static OrderService orderService1;
 	
-	@Autowired
-	private static DeliveryService deliveryService1;
-	
-	public static void ProcessOrder(Order order, DeliveryService deliveryService, OrderService orderService) throws Exception {
+	public static void ProcessOrder(Order order, 
+			DeliveryService deliveryService, 
+			OrderService orderService) throws Exception {
 		
 		// Switch order to Processing
 		order.setOrderStatus(OrderStatus.Processing);
@@ -45,34 +32,51 @@ public class PackagingBusiness {
 		// Medium: 5 -> 13 (2.26 kg - 5.8 kg) 
 		// Large: >= 13 -> 20 (6.3 kg - 9 kg)
 		
-		// Analyze
+		// Analyze:
 		// *** Delivery type
 		// ****** Home         -> Drone | Courier
 		// ****** Locker       ->         Courier
-		DeliveryOption option = order.getDeliveryOption();
+		DeliveryType type = order.getDeliveryType();
 		
 		// *** Distance
 		// ****** <= 30 miles  -> Drone
 		// ****** > 30 miles   ->       | Courier
-		// (UPD) Run a logic to detect the warehouse to collect all products
-		// (UPD) Call Google Map service to calculate distance
+		collecting(order);
 		double distance = 28.5;
 		
 		// *** Freight Weight (the maximum between Actual Weight and Volumetric Weight)
 		// ***** <= 5          -> Drone
 		// ***** > 5           ->       | Courier
-		//order.getOrderItems();
 		double shippingWeight = order.calculateTotalShippingWeight();
 		
-		System.out.println(" >>>>> delivery option: " + option);
+		System.out.println(" >>>>> delivery type: " + type);
 		System.out.println(" >>>>> distance: " + distance);
 		System.out.println(" >>>>> shipping weight: " + shippingWeight);
-		 
+		
+		packaging(order, type, shippingWeight, distance, deliveryService);
+		
+		orderService.save(order);
+		System.out.println(" >>>>> Process order " + order.getId() +  " successfully!");		
+	}
+	
+	private static void collecting(Order order) {
+		
+		// (UPD) Run a logic to detect the warehouse to collect all products
+		// (UPD) Call Google Map service to calculate distance from that warehouse to delivery address
+		
+	}
+	
+	private static void packaging(Order order, DeliveryType type, 
+			double shippingWeight, double distance, 
+			DeliveryService deliveryService) throws Exception { 
+		
+		order.setOrderStatus(OrderStatus.Packaging);
+		
 		List<Delivery> deliveries = new ArrayList<>();
 		
 		// Case 1: All by drone
 		// 1 delivery for ALL packages
-		if (option == DeliveryOption.HomeDelivery && distance <= 30 && shippingWeight <= 5) {
+		if (type == DeliveryType.HomeDelivery && distance <= 30 && shippingWeight <= 5) {
 			// 1 SMALL delivery
 			System.out.println("Case 1 entered ...");
 			Delivery delivery = packageForTheSameDeliveryMethod(order, DeliveryMethod.Drone, distance);
@@ -81,7 +85,7 @@ public class PackagingBusiness {
 
 		// Case 2: all by courier
 		// 1 delivery for ALL packages
-		else if (option == DeliveryOption.LockerPickupDelivery || distance > 30) {
+		else if (type == DeliveryType.LockerPickupDelivery || distance > 30) {
 			System.out.println("Case 2 entered ...");	
 			Delivery delivery = packageForTheSameDeliveryMethod(order, DeliveryMethod.Courier, distance);
 			deliveries.add(delivery);
@@ -133,19 +137,18 @@ public class PackagingBusiness {
 		}
 		
 		// Update DB: Order status
-		order.setOrderStatus(OrderStatus.Processed);
-		orderService.save(order);
-		System.out.println(" >>>>> Process order " + order.getId() +  " successfully!");		
+		order.setOrderStatus(OrderStatus.Packaged);
+		
 	}
+	
+	void Delivering() {} // will be in another scheduling, with DeliveryHandler deliver
+	
+	void Tracking() {} // will be in another scheduling, with DeliveryHandler deliver
 	
 	// Use for case 1 & 2 (the whole order has only one delivery method)
 	private static Delivery packageForTheSameDeliveryMethod(Order order, DeliveryMethod deliveryMethod, double distance) throws Exception {
 		
-		// If Drone delivery    : there is only 1 SMALL PACKAGE (5 lbs) for all order items
-		// If Courier delivery  : there might be more than 1, MULTIPLE PACKAGES, different SIZES
-		
-		DeliveryOption option = order.getDeliveryOption();
-		DeliveryType type = (option == DeliveryOption.HomeDelivery ? DeliveryType.HomeDelivery : DeliveryType.LockerPickupDelivery);
+		DeliveryType type = order.getDeliveryType(); //(option == DeliveryOption.HomeDelivery ? DeliveryType.HomeDelivery : DeliveryType.LockerPickupDelivery);
 		
 		Delivery delivery = new Delivery(order, 
 				type, deliveryMethod, 
@@ -172,13 +175,8 @@ public class PackagingBusiness {
 	// Use for case 3: mix of two delivery methods
 	private static Delivery packageForTheSameDeliveryMethod(OrderItem[] orderItems, DeliveryMethod deliveryMethod, double distance) throws Exception {
 		
-		// If Drone delivery    : there is only 1 SMALL PACKAGE (5 lbs) for all order items
-		// If Courier delivery  : there might be more than 1, MULTIPLE PACKAGES, different SIZES
-		
 		Order order = orderItems[0].getOrder();
-		
-		DeliveryOption option = order.getDeliveryOption();
-		DeliveryType type = (option == DeliveryOption.HomeDelivery ? DeliveryType.HomeDelivery : DeliveryType.LockerPickupDelivery);
+		DeliveryType type = order.getDeliveryType();
 		
 		Delivery delivery = new Delivery(order, 
 				type, deliveryMethod, 
@@ -204,7 +202,7 @@ public class PackagingBusiness {
 	// Use for Drone
 	private static Package packageForDroneDelivery(OrderItem[] orderItems) {
 		Order order = orderItems[0].getOrder();
-		Package p = new Package(order);
+		Package p = new Package(PackageSize.Small, order);
     	for(OrderItem oi : orderItems) {
     		p.addOrderItem(oi);
     	}
@@ -239,6 +237,7 @@ public class PackagingBusiness {
 				} else { 
 					packaging.put(curPackageNo, packaging.get(curPackageNo) + 1);
 				}
+				curPackageSize += sWeight;
 			}
 			
 			// If it exceeds, create a NEW PACKAGE
@@ -268,34 +267,35 @@ public class PackagingBusiness {
             System.out.println(" >>>>> Package ("+ key + ") has " + packaging.get(key) + " order item(s)");
         }
 		
-		
         // Create packages
         List<Package> packages = new ArrayList<>();
         int startOrderItem = 0;
         int endOrderItem = -1;
-        for(Integer key: packaging.keySet()) {
-            
+        
+        int noPackages = packaging.size();
+        for (int pNo = 1; pNo <= noPackages; pNo++) {
+        	
         	// start
-        	if (endOrderItem > 0) {
+        	if (endOrderItem > -1) {
         		startOrderItem = endOrderItem + 1; 
         	}
         	
         	// end
-        	endOrderItem = endOrderItem + packaging.get(key);  
+        	endOrderItem = endOrderItem + packaging.get(pNo);
         	
-        	Package p = new Package(order);
+        	Package pkg = new Package(order);
         	
         	// first package item
         	OrderItem firstOi = orderItems[startOrderItem];
         	double firstOiShWeight = firstOi.calculateShippingWeight();
         	if (firstOiShWeight <= 5) { // SMALL
-        		p.setSize(PackageSize.Small);
+        		pkg.setSize(PackageSize.Small);
         	}
         	else if (firstOiShWeight <= 13) { // MEDIUM
-        		p.setSize(PackageSize.Medium);
+        		pkg.setSize(PackageSize.Medium);
         	}
-        	else if (firstOiShWeight <= 20) {
-        		p.setSize(PackageSize.Large);
+        	else if (firstOiShWeight <= 20) { // LARGE
+        		pkg.setSize(PackageSize.Large);
         	}
         	else {
         		throw new Exception("The order item is oversized: " + firstOiShWeight);
@@ -303,13 +303,12 @@ public class PackagingBusiness {
         	
         	// add order item to packages
         	for(int i = startOrderItem; i <= endOrderItem; i++) {
-        		p.addOrderItem(orderItems[i]);
+        		pkg.addOrderItem(orderItems[i]);
         	}
         	
-        	packages.add(p);
+        	packages.add(pkg);
         }
         
         return packages;
-		
 	}
 }

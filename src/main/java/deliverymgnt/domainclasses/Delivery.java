@@ -33,9 +33,6 @@ public class Delivery {
 	@Column(name = "delivery_status")
 	private DeliveryStatus deliveryStatus;
 	
-//	@Column(name = "delivery_address")
-//	private String deliveryAddress;
-	
 	@Embedded
 	@AttributeOverrides({
 		@AttributeOverride(name = "address", column = @Column(name = "delivery_addr_address")),
@@ -60,9 +57,11 @@ public class Delivery {
 	@Column(name = "estimated_arrival_time")
 	private Date estimatedArrivalTime; // will set by delivery handler
 	
+	@Column(name = "delivery_cost")
+	private double deliveryCost;
+
 	private transient DeliveryHandler deliveryHandler;
 
-	// Relationships
 	@ManyToOne
 	@JoinColumn(name = "order_id")
 	private Order order;
@@ -177,6 +176,14 @@ public class Delivery {
 		this.distance = distance;
 	}
 
+	public double getDeliveryCost() {
+		return deliveryCost;
+	}
+
+	public void setDeliveryCost(double deliveryCost) {
+		this.deliveryCost = deliveryCost;
+	}
+	
 	public double calculateDeliveryCost() {
 		return deliveryHandler.calculateDeliveryCost(new ArrayList<>(packages), distance);
 	}

@@ -1,7 +1,5 @@
 package deliverymgnt.schedulers;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -18,11 +16,9 @@ import deliverymgnt.services.OrderService;
 import deliverymgnt.services.PackagingBusiness;
 
 @Component
-public class TestScheduler {
+public class ProcessOrderScheduler {
 	
-	private static final Logger log = LoggerFactory.getLogger(TestScheduler.class);
-
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+	private static final Logger log = LoggerFactory.getLogger(ProcessOrderScheduler.class);
     
     @Autowired
     private OrderService orderService;
@@ -42,6 +38,5 @@ public class TestScheduler {
 			}
     		log.info("Order {} status: {}", o.getId(), o.getOrderStatus());
     	}
-    	
     }
 }

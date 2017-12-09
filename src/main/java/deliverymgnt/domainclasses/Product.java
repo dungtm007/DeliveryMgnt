@@ -1,10 +1,13 @@
 package deliverymgnt.domainclasses;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -36,6 +39,9 @@ public class Product {
 	@Column(name = "price")
 	private double price;
 	
+	@ManyToMany
+	private Set<Warehouse> warehouses;
+
 	public Product() {
 		
 	}
@@ -104,6 +110,10 @@ public class Product {
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+	
+	public Set<Warehouse> getWarehouses() {
+		return warehouses;
 	}
 
 	public double calculateVolume() {

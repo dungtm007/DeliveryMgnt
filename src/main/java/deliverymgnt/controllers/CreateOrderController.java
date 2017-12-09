@@ -13,7 +13,7 @@ import org.springframework.stereotype.Controller;
 import antlr.StringUtils;
 import deliverymgnt.domainclasses.Address;
 import deliverymgnt.domainclasses.Customer;
-import deliverymgnt.domainclasses.DeliveryOption;
+import deliverymgnt.domainclasses.DeliveryType;
 import deliverymgnt.domainclasses.Order;
 import deliverymgnt.domainclasses.OrderItem;
 import deliverymgnt.domainclasses.OrderStatus;
@@ -261,7 +261,7 @@ public class CreateOrderController implements Initializable {
 		txtAddress.setText(addr.getAddress());
 		txtCity.setText(addr.getCity());
 		txtState.setText(addr.getState());
-		txtZip.setText(addr.getZipCode());
+		txtZip.setText(addr.getZip());
 	}
 	
 	private void setColumnProperties(){
@@ -308,9 +308,9 @@ public class CreateOrderController implements Initializable {
 		order.setDeliveryDeadline(deliveryDate);
 	}
 	
-	private void setDeliveryOptionForOrder() {
-		DeliveryOption option = rdHome.isSelected() ? DeliveryOption.HomeDelivery : DeliveryOption.LockerPickupDelivery;
-		order.setDeliveryOption(option);
+	private void setDeliveryTypeForOrder() {
+		DeliveryType type = rdHome.isSelected() ? DeliveryType.HomeDelivery : DeliveryType.LockerPickupDelivery;
+		order.setDeliveryType(type);
 	}
 	
 	private void reviewOrderBeforePlacement() {
@@ -318,7 +318,7 @@ public class CreateOrderController implements Initializable {
 		// Hard code some values now
 		order.setOrderDate(new Date());
 		setDeliveryDeadlineForOrder();
-		setDeliveryOptionForOrder();
+		setDeliveryTypeForOrder();
 		
 		order.setOrderStatus(OrderStatus.Entered);
 		order.setDeliveryAddress(customer.getAddress()); // hard code value

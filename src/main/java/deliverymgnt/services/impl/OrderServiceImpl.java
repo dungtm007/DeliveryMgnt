@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import deliverymgnt.domainclasses.Order;
+import deliverymgnt.domainclasses.OrderItem;
+import deliverymgnt.repositories.OrderItemRepository;
 import deliverymgnt.repositories.OrderRepository;
 import deliverymgnt.services.OrderService;
 
@@ -15,9 +17,20 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private OrderRepository orderRepository;
 	
+	@Autowired
+	private OrderItemRepository orderItemRepository;
+	
 	@Override
 	public Order save(Order entity) {
-		return orderRepository.save(entity);
+		
+		Order savedOrder = orderRepository.save(entity);
+
+		// Save order items
+		for(OrderItem oi : savedOrder.getOrderItems()) {
+			orderItemRepository.save(oi);
+		}
+		
+		return savedOrder;
 	}
 
 	@Override

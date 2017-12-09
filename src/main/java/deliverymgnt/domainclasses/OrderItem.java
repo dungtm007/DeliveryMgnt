@@ -21,12 +21,6 @@ public class OrderItem {
 	@Column(name="id")
 	private int id;
 	
-	@Column(name="amount")
-	private int amount;
-	
-	@Column(name="unit_price")
-	private double unitPrice;
-
 	@ManyToOne
 	@JoinColumn(name="order_id")
 	private Order order;
@@ -35,19 +29,28 @@ public class OrderItem {
 	@JoinColumn(name="product_id")
 	private Product product;
 	
-	public OrderItem() {
+	@Column(name="amount")
+	private int amount;
+	
+	@Column(name="unit_price")
+	private double unitPrice;
+
+	OrderItem() {
 		
 	}
 	
-	public OrderItem(Product product, int amount, double unitPrice) {
+//	public OrderItem(Product product, int amount, double unitPrice) {
+//		this.product = product;
+//		this.amount = amount;
+//		this.unitPrice = unitPrice;
+//	}
+	
+	public OrderItem(Product product, int amount, double unitPrice, Order order) {
 		this.product = product;
 		this.amount = amount;
 		this.unitPrice = unitPrice;
-	}
-	
-	public OrderItem(Product product, int amount, double unitPrice, Order order) {
-		this(product, amount, unitPrice);
 		this.order = order;
+		order.addOrderItem(this);
 	}
 
 	public int getAmount() {
@@ -90,10 +93,17 @@ public class OrderItem {
 		this.product = product;
 	}
 	
-//	public StringBinding getProductName() {
-//		return this.getProduct().getName();
-//	}
+	// for JavaFX binding 
+	public String getProductName() {
+		
+		return this.getProduct().getName();
+	}
 
+	// for JavaFX binding
+	public double getPrice() {
+		return calculatePrice();
+	}
+	
 	public double calculatePrice() {
 		return unitPrice * amount;
 	}

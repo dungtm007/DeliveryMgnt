@@ -14,7 +14,7 @@
       <Label layoutX="38.0" layoutY="146.0" text="Amount" AnchorPane.leftAnchor="38.0" AnchorPane.topAnchor="146.0" />
       <Label layoutX="38.0" layoutY="205.0" text="Unit Price" AnchorPane.leftAnchor="38.0" AnchorPane.topAnchor="205.0" />
       <ChoiceBox fx:id="ddlProducts" layoutX="123.0" layoutY="81.0" onInputMethodTextChanged="#selectProduct" prefHeight="27.0" prefWidth="221.0" AnchorPane.leftAnchor="123.0" AnchorPane.topAnchor="81.0" />
-      <Button fx:id="btnAdd" layoutX="244.0" layoutY="249.0" mnemonicParsing="false" onAction="#addOrderItem" prefHeight="40.0" prefWidth="100.0" text="Add">
+      <Button fx:id="btnAdd" layoutX="194.0" layoutY="249.0" mnemonicParsing="false" onAction="#addOrUpdateOrderItemToTable" prefHeight="42.0" prefWidth="150.0" text="Add/Update">
          <font>
             <Font size="19.0" />
          </font>
@@ -42,22 +42,28 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="939.0" layoutY="477.0" prefHeight="31.0" prefWidth="248.0" textAlignment="RIGHT" AnchorPane.bottomAnchor="92.0" AnchorPane.rightAnchor="10.0">
+      <Label fx:id="lblTotalPrice" layoutX="939.0" layoutY="477.0" prefHeight="38.0" prefWidth="161.0" text="0" textAlignment="RIGHT" AnchorPane.bottomAnchor="92.0" AnchorPane.rightAnchor="10.0">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
-      <Button fx:id="btnPlaceOrder" layoutX="969.0" layoutY="523.0" mnemonicParsing="false" onAction="#placeOrder" prefHeight="69.0" prefWidth="221.0" text="Place order" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+      <Button fx:id="btnPlaceOrder" layoutX="969.0" layoutY="523.0" mnemonicParsing="false" onAction="#placeOrder" prefHeight="69.0" prefWidth="221.0" text="Place Order" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <font>
             <Font size="26.0" />
          </font>
       </Button>
       <Label layoutX="173.0" layoutY="546.0" prefHeight="24.0" prefWidth="71.0" text="Delivery in" AnchorPane.bottomAnchor="30.0" />
-      <RadioButton fx:id="rd2days" layoutX="262.0" layoutY="550.0" mnemonicParsing="false" text="2 days" AnchorPane.bottomAnchor="32.0" />
-      <RadioButton fx:id="rd5to7days" layoutX="344.0" layoutY="550.0" mnemonicParsing="false" text="5 - 7 days" AnchorPane.bottomAnchor="32.0" />
+      <RadioButton fx:id="rd2days" layoutX="262.0" layoutY="550.0" mnemonicParsing="false" onAction="#selectDeliveryDeadline" text="2 days" AnchorPane.bottomAnchor="32.0">
+         <toggleGroup>
+            <ToggleGroup fx:id="toggleDeliveryDeadline" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="rd5to7days" layoutX="344.0" layoutY="550.0" mnemonicParsing="false" onAction="#selectDeliveryDeadline" text="5 - 7 days" toggleGroup="$toggleDeliveryDeadline" AnchorPane.bottomAnchor="32.0" />
       <Label layoutX="484.0" layoutY="547.0" prefHeight="24.0" prefWidth="71.0" text="Delivery at" AnchorPane.bottomAnchor="30.0" />
-      <RadioButton fx:id="rdLocker" layoutX="647.0" layoutY="550.0" mnemonicParsing="false" text="Locker pickup" AnchorPane.bottomAnchor="32.0" />
-      <RadioButton fx:id="rdHome" layoutX="570.0" layoutY="550.0" mnemonicParsing="false" text="Home" AnchorPane.bottomAnchor="32.0" />
+      <RadioButton fx:id="rdLocker" layoutX="647.0" layoutY="550.0" mnemonicParsing="false" onAction="#selectDeliveryOption" text="Locker pickup" AnchorPane.bottomAnchor="32.0">
+         <toggleGroup>
+            <ToggleGroup fx:id="toggleDeliveryOption" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="rdHome" layoutX="570.0" layoutY="550.0" mnemonicParsing="false" onAction="#selectDeliveryOption" text="Home" toggleGroup="$toggleDeliveryOption" AnchorPane.bottomAnchor="32.0" />
       <Label alignment="TOP_CENTER" layoutX="520.0" layoutY="14.0" snapToPixel="false" text="Create Order" AnchorPane.leftAnchor="520.0" AnchorPane.rightAnchor="519.0" AnchorPane.topAnchor="14.0">
          <font>
             <Font size="26.0" />

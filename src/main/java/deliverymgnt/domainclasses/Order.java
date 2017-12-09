@@ -1,5 +1,7 @@
 package deliverymgnt.domainclasses;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -52,7 +54,8 @@ public class Order {
 	private String deliveryAddress; // the home address / someone's address or locker's location
 	
 	public Order() {
-		
+		this.orderItems = new HashSet<>();
+		this.deliveries = new HashSet<>();
 	}
 	
 	public Order(Date orderDate, DeliveryOption deliveryOption, Date deliveryDeadline, 
@@ -182,5 +185,19 @@ public class Order {
 
 	public void setDeliveryAddress(String deliveryAddress) {
 		this.deliveryAddress = deliveryAddress;
+	}
+	
+	public boolean hasProduct(Product product) {
+		for(OrderItem oi : orderItems) {
+			if (oi.getProduct().equals(product)) {
+				return true;
+			}
+				
+		}
+		return false;
+	}
+	
+	public void addOrderItem(OrderItem orderItem) {
+		orderItems.add(orderItem);
 	}
 }

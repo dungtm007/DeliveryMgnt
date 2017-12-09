@@ -32,6 +32,10 @@ public class Customer {
 	@OneToMany(mappedBy="customer")
 	private Set<Order> orders;
 
+	public Customer() {
+		this.orders = new HashSet<>();
+	}
+	
 	public Customer(String firstName, String lastName, String address) {
 		this.firstName = firstName;
 		this.lastName = lastName;

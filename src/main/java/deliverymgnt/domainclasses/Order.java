@@ -14,6 +14,7 @@ import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -47,7 +48,7 @@ public class Order {
 	@JoinColumn(name="customer_id")
 	private Customer customer;
 	
-	@OneToMany(mappedBy="order")
+	@OneToMany(mappedBy="order", fetch=FetchType.EAGER)
 	private Set<OrderItem> orderItems;
 	
 	@OneToMany(mappedBy="order")
@@ -167,7 +168,11 @@ public class Order {
 	}
 	
 	public double calculateTotalVolume() {
-		return 0.0;
+		double total = 0.0;
+		for(OrderItem oi : orderItems) {
+			total += oi.calculateVolume();
+		}
+		return total;
 	}
 	
 	public double calculateTotalPrice() {
@@ -182,6 +187,14 @@ public class Order {
 		double total = 0.0;
 		for(OrderItem oi : orderItems) {
 			total += oi.calculateVolumetricWeight();
+		}
+		return total;
+	}
+	
+	public double calculateTotalShippingWeight() {
+		double total = 0.0;
+		for(OrderItem oi : orderItems) {
+			total += oi.calculateShippingWeight();
 		}
 		return total;
 	}
@@ -242,6 +255,18 @@ public class Order {
 			@Override
 			public int compare(OrderItem o1, OrderItem o2) {
 				double diff = o1.calculateActualWeight() - o2.calculateActualWeight();
+				return diff < 0 ? -1 : (diff == 0 ? 0 : 1);
+			}
+		});
+		return orderItemsList;
+	}
+	
+	public List<OrderItem> getSortedOrderItemsByShippingWeight() {
+		List<OrderItem> orderItemsList = new ArrayList<>(orderItems);
+		orderItemsList.sort(new Comparator<OrderItem>() {
+			@Override
+			public int compare(OrderItem o1, OrderItem o2) {
+				double diff = o1.calculateShippingWeight() - o2.calculateShippingWeight();
 				return diff < 0 ? -1 : (diff == 0 ? 0 : 1);
 			}
 		});

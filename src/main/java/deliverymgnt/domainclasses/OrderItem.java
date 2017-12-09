@@ -119,4 +119,8 @@ public class OrderItem {
 	public double calculateVolumetricWeight() {
 		return product.calculateVolumetricWeight() * amount;
 	}
+	
+	public double calculateShippingWeight() {
+		return product.calculateShippingWeight() * amount;
+	}
 }

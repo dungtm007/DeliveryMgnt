@@ -115,6 +115,10 @@ public class Product {
 	public double calculateVolumetricWeight() {
 		return calculateVolume() / WEIGHT_DIVISOR; // 139 is divisor used for shipping parcel in domestic US
 	}
+	
+	public double calculateShippingWeight() {
+		return Math.max(calculateVolumetricWeight(), getWeight());
+	}
 
 	@Override
 	public String toString() {

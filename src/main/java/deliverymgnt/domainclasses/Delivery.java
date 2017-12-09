@@ -3,6 +3,7 @@ package deliverymgnt.domainclasses;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.AttributeOverride;
@@ -47,6 +48,9 @@ public class Delivery {
 	@Column(name = "delivery_type")
 	private DeliveryType deliveryType;
 	
+	@Column(name = "delivery_method")
+	private DeliveryMethod deliveryMethod;
+	
 	@Column(name = "delivery_distance")
 	private double distance;
 	
@@ -85,16 +89,19 @@ public class Delivery {
 		this.deliveryAddress = deliveryAddress;
 		this.distance = distance;
 		this.deliveryType = deliveryType;
+		this.packages = new HashSet<>();
 	}
 	
-	public Delivery(Order order, DeliveryStatus deliveryStatus, 
-			Address deliveryAddress, double distance, DeliveryType deliveryType) {
+	public Delivery(Order order, DeliveryType deliveryType, DeliveryMethod deliveryMethod, 
+			DeliveryStatus deliveryStatus,  Address deliveryAddress, double distance) {
 		
 		this.order = order;
+		this.deliveryType = deliveryType;
+		this.deliveryMethod = deliveryMethod;
 		this.deliveryStatus = deliveryStatus;
 		this.deliveryAddress = deliveryAddress;
 		this.distance = distance;
-		this.deliveryType = deliveryType;
+		this.packages = new HashSet<>();
 	}
 	
 	public Date getStartTime() {
@@ -111,6 +118,14 @@ public class Delivery {
 
 	public void setEstimatedArrivalTime(Date estimatedArrivalTime) {
 		this.estimatedArrivalTime = estimatedArrivalTime;
+	}
+	
+	public DeliveryMethod getDeliveryMethod() {
+		return deliveryMethod;
+	}
+
+	public void setDeliveryMethod(DeliveryMethod deliveryMethod) {
+		this.deliveryMethod = deliveryMethod;
 	}
 	
 	public int getId() {
@@ -169,6 +184,12 @@ public class Delivery {
 	public void addPackage(Package pkg) {
 		packages.add(pkg);
 		pkg.setDelivery(this);
+	}
+	
+	public void addPackages(List<Package> packages) {
+		for(Package pkg : packages) {
+			addPackage(pkg);
+		}
 	}
 	
 }

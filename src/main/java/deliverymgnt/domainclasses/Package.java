@@ -49,6 +49,12 @@ public class Package {
 		this.size = size;
 		this.order = order;
 		this.orderItems = new HashSet<>();
+	}
+	
+	public Package(Order order) {
+		
+		this.order = order;
+		this.orderItems = new HashSet<>();
 		
 	}
 
@@ -118,5 +124,9 @@ public class Package {
 		}
 		return total;
 		
+	}
+	
+	public void addOrderItem(OrderItem orderItem) {
+		orderItems.add(orderItem);
 	}
 }

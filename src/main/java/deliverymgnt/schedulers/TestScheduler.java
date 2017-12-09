@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import deliverymgnt.domainclasses.Order;
 import deliverymgnt.domainclasses.OrderStatus;
+import deliverymgnt.services.DeliveryService;
 import deliverymgnt.services.OrderService;
 import deliverymgnt.services.PackagingBusiness;
 
@@ -26,12 +27,20 @@ public class TestScheduler {
     @Autowired
     private OrderService orderService;
     
+    @Autowired
+    private DeliveryService deliveryService;
+    
     @Scheduled(fixedRate = 4000) 
     public void processOrders() {
     	
     	List<Order> orders = orderService.findByOrderStatus(OrderStatus.Entered);
     	for(Order o : orders) {
-    		log.info("Order {} - {}", o.getId(), o.getDeliveryDeadline());
+    		try {
+				PackagingBusiness.ProcessOrder(o, deliveryService, orderService);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+    		log.info("Order {} status: {}", o.getId(), o.getOrderStatus());
     	}
     	
     }

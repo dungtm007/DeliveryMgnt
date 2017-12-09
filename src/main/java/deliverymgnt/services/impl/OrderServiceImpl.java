@@ -23,22 +23,23 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Override
 	public Order save(Order entity) {
-		
-		Order savedOrder = orderRepository.save(entity);
-
-		// Save order items
-		for(OrderItem oi : savedOrder.getOrderItems()) {
-			orderItemRepository.save(oi);
-		}
-		
-		return savedOrder;
+		return saveOrderAndOrderItems(entity);
 	}
 
 	@Override
 	public Order update(Order entity) {
-		return orderRepository.save(entity);
+		return saveOrderAndOrderItems(entity);
 	}
 
+	private Order saveOrderAndOrderItems(Order order) {
+		Order savedOrder = orderRepository.save(order);
+		// Save order items
+		for(OrderItem oi : savedOrder.getOrderItems()) {
+			orderItemRepository.save(oi);
+		}
+		return order;
+	}
+	
 	@Override
 	public void delete(Order entity) {
 		orderRepository.delete(entity);

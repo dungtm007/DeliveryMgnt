@@ -19,7 +19,7 @@ public class DroneDeliveryHandler implements DeliveryHandler {
 
 	// private Drone drone;
 	// maximum weight: 5 lbs
-	// maximum package: 2 packages
+	// maximum package: 2 SMALL packages
 	// maximum distance: 30 miles
 	
 	// deliver time: within 1 day 

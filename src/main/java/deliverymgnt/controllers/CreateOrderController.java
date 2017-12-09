@@ -47,9 +47,6 @@ public class CreateOrderController implements Initializable {
 	private ChoiceBox<Product> ddlProducts;
 	
 	@FXML
-	private ComboBox<Product> cbProducts;
-	
-	@FXML
 	private TextField txtAmount;
 	
 	@FXML
@@ -224,18 +221,7 @@ public class CreateOrderController implements Initializable {
 		List<Product> products = productService.findAll();
 		productsList.addAll(products);
 		ddlProducts.setItems(productsList);
-		cbProducts.setItems(productsList);
-		cbProducts.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Product>() {
-            @Override
-            public void changed(ObservableValue<? extends Product> observable, Product product1, Product product2) {
-            	
-                if (product2 != null) {
-//                	System.out.println("Previous product: " + product1);
-//                    System.out.println("Selected product: " + product2);
-                }
-                
-            }
-        });
+		
 		ddlProducts.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Product>() {
             @Override
             public void changed(ObservableValue<? extends Product> observable, Product product1, Product product2) {

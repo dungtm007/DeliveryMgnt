@@ -55,7 +55,7 @@ public class LoginController implements Initializable {
 //    	}
     	
     	// switch to Trung's scene
-    	stageManager.switchScene(FxmlView.CREATE_ORDER);
+    	stageManager.switchScene(FxmlView.VIEW_ORDER);
     	
 //    	String result = "";
 //		

@@ -1,5 +1,6 @@
 package deliverymgnt.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,17 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<Order> findByOrderStatus(OrderStatus orderStatus) {
 		return orderRepository.findByOrderStatus(orderStatus);
+	}
+
+	@Override
+	public List<Order> findByCustomer(int customerId) {
+		List<Order> ret = new ArrayList<Order>();
+		for(Order i : orderRepository.findAll()) {
+			if(customerId == i.getCustomer().getId()) {
+				ret.add(i);
+			}
+		}
+		return ret;
 	}
 
 }

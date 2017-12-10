@@ -11,4 +11,5 @@ import deliverymgnt.generic.GenericService;
 @Service
 public interface OrderService extends GenericService<Order> {
 	List<Order> findByOrderStatus(OrderStatus orderStatus);
+	List<Order> findByCustomer(int customerId);
 }

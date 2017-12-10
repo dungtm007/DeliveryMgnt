@@ -40,6 +40,19 @@ public enum FxmlView {
 		}
     		
     },
+	VIEW_ORDER {
+
+		@Override
+		public String getTitle() {
+			return getStringFromResourceBundle("view_order.title");
+		}
+
+		@Override
+		public String getFxmlFile() {
+			return "/fxml/OrderLayoutCustomer.fxml";
+		}
+    		
+    },
     ROOT_LAYOUT_VIEW {
     	@Override
 		public String getTitle() {

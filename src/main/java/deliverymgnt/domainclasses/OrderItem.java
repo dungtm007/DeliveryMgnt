@@ -104,6 +104,11 @@ public class OrderItem {
 		return calculatePrice();
 	}
 	
+	// for JavaFX binding
+	public String getOrderStatus() {
+		return order.getOrderStatus().toString();
+	}
+	
 	public double calculatePrice() {
 		return unitPrice * amount;
 	}

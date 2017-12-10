@@ -37,6 +37,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -116,6 +117,9 @@ public class CreateOrderController implements Initializable {
 	@FXML
 	private Label lblOrderStatus;
 	
+	@FXML
+	private CheckBox chkUseCustomerAddress;
+	
 	@Autowired
 	private CustomerService customerService;
 	
@@ -168,14 +172,16 @@ public class CreateOrderController implements Initializable {
 			
 			if (found != null) {
 				orderItemsList.remove(found);
-				orderItemsList.add(found);
+				order.getOrderItems().remove(found);
+				//orderItemsList.add(found);
 			}
 			
 		}
-		else {
+		
+		//else {
 			OrderItem oi = new OrderItem(selProduct, Integer.parseInt(txtAmount.getText()), Double.parseDouble(txtUnitPrice.getText()), order);
 			orderItemsList.add(oi);	
-		}
+		//}
 		
 		
 		updateTotalPriceDisplay();
@@ -229,10 +235,16 @@ public class CreateOrderController implements Initializable {
 			hasWarning = true;
 			content = "Please select your preferred way to get the packages (at home or pickup)!";
 		}
+		else if (txtAddress.getText().isEmpty() ||
+				txtCity.getText().isEmpty() ||
+				txtState.getText().isEmpty() ||
+				txtZip.getText().isEmpty()) {
+			hasWarning = true;
+			content = "Please fill completed delivery address!";
+		}
 		
 		if (hasWarning) {
 			alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Warning");
 			alert.setContentText(content);
 			alert.showAndWait();
 			return false;
@@ -268,11 +280,12 @@ public class CreateOrderController implements Initializable {
 		
 		// Temporary get customer
 		customer = customerService.find(1);
-		Address addr = customer.getAddress();
-		txtAddress.setText(addr.getAddress());
-		txtCity.setText(addr.getCity());
-		txtState.setText(addr.getState());
-		txtZip.setText(addr.getZip());
+		
+//		Address addr = customer.getAddress();
+//		txtAddress.setText(addr.getAddress());
+//		txtCity.setText(addr.getCity());
+//		txtState.setText(addr.getState());
+//		txtZip.setText(addr.getZip());
 		
 		// Timer
 		timer = new Timer();
@@ -331,10 +344,33 @@ public class CreateOrderController implements Initializable {
 //		System.out.println("Delivery option: " + order.getDeliveryOption().toString());
 	}
 	
+	@FXML
+	private void useCustomerAddress (ActionEvent event) throws IOException {
+		
+		String addr = "";
+		String city = "";
+		String state = "";
+		String zip = "";
+		
+		if(chkUseCustomerAddress.isSelected()) {
+			Address addrress = customer.getAddress();
+			addr = addrress.getAddress();
+			city = addrress.getCity();
+			state = addrress.getState();
+			zip = addrress.getZip();
+		}
+		
+		txtAddress.setText(addr);
+		txtCity.setText(city);
+		txtState.setText(state);
+		txtZip.setText(zip);
+	}
+	
 	@SuppressWarnings("deprecation")
 	private void setDeliveryDeadlineForOrder() {
 		int days = rd2days.isSelected() ? 2 : 7;
 		
+		// Simulations: no of days = no of hours
 		Date od = order.getOrderDate();
 		Date deliveryDate = new Date(od.getYear(), od.getMonth(), od.getDate(),
 				od.getHours() + days, od.getMinutes(), od.getSeconds());
@@ -346,16 +382,17 @@ public class CreateOrderController implements Initializable {
 		order.setDeliveryType(type);
 	}
 	
+	private void setDeliveryAddressForOrder() {
+		Address deliveryAddress = new Address(txtAddress.getText(), txtCity.getText(), txtState.getText(), txtZip.getText());
+		order.setDeliveryAddress(deliveryAddress);
+	}
+	
 	private void reviewOrderBeforePlacement() {
-		
-		// Hard code some values now
 		order.setOrderDate(new Date());
 		setDeliveryDeadlineForOrder();
 		setDeliveryTypeForOrder();
-		
+		setDeliveryAddressForOrder();
 		order.setOrderStatus(OrderStatus.Entered);
-		order.setDeliveryAddress(customer.getAddress()); // hard code value
-		
 	}
 	
 }

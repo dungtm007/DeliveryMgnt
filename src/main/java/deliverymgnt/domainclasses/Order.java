@@ -48,6 +48,10 @@ public class Order {
 	@JoinColumn(name="customer_id")
 	private Customer customer;
 	
+	@ManyToOne
+	@JoinColumn(name="warehouse_id")
+	private Warehouse warehouse;
+	
 	@OneToMany(mappedBy="order", fetch=FetchType.EAGER)
 	private Set<OrderItem> orderItems;
 	
@@ -212,6 +216,18 @@ public class Order {
 
 	public void setDeliveryAddress(Address deliveryAddress) {
 		this.deliveryAddress = deliveryAddress;
+	}
+	
+	public Warehouse getWarehouse() {
+		return warehouse;
+	}
+
+	public void setWarehouse(Warehouse warehouse) {
+		this.warehouse = warehouse;
+	}
+	
+	public String getOrderNo() {
+		return "ODR" + String.format("%05d", id);
 	}
 	
 	public boolean hasProduct(Product product) {

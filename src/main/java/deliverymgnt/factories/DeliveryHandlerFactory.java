@@ -13,7 +13,7 @@ public class DeliveryHandlerFactory {
 	private static CourierDeliveryHandler courierDeliveryHdlr = new CourierDeliveryHandler();
 	private static DroneDeliveryHandler droneDeliveryHdlr = new DroneDeliveryHandler();
 	
-	public static DeliveryHandler GetDeliveryHandler(DeliveryMethod deliveryMethod) {
+	public static DeliveryHandler getDeliveryHandler(DeliveryMethod deliveryMethod) {
 		if (deliveryMethod == DeliveryMethod.Courier) {
 			return courierDeliveryHdlr;
 		} else {

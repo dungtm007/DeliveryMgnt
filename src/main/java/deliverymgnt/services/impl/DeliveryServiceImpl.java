@@ -1,5 +1,6 @@
 package deliverymgnt.services.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,11 @@ public class DeliveryServiceImpl implements DeliveryService {
 	@Override
 	public List<Delivery> findByOrderId(int orderId) {
 		return deliveryRepository.findByOrderId(orderId);
+	}
+
+	@Override
+	public List<Delivery> findByStartTimeGreaterThanEqualAndStartTimeLessThanEqual(Date fromDate, Date toDate) {
+		return deliveryRepository.findByStartTimeGreaterThanEqualAndStartTimeLessThanEqual(fromDate, toDate);
 	}
 
 }

@@ -1,6 +1,5 @@
 package deliverymgnt.domainclasses;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -20,8 +19,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import deliverymgnt.domainclasses.deliveryhandlers.DeliveryHandler;
-import deliverymgnt.factories.DeliveryHandlerFactory;
 
 @Entity
 @Table(name = "deliveries")
@@ -74,7 +71,7 @@ public class Delivery {
 	@Column(name = "courier_service")
 	private CourierService courierService;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "order_id")
 	private Order order;
 	
@@ -225,6 +222,18 @@ public class Delivery {
 
 	public void setRemainingDistance(double remainingDistance) {
 		this.remainingDistance = remainingDistance;
+	}
+	
+	public String getOrderNo() {
+		return order.getOrderNo();
+	}
+	
+	public Date getOrderDate() {
+		return order.getOrderDate();
+	}
+	
+	public String getDeliveryNo() {
+		return "DLV" + String.format("%05d", id);
 	}
 	
 	public void addPackage(Package pkg) {

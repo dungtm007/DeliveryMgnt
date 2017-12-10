@@ -3,6 +3,8 @@ package deliverymgnt;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -42,8 +44,9 @@ public class Main extends Application {
      * Useful to override this method by sub-classes wishing to change the first
      * Scene to be displayed on startup. Example: Functional tests on main
      * window.
+     * @throws IOException 
      */
-	protected void displayInitialScreen() {
+	protected void displayInitialScreen() throws IOException {
 		stageManager.switchScene(FxmlView.LOGIN);
 	}
 	

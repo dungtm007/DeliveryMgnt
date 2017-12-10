@@ -20,6 +20,7 @@ import deliverymgnt.factories.DeliveryHandlerFactory;
 import deliverymgnt.services.DeliveryService;
 import deliverymgnt.services.OrderService;
 import deliverymgnt.services.PackagingBusiness;
+import deliverymgnt.services.WarehouseService;
 
 @Component
 public class DeliveryManagementScheduler {
@@ -31,6 +32,9 @@ public class DeliveryManagementScheduler {
     
     @Autowired
     private DeliveryService deliveryService;
+    
+    @Autowired
+    private WarehouseService warehouseService;
     
     @Scheduled(fixedRate = 7000) 
     public void runScheduledDeliveryManagement() {
@@ -46,7 +50,7 @@ public class DeliveryManagementScheduler {
     	List<Order> orders = orderService.findByOrderStatus(OrderStatus.Entered);
     	for(Order o : orders) {
     		try {
-				PackagingBusiness.ProcessOrder(o, deliveryService, orderService);
+				PackagingBusiness.processOrder(o, orderService, warehouseService, deliveryService);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -61,7 +65,7 @@ public class DeliveryManagementScheduler {
     	for(Delivery d : deliveries) {
 
 			DeliveryMethod method = d.getDeliveryMethod();
-			DeliveryHandler deliveryHdlr = DeliveryHandlerFactory.GetDeliveryHandler(method);
+			DeliveryHandler deliveryHdlr = DeliveryHandlerFactory.getDeliveryHandler(method);
 			deliveryHdlr.deliver(d, deliveryService, orderService);
 			
     		log.info("Delivery {} status: {}", d.getId(), d.getDeliveryStatus());
@@ -75,7 +79,7 @@ public class DeliveryManagementScheduler {
     	for(Delivery d : deliveries) {
     		
 			DeliveryMethod method = d.getDeliveryMethod();
-			DeliveryHandler deliveryHdlr = DeliveryHandlerFactory.GetDeliveryHandler(method);
+			DeliveryHandler deliveryHdlr = DeliveryHandlerFactory.getDeliveryHandler(method);
 			deliveryHdlr.track(d, deliveryService, orderService);
     			
     		log.info("Delivery {} status: {}", d.getId(), d.getDeliveryStatus());

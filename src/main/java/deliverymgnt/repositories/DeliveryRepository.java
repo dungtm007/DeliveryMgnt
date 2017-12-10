@@ -4,6 +4,7 @@ import deliverymgnt.domainclasses.Delivery;
 import deliverymgnt.domainclasses.DeliveryStatus;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,4 +13,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface DeliveryRepository extends JpaRepository<Delivery, Integer> {
 	List<Delivery> findByDeliveryStatus(DeliveryStatus deliveryStatus);
 	List<Delivery> findByOrderId(int orderId);
+	List<Delivery> findByStartTimeGreaterThanEqualAndStartTimeLessThanEqual(Date fromDate, Date toDate);
 }

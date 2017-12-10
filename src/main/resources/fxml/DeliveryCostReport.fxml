@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="821.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deliverymgnt.controllers.DeliveryCostReportController">
+   <children>
+      <VBox fx:id="vboxContriner" layoutX="7.0" layoutY="7.0" prefHeight="794.0" prefWidth="1089.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label prefHeight="84.0" prefWidth="1100.0" text="                                    Delivery Cost Report" textAlignment="JUSTIFY">
+               <font>
+                  <Font size="38.0" />
+               </font>
+               <padding>
+                  <Insets bottom="5.0" left="15.0" right="5.0" top="15.0" />
+               </padding>
+            </Label>
+            <VBox prefHeight="152.0" prefWidth="1100.0">
+               <children>
+                  <RadioButton fx:id="rdLast7Days" mnemonicParsing="false" onAction="#selectDateFilter" prefHeight="21.0" prefWidth="1091.0" selected="true" text="Last 7 days">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="togglePeriod" />
+                     </toggleGroup>
+                     <VBox.margin>
+                        <Insets left="250.0" top="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="rdSpecificPeriod" mnemonicParsing="false" onAction="#selectDateFilter" prefHeight="21.0" prefWidth="1091.0" text="Specific Period" toggleGroup="$togglePeriod">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="250.0" top="10.0" />
+                     </VBox.margin>
+                  </RadioButton>
+                  <HBox fx:id="boxFromTo" disable="true" prefHeight="41.0" prefWidth="800.0">
+                     <children>
+                        <Label text="From: ">
+                           <HBox.margin>
+                              <Insets right="20.0" top="5.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <DatePicker fx:id="dpFrom" prefHeight="31.0" prefWidth="194.0">
+                           <HBox.margin>
+                              <Insets right="20.0" top="5.0" />
+                           </HBox.margin>
+                        </DatePicker>
+                        <Label text="To: ">
+                           <HBox.margin>
+                              <Insets right="20.0" top="5.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <DatePicker fx:id="dpTo" prefHeight="31.0" prefWidth="186.0">
+                           <HBox.margin>
+                              <Insets right="20.0" top="5.0" />
+                           </HBox.margin>
+                        </DatePicker>
+                        <Button fx:id="btnFind" mnemonicParsing="false" onAction="#loadDeliveriesFromPeriod" prefHeight="39.0" prefWidth="77.0" text="Find">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="250.0" top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+            <TableView fx:id="tableViewDeliveries" prefHeight="488.0" prefWidth="1100.0">
+              <columns>
+                <TableColumn fx:id="colOrderNo" prefWidth="126.0" text="Order #" />
+                  <TableColumn fx:id="colOrderDate" prefWidth="184.0" text="Order Date" />
+                <TableColumn fx:id="colDeliveryNo" prefWidth="147.0" text="Delivery #" />
+                  <TableColumn fx:id="colStatus" prefWidth="145.0" text="Status" />
+                  <TableColumn fx:id="colShippedDate" prefWidth="187.0" text="Shipped Date" />
+                  <TableColumn fx:id="colArrivalDate" prefWidth="183.0" text="Arrival Date" />
+                  <TableColumn fx:id="colCost" prefWidth="124.0" text="Cost" />
+              </columns>
+            </TableView>
+            <HBox prefHeight="54.0" prefWidth="1100.0">
+               <children>
+                  <Label prefHeight="65.0" prefWidth="175.0" text="Total Cost: ">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="750.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="lblTotalCost" text="100">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="40.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </HBox>
+            <Button fx:id="btnDashboard" alignment="CENTER" mnemonicParsing="false" onAction="#backToDashboard" prefHeight="54.0" prefWidth="224.0" text="Dashboard">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="900.0" top="20.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

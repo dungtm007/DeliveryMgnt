@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
+import deliverymgnt.domainclasses.Address;
 import deliverymgnt.domainclasses.CourierService;
 import deliverymgnt.domainclasses.Delivery;
 import deliverymgnt.domainclasses.DeliveryMethod;
@@ -17,38 +18,45 @@ import deliverymgnt.domainclasses.OrderItem;
 import deliverymgnt.domainclasses.OrderStatus;
 import deliverymgnt.domainclasses.Package;
 import deliverymgnt.domainclasses.PackageSize;
+import deliverymgnt.domainclasses.Warehouse;
+import deliverymgnt.services.impl.GeoComputingServiceImpl;
 
 public class PackagingBusiness {
 	
-	public static void ProcessOrder(Order order, 
-			DeliveryService deliveryService, 
-			OrderService orderService) throws Exception {
+	// ***********************************************
+	// ** Rules to generate Deliveries and Packages **
+	// ***********************************************
+	// Maximum weight of a delivery: 30 lbs
+	// Maximum weight of a package: 20 lbs (9.07 kg)
+	// Small: <= 5 lbs (< 2.26 kg)
+	// Medium: 5 -> 13 (2.26 kg - 5.8 kg) 
+	// Large: >= 13 -> 20 (6.3 kg - 9 kg)
+	
+	// ***********************************************
+	// ** Analyze mechanism **************************
+	// ***********************************************
+	// *** Delivery type
+	// ****** Home         -> Drone | Courier
+	// ****** Locker       ->         Courier
+	// *** Distance
+	// ****** <= 30 miles  -> Drone
+	// ****** > 30 miles   ->       | Courier
+	// *** Shipping Weight (the maximum between Actual Weight and Volumetric Weight)
+	// ***** <= 5          -> Drone
+	// ***** > 5           ->       | Courier
+	
+	public static void processOrder(Order order, 
+			OrderService orderService,
+			WarehouseService warehouseService,
+			DeliveryService deliveryService) throws Exception {
 		
 		// Switch order to Processing
 		order.setOrderStatus(OrderStatus.Processing);
 		
-		// Rules to Generate Deliveries and Packages
-		// Maximum weight of a delivery: 30 lbs
-		// Maximum weight of a package: 20 lbs (9.07 kg)
-		// Small: <= 5 lbs (< 2.26 kg)
-		// Medium: 5 -> 13 (2.26 kg - 5.8 kg) 
-		// Large: >= 13 -> 20 (6.3 kg - 9 kg)
+		collecting(order, warehouseService);
 		
-		// Analyze:
-		// *** Delivery type
-		// ****** Home         -> Drone | Courier
-		// ****** Locker       ->         Courier
 		DeliveryType type = order.getDeliveryType();
-		
-		// *** Distance
-		// ****** <= 30 miles  -> Drone
-		// ****** > 30 miles   ->       | Courier
-		collecting(order);
 		double distance = 28.5;
-		
-		// *** Freight Weight (the maximum between Actual Weight and Volumetric Weight)
-		// ***** <= 5          -> Drone
-		// ***** > 5           ->       | Courier
 		double shippingWeight = order.calculateTotalShippingWeight();
 		
 		System.out.println(" >>>>> delivery type: " + type);
@@ -61,11 +69,43 @@ public class PackagingBusiness {
 		System.out.println(" >>>>> Process order " + order.getId() +  " successfully!");		
 	}
 	
-	private static void collecting(Order order) {
+	private static void collecting(Order order, WarehouseService warehouseService) {
 		
 		// (UPD) Run a logic to detect the warehouse to collect all products
 		// (UPD) Call Google Map service to calculate distance from that warehouse to delivery address
 		
+		Address addr = order.getDeliveryAddress();
+		String deliveryAddress = addr.toString();
+		
+		// Get all warehouses
+		List<Warehouse> warehouses = warehouseService.findAll();
+		
+		// Filter those warehouses that can satisfy all items of order
+		// ... (next release)
+		
+		// Find the nearest warehouse with delivery address
+		GeoComputingService googleMapSvc = new GeoComputingServiceImpl();
+		double nearestDist = Double.MAX_VALUE;
+		Warehouse warehouse = null;
+		for(Warehouse w : warehouses) {
+			String warehouseAddress = w.getWarehouseAddress().toString();
+			double dist = googleMapSvc.computeDistance(warehouseAddress, deliveryAddress);
+			
+			System.out.println(">>>>>");
+			System.out.println(" Distance from warehouse " + w.getName() + "(" + warehouseAddress  + ")");
+			System.out.println(" to delivery address (" + deliveryAddress  + ") is:");
+			System.out.println("    " + dist + " miles");
+			System.out.println(">>>>>");
+			
+			if (dist < nearestDist) {
+				nearestDist = dist;
+				warehouse = w;
+			} 
+		}
+	
+		if (warehouse != null) {
+			order.setWarehouse(warehouse);
+		}
 	}
 	
 	private static void packaging(Order order, DeliveryType type, 

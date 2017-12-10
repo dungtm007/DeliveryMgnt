@@ -3,11 +3,16 @@ package deliverymgnt.config;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
+import javax.persistence.Tuple;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+
+import deliverymgnt.controllers.ViewOrderDetailsController;
 import javafx.scene.Parent;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 
 /**
  * Will load the FXML hierarchy as specified in the load method and register
@@ -27,11 +32,17 @@ public class SpringFXMLLoader {
 		this.resourceBundle = resourceBundle;
 	}
 	
-	public Parent load(String fxmlPath) throws IOException {
+	// Object will contain Parent and Object (controller)
+	public Object[] load(String fxmlPath) throws IOException {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setControllerFactory(context::getBean); // Spring now FXML Controller Factory
 		loader.setResources(resourceBundle);
 		loader.setLocation(getClass().getResource(fxmlPath));
-		return loader.load();
+		
+		Parent view = loader.load();
+		Object controller1 = loader.getController();
+		
+		//return loader.load();
+		return new Object[] { view, controller1 };
 	}
 }

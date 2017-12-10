@@ -76,6 +76,30 @@ public enum FxmlView {
 		public String getFxmlFile() {
 			return "/fxml/RootLayout.fxml";
 		}
+    },
+    VIEW_ORDER_DETAILS {
+    	
+    	@Override
+		public String getTitle() {
+			return getStringFromResourceBundle("view_order_details.title");
+		}
+
+		@Override
+		public String getFxmlFile() {
+			return "/fxml/ViewOrderDetails.fxml";
+		}
+    },
+    DELIVERY_COST_REPORT {
+    	
+    	@Override
+		public String getTitle() {
+			return getStringFromResourceBundle("delivery_cost_report.title");
+		}
+
+		@Override
+		public String getFxmlFile() {
+			return "/fxml/DeliveryCostReport.fxml";
+		}
     }
 	;
 	

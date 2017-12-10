@@ -10,6 +10,7 @@ import com.google.maps.GeoApiContext.Builder;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.DistanceMatrix;
 import com.google.maps.model.TravelMode;
+import com.google.maps.model.Unit;
 
 import deliverymgnt.services.GeoComputingService;
 
@@ -26,7 +27,9 @@ public class GeoComputingServiceImpl implements GeoComputingService {
 			DistanceMatrix trix = req.origins(from)
 			        .destinations(to)
 			        .mode(TravelMode.DRIVING)
-			        .avoid(RouteRestriction.HIGHWAYS)
+			        //.avoid(RouteRestriction.HIGHWAYS)
+			        .avoid(RouteRestriction.FERRIES)
+			        .units(Unit.IMPERIAL)
 			        .language("en")
 			        .await();
 			ret = trix.rows[0].elements[0].distance.inMeters;
@@ -40,7 +43,7 @@ public class GeoComputingServiceImpl implements GeoComputingService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return ret;
+		return ret / 1000; // convert to miles
 	}
 
 	@Override
@@ -51,7 +54,9 @@ public class GeoComputingServiceImpl implements GeoComputingService {
 			DistanceMatrix trix = req.origins(from)
 			        .destinations(to)
 			        .mode(TravelMode.DRIVING)
-			        .avoid(RouteRestriction.HIGHWAYS)
+			        //.avoid(RouteRestriction.HIGHWAYS)
+			        .avoid(RouteRestriction.FERRIES)
+			        .units(Unit.IMPERIAL)
 			        .language("en")
 			        .await();
 			ret = trix.rows[0].elements[0].duration.inSeconds;

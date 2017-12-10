@@ -55,26 +55,14 @@ public class LoginController implements Initializable {
 //    	}
     	
     	// switch to Trung's scene
-    	stageManager.switchScene(FxmlView.CREATE_ORDER);
+    	//stageManager.switchScene(FxmlView.CREATE_ORDER);
     	
 //    	Object ctl = stageManager.switchScene(FxmlView.VIEW_ORDER_DETAILS);
 //    	ViewOrderDetailsController vodController = (ViewOrderDetailsController)ctl;
 //    	vodController.setOrderId(20);
     	
+    	stageManager.switchScene(FxmlView.DELIVERY_COST_REPORT);
     	
-    	
-//    	String result = "";
-//		
-//		for(Customer cust : customerService.findAll()){
-//			result += cust.toString() + "<br>";
-//		}
-//		
-//		//System.out.println("Hello " + (username != null ? username : "World") + "!");
-//		System.out.println(result);
-//    	
-//		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//		alert.setContentText("123");
-//		alert.show();
     }
     
     public String getPassword() {

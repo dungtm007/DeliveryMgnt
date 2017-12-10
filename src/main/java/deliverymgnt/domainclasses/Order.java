@@ -210,6 +210,10 @@ public class Order {
 		this.deliveryAddress = deliveryAddress;
 	}
 	
+	public String getOrderNo() {
+		return "ODR" + String.format("%05d", id);
+	}
+	
 	public boolean hasProduct(Product product) {
 		for(OrderItem oi : orderItems) {
 			if (oi.getProduct().equals(product)) {

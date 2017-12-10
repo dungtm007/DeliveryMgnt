@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,7 +33,7 @@ public class Package {
 	@JoinColumn(name = "order_id")
 	private Order order;
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "packages_order_items", 
 		joinColumns = @JoinColumn(name = "package_id"), 
 		inverseJoinColumns = @JoinColumn(name = "order_item_id"))
@@ -127,7 +128,15 @@ public class Package {
 			total += oi.calculateVolumetricWeight();
 		}
 		return total;
+	}
+	
+	public double calculateShippingWeight() {
 		
+		double total = 0.0;
+		for(OrderItem oi : orderItems) {
+			total += oi.calculateShippingWeight();
+		}
+		return total;
 	}
 	
 	public void addOrderItem(OrderItem orderItem) {

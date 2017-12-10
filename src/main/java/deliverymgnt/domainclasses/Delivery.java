@@ -21,6 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import deliverymgnt.domainclasses.deliveryhandlers.DeliveryHandler;
+import deliverymgnt.factories.DeliveryHandlerFactory;
 
 @Entity
 @Table(name = "deliveries")
@@ -55,6 +56,9 @@ public class Delivery {
 	@Column(name = "remaining_distance")
 	private double remainingDistance;
 	
+	@Column(name = "delivery_deadline")
+	private Date deliveryDeadline;
+	
 	@Column(name = "start_time")
 	private Date startTime;
 	
@@ -66,8 +70,9 @@ public class Delivery {
 
 	@Column(name = "delivery_cost")
 	private double deliveryCost;
-
-	private transient DeliveryHandler deliveryHandler;
+	
+	@Column(name = "courier_service")
+	private CourierService courierService;
 
 	@ManyToOne
 	@JoinColumn(name = "order_id")
@@ -87,12 +92,14 @@ public class Delivery {
 	}
 	
 	public Delivery(Order order, Set<Package> packages, DeliveryStatus deliveryStatus, 
-			Address deliveryAddress, double distance, double remainingDistance, DeliveryType deliveryType) {
+			Address deliveryAddress, Date deliveryDeadline, 
+			double distance, double remainingDistance, DeliveryType deliveryType) {
 		
 		this.order = order;
 		this.packages = packages;
 		this.deliveryStatus = deliveryStatus;
 		this.deliveryAddress = deliveryAddress;
+		this.deliveryDeadline = deliveryDeadline;
 		this.distance = distance;
 		this.remainingDistance = remainingDistance;
 		this.deliveryType = deliveryType;
@@ -100,13 +107,15 @@ public class Delivery {
 	}
 	
 	public Delivery(Order order, DeliveryType deliveryType, DeliveryMethod deliveryMethod, 
-			DeliveryStatus deliveryStatus, Address deliveryAddress, double distance, double remainingDistance) {
+			DeliveryStatus deliveryStatus, Address deliveryAddress, Date deliveryDeadline, 
+			double distance, double remainingDistance) {
 		
 		this.order = order;
 		this.deliveryType = deliveryType;
 		this.deliveryMethod = deliveryMethod;
 		this.deliveryStatus = deliveryStatus;
 		this.deliveryAddress = deliveryAddress;
+		this.deliveryDeadline = deliveryDeadline;
 		this.distance = distance;
 		this.remainingDistance = remainingDistance;
 		this.packages = new HashSet<>();
@@ -154,33 +163,42 @@ public class Delivery {
 	public void setDeliveryAddress(Address deliveryAddress) {
 		this.deliveryAddress = deliveryAddress;
 	}
-	public DeliveryHandler getDeliveryHandler() {
-		return deliveryHandler;
+	
+	public CourierService getCourieService() {
+		return courierService;
 	}
-	public void setDeliveryHandler(DeliveryHandler deliveryHandler) {
-		this.deliveryHandler = deliveryHandler;
+
+	public void setCourierService(CourierService courierService) {
+		this.courierService = courierService;
 	}
+	
 	public Order getOrder() {
 		return order;
 	}
 	public void setOrder(Order order) {
 		this.order = order;
 	}
+	
 	public Set<Package> getPackages() {
 		return packages;
 	}
+	
 	public void setPackages(Set<Package> packages) {
 		this.packages = packages;
 	}
+	
 	public DeliveryType getDeliveryType() {
 		return deliveryType;
 	}
+	
 	public void setDeliveryType(DeliveryType deliveryType) {
 		this.deliveryType = deliveryType;
 	}
+	
 	public double getDistance() {
 		return distance;
 	}
+	
 	public void setDistance(double distance) {
 		this.distance = distance;
 	}
@@ -199,10 +217,6 @@ public class Delivery {
 
 	public void setActualArrivalTime(Date actualArrivalTime) {
 		this.actualArrivalTime = actualArrivalTime;
-	}
-	
-	public double calculateDeliveryCost() {
-		return deliveryHandler.calculateDeliveryCost(new ArrayList<>(packages), distance);
 	}
 	
 	public double getRemainingDistance() {

@@ -2,6 +2,7 @@ package deliverymgnt.domainclasses;
 
 import java.util.Hashtable;
 
+
 public final class CourierSystem {
 
 	private static Hashtable<Integer, Hashtable<Integer, Double>> expressServiceMappings = generateExpressServiceMappings();
@@ -74,8 +75,7 @@ public final class CourierSystem {
 		distanceZone2Weights.put(25,  47.32);
 		// ...
 		
-		
-		return expressServiceMappings;
+		return mappings;
 	}
 	
 	private static Hashtable<Integer, Hashtable<Integer, Double>> generateNormalServiceMappings() {
@@ -145,22 +145,28 @@ public final class CourierSystem {
 		// ...
 		
 		
-		return expressServiceMappings;
+		return mappings;
 	}
 	
 	private static Hashtable<Integer, Hashtable<Integer, Double>> getPriceMappings(CourierService deliveryService) {
 		
 		if (deliveryService == CourierService.Express) 
 		{
+			if (expressServiceMappings == null) {
+				expressServiceMappings = generateExpressServiceMappings();
+			}
 			return expressServiceMappings;
 		}
 		else 
 		{
+			if (normalServiceMappings == null) {
+				normalServiceMappings = generateNormalServiceMappings();
+			}
 			return normalServiceMappings;
 		}
 	}
 	
-	public static double caculateDeliveryCost(CourierService deliveryService, double weight, double distance) {
+	public static double calculateDeliveryCost(CourierService deliveryService, double weight, double distance) {
 		
 		Hashtable<Integer, Hashtable<Integer, Double>> mappings = getPriceMappings(deliveryService);
 		Hashtable<Integer, Double> zone;
@@ -174,6 +180,5 @@ public final class CourierSystem {
 		
 		return zone.get(Math.round((float)weight)); 
 	}
-	
 	
 }

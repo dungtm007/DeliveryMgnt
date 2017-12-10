@@ -183,10 +183,10 @@ public class CreateOrderController implements Initializable {
 	
 	private void updateTotalPriceDisplay() {
 		
-		double totalPrice = 0.0;
-		for(OrderItem oi : orderItemsList) {
-			totalPrice += oi.calculatePrice();
-		}
+//		double totalPrice = 0.0;
+//		for(OrderItem oi : orderItemsList) {
+//			totalPrice += oi.calculatePrice();
+//		}
 		
 		lblTotalPrice.setText(String.format("%.2f", order.calculateTotalPrice()));
 		lblShippingWeight.setText(String.format("%.2f", order.calculateTotalShippingWeight()));
@@ -257,7 +257,6 @@ public class CreateOrderController implements Initializable {
 //                    System.out.println("Selected product: " + product2);
                 }
                 
-                
                 txtUnitPrice.setText(String.format("%.2f", product2.getPrice()));
                 txtAmount.setText("1");
                 
@@ -295,9 +294,7 @@ public class CreateOrderController implements Initializable {
 					}
 				});
 			}
-		}, 0, 1500);
-		
-		
+		}, 0, 8000);
 	}
 	
 	private void setColumnProperties(){

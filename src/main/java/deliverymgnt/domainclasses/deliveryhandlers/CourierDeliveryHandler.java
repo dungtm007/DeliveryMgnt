@@ -15,6 +15,7 @@ import deliverymgnt.domainclasses.DeliveryType;
 import deliverymgnt.domainclasses.Order;
 import deliverymgnt.domainclasses.OrderStatus;
 import deliverymgnt.domainclasses.Package;
+import deliverymgnt.factories.CourierSystemFactory;
 import deliverymgnt.services.DeliveryService;
 import deliverymgnt.services.OrderService;
 
@@ -25,8 +26,6 @@ import deliverymgnt.services.OrderService;
 
 @Component
 public class CourierDeliveryHandler implements DeliveryHandler {
-
-	private CourierService courierService;
 	
 	@Autowired
 	private DeliveryService deliveryService;
@@ -34,56 +33,22 @@ public class CourierDeliveryHandler implements DeliveryHandler {
 	@Autowired
 	private OrderService orderService;
 	
-	@Autowired
 	public CourierDeliveryHandler() {
+		
 	}
 	
-	public CourierDeliveryHandler(CourierService courierService) {
-		this.courierService = courierService;
-	}
-	
-	@Override
-	public double calculateDeliveryCost(List<Package> packages, double distance) {
-		
-		double totalChargedWeight = 0.0;
-		
-		for(Package p : packages) {
-			double volumetricWeight = p.calculateVolumetricWeight();
-			double actualWeight = p.calculateActualWeight();
-			double chargedWeight = Math.max(volumetricWeight, actualWeight);
-			totalChargedWeight += chargedWeight;
-		}
-		
-		// ask the CourierSystem and pass the service (dollars per pound), totalChargedWeight and distance
-		double totalPrice = CourierSystem.caculateDeliveryCost(courierService, totalChargedWeight, distance); 
-		
-		return totalPrice;
-	}
-
-	@Override
-	public void deliver(List<Package> packages) {
-		// TODO Auto-generated method stub
-		
-		
-	}
-
-	@Override
-	public void arrive(List<Package> packages) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	@SuppressWarnings("deprecation")
 	@Override
 	public void deliver(Delivery delivery, DeliveryService deliveryService, OrderService orderService) {
 
 		// set start time & estimate arrival time
 		double distance = delivery.getDistance();
-		double seconds = distance * 12; // 12 seconds per mile for drone
+		int seconds = (int)Math.round(distance * 5); // 5 seconds per mile for drone
+		int buffer = 15; // seconds
 		
 		Date start = new Date();
 		Date estimatedArrival = new Date(start.getYear(), start.getMonth(), start.getDate(), 
-				start.getHours(), start.getMinutes(), start.getSeconds() + (int)Math.round(seconds)); 
+				start.getHours(), start.getMinutes(), start.getSeconds() +  seconds + buffer); 
 		delivery.setStartTime(start);
 		delivery.setEstimatedArrivalTime(estimatedArrival);
 	
@@ -107,9 +72,9 @@ public class CourierDeliveryHandler implements DeliveryHandler {
 		long diff = curTime.getTime() - startTime.getTime();
 		int seconds = (int)(diff / 1000);
 		
-		double travel = seconds / 12; // miles (12 seconds per miles)  
-		double remainingDistance = delivery.getRemainingDistance();
-		remainingDistance -= travel;
+		double travel = seconds / 5; // miles (5 seconds per miles)  
+		double distance = delivery.getDistance();
+		double remainingDistance = distance - travel;
 		if (remainingDistance <= 0) {
 			arrive(delivery, deliveryService, orderService);
 		}
@@ -126,22 +91,33 @@ public class CourierDeliveryHandler implements DeliveryHandler {
 		delivery.setActualArrivalTime(new Date());
 		delivery.setDeliveryStatus(DeliveryStatus.Finished);
 		
-		// set order status is Finished (if all deliveries are finished)
-		// ...
-		
 		// If this is Locker Delivery
 		// Run Locker allocation business
 		if (delivery.getDeliveryType() == DeliveryType.LockerPickupDelivery) {
-			
+			// (UPD) ...
+			delivery.setDeliveryStatus(DeliveryStatus.Delivered);
 		}
+		
+		// Update cost
+		double cost = calculateDeliveryCost(delivery);
+		delivery.setDeliveryCost(cost);
 		
 		deliveryService.save(delivery);
 	}
 
 	@Override
-	public double calculateDeliveryCost(Delivery delivery, double distance) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	public double calculateDeliveryCost(Delivery delivery) {
 
+		double totalShippingWeight = 0.0;
+		
+		for(Package p : delivery.getPackages()) {
+			double shippingWeight = p.calculateShippingWeight();
+			totalShippingWeight += shippingWeight;
+		}
+		
+		// Ask the CourierSystem and pass the service (dollars per pound), totalChargedWeight and distance
+		double totalPrice = CourierSystem.calculateDeliveryCost(delivery.getCourieService(), totalShippingWeight, delivery.getDistance()); 
+		
+		return totalPrice;
+	}
 }

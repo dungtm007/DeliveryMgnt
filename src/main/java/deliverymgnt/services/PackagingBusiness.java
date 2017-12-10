@@ -3,9 +3,11 @@ package deliverymgnt.services;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
+import deliverymgnt.domainclasses.CourierService;
 import deliverymgnt.domainclasses.Delivery;
 import deliverymgnt.domainclasses.DeliveryMethod;
 import deliverymgnt.domainclasses.DeliveryStatus;
@@ -111,6 +113,7 @@ public class PackagingBusiness {
 				}
 			}
 			
+			// BUG
 			Delivery droneDelivery = packageForTheSameDeliveryMethod(droneOrderItems.toArray(new OrderItem[0]), DeliveryMethod.Drone, distance);
 			Delivery courierDelivery = packageForTheSameDeliveryMethod(courierOrderItems.toArray(new OrderItem[0]), DeliveryMethod.Courier, distance);
 			
@@ -138,7 +141,6 @@ public class PackagingBusiness {
 		
 		// Update DB: Order status
 		order.setOrderStatus(OrderStatus.Packaged);
-		
 	}
 	
 	void Delivering() {} // will be in another scheduling, with DeliveryHandler deliver
@@ -149,12 +151,13 @@ public class PackagingBusiness {
 	private static Delivery packageForTheSameDeliveryMethod(Order order, DeliveryMethod deliveryMethod, double distance) throws Exception {
 		
 		DeliveryType type = order.getDeliveryType(); //(option == DeliveryOption.HomeDelivery ? DeliveryType.HomeDelivery : DeliveryType.LockerPickupDelivery);
+		Date deadline = order.getDeliveryDeadline();
 		
 		Delivery delivery = new Delivery(order, 
 				type, deliveryMethod, 
 				DeliveryStatus.Entered, 
-				order.getDeliveryAddress(), 
-				distance, distance);
+				order.getDeliveryAddress(),
+				deadline, distance, distance);
 		
 		// If Drone delivery    : there is only 1 SMALL PACKAGE (5 lbs) for all order items
 		if (deliveryMethod == DeliveryMethod.Drone) {
@@ -165,6 +168,13 @@ public class PackagingBusiness {
 		
 		// If Courier delivery  : there might be more than 1, MULTIPLE PACKAGES, different SIZES
 		else {
+			
+			Date orderDate = order.getOrderDate();
+			long diff = deadline.getTime() - orderDate.getTime();
+			int days = (int)(diff / (1000 * 60 * 60 * 24));
+			CourierService courierService = days <= 3 ? CourierService.Express : CourierService.Normal;
+			delivery.setCourierService(courierService);
+			
 			List<Package> packages = packageForCourierDelivery(order.getOrderItems().toArray(new OrderItem[0]));
 			delivery.addPackages(packages);
 		}
@@ -177,15 +187,22 @@ public class PackagingBusiness {
 		
 		Order order = orderItems[0].getOrder();
 		DeliveryType type = order.getDeliveryType();
+		Date deadline = order.getDeliveryDeadline();
 		
 		Delivery delivery = new Delivery(order, 
 				type, deliveryMethod, 
 				DeliveryStatus.Entered, 
-				order.getDeliveryAddress(), 
-				distance, distance);
+				order.getDeliveryAddress(),
+				deadline, distance, distance);
 
 		// If Drone delivery    : there is only 1 SMALL PACKAGE (5 lbs) for all order items
 		if (deliveryMethod == DeliveryMethod.Drone) {
+			
+			Date orderDate = order.getOrderDate();
+			long diff = deadline.getTime() - orderDate.getTime();
+			int days = (int)(diff / (1000 * 60 * 60 * 24));
+			CourierService courierService = days <= 3 ? CourierService.Express : CourierService.Normal;
+			delivery.setCourierService(courierService);
 			
 			Package pkg = packageForDroneDelivery(orderItems);
 			delivery.addPackage(pkg);

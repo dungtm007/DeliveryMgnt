@@ -7,5 +7,5 @@ public enum OrderStatus {
 	Packaged,
 	Delivering,
 	Delivered,
-	Finished // when all deliveries are finished
+	Finished // when all deliveries are finished (users have picked up all)
 }

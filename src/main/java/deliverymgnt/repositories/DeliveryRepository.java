@@ -11,4 +11,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 @Repository
 public interface DeliveryRepository extends JpaRepository<Delivery, Integer> {
 	List<Delivery> findByDeliveryStatus(DeliveryStatus deliveryStatus);
+	List<Delivery> findByOrderId(int orderId);
 }

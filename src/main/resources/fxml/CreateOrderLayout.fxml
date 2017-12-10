@@ -89,6 +89,26 @@
       <TextField fx:id="txtState" layoutX="552.0" layoutY="645.0" prefHeight="27.0" prefWidth="221.0" />
       <TextField fx:id="txtZip" layoutX="552.0" layoutY="687.0" prefHeight="27.0" prefWidth="221.0" />
       <CheckBox fx:id="chkUseCustomerAddress" layoutX="474.0" layoutY="524.0" mnemonicParsing="false" selected="true" text="Use customer address" />
+      <Label layoutX="38.0" layoutY="353.0" text="Shipping Weight:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblShippingWeight" layoutX="103.0" layoutY="396.0" text="sw">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="33.0" layoutY="443.0" text="Order Status:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblOrderStatus" layoutX="96.0" layoutY="489.0" text="os">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
    </children>
    <effect>
       <Blend />

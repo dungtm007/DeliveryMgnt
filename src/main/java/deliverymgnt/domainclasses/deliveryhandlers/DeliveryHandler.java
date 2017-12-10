@@ -5,6 +5,8 @@ import java.util.Set;
 
 import deliverymgnt.domainclasses.Delivery;
 import deliverymgnt.domainclasses.Package;
+import deliverymgnt.services.DeliveryService;
+import deliverymgnt.services.OrderService;
 
 public interface DeliveryHandler {
 	
@@ -12,6 +14,7 @@ public interface DeliveryHandler {
 	double calculateDeliveryCost(Delivery delivery, double distance);
 	void deliver(List<Package> packages);
 	void arrive(List<Package> packages);
-	void deliver(Delivery delivery);
-	void arrive(Delivery delivery);
+	void deliver(Delivery delivery, DeliveryService deliveryService, OrderService orderService);
+	void track(Delivery delivery, DeliveryService deliveryService, OrderService orderService);
+	void arrive(Delivery delivery, DeliveryService deliveryService, OrderService orderService);
 }

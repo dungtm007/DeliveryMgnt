@@ -28,6 +28,10 @@ public class Box {
 	@Column(name="is_available")
 	private boolean isAvailable;
 
+	Box() {
+		
+	}
+	
 	public Box(PackageSize size, boolean isAvailable, Locker locker) {
 		this.size = size;
 		this.isAvailable = isAvailable;

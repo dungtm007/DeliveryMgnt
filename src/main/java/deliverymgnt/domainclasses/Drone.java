@@ -32,7 +32,6 @@ public class Drone {
 	}
 	
 	public Drone() {
-		// TODO Auto-generated constructor stub
 		
 	}
 

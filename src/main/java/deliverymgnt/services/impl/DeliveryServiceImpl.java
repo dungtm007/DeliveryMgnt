@@ -73,4 +73,9 @@ public class DeliveryServiceImpl implements DeliveryService {
 		return deliveryRepository.findByDeliveryStatus(deliveryStatus);
 	}
 
+	@Override
+	public List<Delivery> findByOrderId(int orderId) {
+		return deliveryRepository.findByOrderId(orderId);
+	}
+
 }

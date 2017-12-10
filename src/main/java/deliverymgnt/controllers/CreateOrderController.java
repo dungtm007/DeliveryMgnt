@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,7 @@ import deliverymgnt.domainclasses.Product;
 import deliverymgnt.services.CustomerService;
 import deliverymgnt.services.OrderService;
 import deliverymgnt.services.ProductService;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -107,6 +110,12 @@ public class CreateOrderController implements Initializable {
 	@FXML
 	private TextField txtZip;
 	
+	@FXML
+	private Label lblShippingWeight;
+	
+	@FXML
+	private Label lblOrderStatus;
+	
 	@Autowired
 	private CustomerService customerService;
 	
@@ -121,6 +130,8 @@ public class CreateOrderController implements Initializable {
 	
 	private Order order;
 	private Customer customer;
+	
+	private Timer timer;
 	
 	@FXML
     private void selectProduct(ActionEvent event) throws IOException {
@@ -177,7 +188,8 @@ public class CreateOrderController implements Initializable {
 			totalPrice += oi.calculatePrice();
 		}
 		
-		lblTotalPrice.setText(String.format("%.2f", totalPrice));
+		lblTotalPrice.setText(String.format("%.2f", order.calculateTotalPrice()));
+		lblShippingWeight.setText(String.format("%.2f", order.calculateTotalShippingWeight()));
 	}
 	
 	@FXML
@@ -189,7 +201,7 @@ public class CreateOrderController implements Initializable {
 		}
 		
 		reviewOrderBeforePlacement();
-		orderService.save(order);
+		order = orderService.save(order);
 		
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.setContentText("Your order is placed successfully!");
@@ -262,6 +274,30 @@ public class CreateOrderController implements Initializable {
 		txtCity.setText(addr.getCity());
 		txtState.setText(addr.getState());
 		txtZip.setText(addr.getZip());
+		
+		// Timer
+		timer = new Timer();
+		timer.scheduleAtFixedRate(new TimerTask() {
+			
+			@Override
+			public void run() {
+				Platform.runLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						if (order != null) {
+							int id = order.getId();
+							if (id > 0) {
+								Order updatedOrder = orderService.find(id);
+								lblOrderStatus.setText(updatedOrder.getOrderStatus().toString());
+							}
+						}
+					}
+				});
+			}
+		}, 0, 1500);
+		
+		
 	}
 	
 	private void setColumnProperties(){
@@ -303,8 +339,8 @@ public class CreateOrderController implements Initializable {
 		int days = rd2days.isSelected() ? 2 : 7;
 		
 		Date od = order.getOrderDate();
-		Date deliveryDate = new Date(od.getYear(), od.getMonth(), od.getDate() + days,
-				od.getHours(), od.getMinutes(), od.getSeconds());
+		Date deliveryDate = new Date(od.getYear(), od.getMonth(), od.getDate(),
+				od.getHours() + days, od.getMinutes(), od.getSeconds());
 		order.setDeliveryDeadline(deliveryDate);
 	}
 	

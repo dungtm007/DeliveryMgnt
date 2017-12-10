@@ -154,7 +154,7 @@ public class PackagingBusiness {
 				type, deliveryMethod, 
 				DeliveryStatus.Entered, 
 				order.getDeliveryAddress(), 
-				distance);
+				distance, distance);
 		
 		// If Drone delivery    : there is only 1 SMALL PACKAGE (5 lbs) for all order items
 		if (deliveryMethod == DeliveryMethod.Drone) {
@@ -182,7 +182,7 @@ public class PackagingBusiness {
 				type, deliveryMethod, 
 				DeliveryStatus.Entered, 
 				order.getDeliveryAddress(), 
-				distance);
+				distance, distance);
 
 		// If Drone delivery    : there is only 1 SMALL PACKAGE (5 lbs) for all order items
 		if (deliveryMethod == DeliveryMethod.Drone) {

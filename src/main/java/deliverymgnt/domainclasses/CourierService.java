@@ -1,6 +1,6 @@
 package deliverymgnt.domainclasses;
 
-public enum DeliveryService {
+public enum CourierService {
 	Normal,
 	Express
 }

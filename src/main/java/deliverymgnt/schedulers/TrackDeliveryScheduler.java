@@ -9,12 +9,16 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import deliverymgnt.domainclasses.Delivery;
+import deliverymgnt.domainclasses.DeliveryMethod;
 import deliverymgnt.domainclasses.DeliveryStatus;
+import deliverymgnt.domainclasses.deliveryhandlers.DeliveryHandler;
+import deliverymgnt.factories.DeliveryHandlerFactory;
+import deliverymgnt.services.DeliveringBusiness;
 import deliverymgnt.services.DeliveryService;
 import deliverymgnt.services.OrderService;
 
 @Component
-public class DeliveryScheduler {
+public class TrackDeliveryScheduler {
 
 private static final Logger log = LoggerFactory.getLogger(ProcessOrderScheduler.class);
     
@@ -24,14 +28,15 @@ private static final Logger log = LoggerFactory.getLogger(ProcessOrderScheduler.
     @Autowired
     private DeliveryService deliveryService;
     
-    @Scheduled(fixedRate = 7000) 
-    public void processDeliveries() {
+    @Scheduled(fixedRate = 9000) 
+    public void updateDeliveryTracking() {
     	
-    	List<Delivery> deliveries = deliveryService.findByDeliveryStatus(DeliveryStatus.Entered);
+    	List<Delivery> deliveries = deliveryService.findByDeliveryStatus(DeliveryStatus.Delivering);
     	for(Delivery d : deliveries) {
     		try {
-				// Call delivery handler to process
-    			
+    			DeliveryMethod method = d.getDeliveryMethod();
+    			DeliveryHandler deliveryHdlr = DeliveryHandlerFactory.GetDeliveryHandler(method);
+    			deliveryHdlr.track(d, deliveryService, orderService);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

@@ -8,4 +8,5 @@ import deliverymgnt.generic.GenericService;
 
 public interface DeliveryService extends GenericService<Delivery> {
 	List<Delivery> findByDeliveryStatus(DeliveryStatus deliveryStatus);
+	List<Delivery> findByOrderId(int orderId);
 }

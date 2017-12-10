@@ -27,13 +27,8 @@ public class Customer {
 	@Column(name="last_name")
 	private String lastName;
 	
-//	@Column(name="address")
-//	private String address;
-	
 	@Embedded
 	private Address address;
-	
-	
 	@OneToMany(mappedBy="customer")
 	private Set<Order> orders;
 

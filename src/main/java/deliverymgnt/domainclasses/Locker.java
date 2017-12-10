@@ -39,6 +39,10 @@ public class Locker {
 	@OneToMany(mappedBy="locker")
 	private Set<Box> boxes;  
 	
+	public Locker() {
+		
+	}
+	
 	public Locker(String address, int numOfLargeBox, int numOfMediumBox, int numOfSmallBox) {
 		this.address = address;
 		// there should be corresponding boxes created

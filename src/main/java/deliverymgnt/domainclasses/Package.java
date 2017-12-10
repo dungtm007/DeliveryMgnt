@@ -44,6 +44,10 @@ public class Package {
 	@JoinColumn(name = "delivery_id")
 	private Delivery delivery;
 	
+	Package() {
+		this.orderItems = new HashSet<>();
+	}
+	
 	public Package(PackageSize size, Order order) {
 		
 		this.size = size;

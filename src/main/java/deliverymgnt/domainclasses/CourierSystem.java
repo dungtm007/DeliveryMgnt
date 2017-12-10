@@ -130,14 +130,14 @@ public final class CourierSystem {
 		distanceZone2Weights.put(11,  10.72);
 		distanceZone2Weights.put(12, 11.06);
 		distanceZone2Weights.put(13, 11.43);
-		distanceZone2Weights.put(14, 11.63 );
+		distanceZone2Weights.put(14, 11.63);
 		distanceZone2Weights.put(15, 11.88);
 		distanceZone2Weights.put(16, 12.11);
 		distanceZone2Weights.put(17, 12.48);
 		distanceZone2Weights.put(18,12.65 );
 		distanceZone2Weights.put(19, 12.92);
-		distanceZone2Weights.put(20, 13.15 );
-		distanceZone2Weights.put(21, 13.67 );
+		distanceZone2Weights.put(20, 13.15);
+		distanceZone2Weights.put(21, 13.67);
 		distanceZone2Weights.put(22, 13.92);
 		distanceZone2Weights.put(23, 14.30);
 		distanceZone2Weights.put(24, 14.63);
@@ -148,9 +148,9 @@ public final class CourierSystem {
 		return expressServiceMappings;
 	}
 	
-	private static Hashtable<Integer, Hashtable<Integer, Double>> getPriceMappings(DeliveryService deliveryService) {
+	private static Hashtable<Integer, Hashtable<Integer, Double>> getPriceMappings(CourierService deliveryService) {
 		
-		if (deliveryService == DeliveryService.Express) 
+		if (deliveryService == CourierService.Express) 
 		{
 			return expressServiceMappings;
 		}
@@ -160,7 +160,7 @@ public final class CourierSystem {
 		}
 	}
 	
-	public static double caculateDeliveryCost(DeliveryService deliveryService, double weight, double distance) {
+	public static double caculateDeliveryCost(CourierService deliveryService, double weight, double distance) {
 		
 		Hashtable<Integer, Hashtable<Integer, Double>> mappings = getPriceMappings(deliveryService);
 		Hashtable<Integer, Double> zone;

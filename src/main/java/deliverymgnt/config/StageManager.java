@@ -2,10 +2,12 @@ package deliverymgnt.config;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
+import java.io.IOException;
 import java.util.Objects;
 
 import org.slf4j.Logger;
 
+import deliverymgnt.controllers.ViewOrderDetailsController;
 import deliverymgnt.views.FxmlView;
 import javafx.application.Platform;
 import javafx.scene.Parent;
@@ -34,9 +36,11 @@ public class StageManager {
 //		show(viewRootNodeHierarchy, view.getTitle());
 //	}
 	
-	public void switchScene(final FxmlView view) {
+	public Object switchScene(final FxmlView view) throws IOException {
 		
-		Parent viewNode = loadViewNodeHierarchy(view.getFxmlFile());
+		//Parent viewNode = loadViewNodeHierarchy(view.getFxmlFile());
+		Object[] viewAndController = loadViewNodeHierarchy(view.getFxmlFile());
+		Parent viewNode = (Parent) viewAndController[0];
 		
 		if (view == FxmlView.LOGIN) {
 			show(viewNode, view.getTitle());
@@ -44,6 +48,7 @@ public class StageManager {
 		else {
 			showContent(viewNode, view.getTitle());
 		}
+		return viewAndController[1];
 	}
 	
 	private void show(final Parent rootNode, String title) {
@@ -64,11 +69,13 @@ public class StageManager {
 	/*
 	 * Change the main content of the root layout scene
 	 * */
-	private void showContent(final Parent contentNode, String title) {
+	private void showContent(final Parent contentNode, String title) throws IOException {
 		
 		// Load root layout (if not loaded)
 		if (rootLayout == null) {
-			rootLayout = (BorderPane)loadViewNodeHierarchy(FxmlView.ROOT_LAYOUT_VIEW.getFxmlFile());
+			//rootLayout = (BorderPane)loadViewNodeHierarchy(FxmlView.ROOT_LAYOUT_VIEW.getFxmlFile());
+			Object[] viewAndController = loadViewNodeHierarchy(FxmlView.ROOT_LAYOUT_VIEW.getFxmlFile());
+			rootLayout = (BorderPane)viewAndController[0];
 		}
 		Scene scene = prepareScene(rootLayout);
 		primaryStage.setScene(scene); // set scene is root layout
@@ -103,17 +110,22 @@ public class StageManager {
      * of that hierarchy.
      *
      * @return Parent root node of the FXML document hierarchy
+	 * @throws IOException 
      */
-	private Parent loadViewNodeHierarchy(String fxmlFilePath) {
-		Parent rootNode = null;
-		try {
-			rootNode = springFXMLLoader.load(fxmlFilePath);
-			Objects.requireNonNull(rootNode, "A Root FXML node must not be null");
-		}
-		catch (Exception exception) {
-			logAndExit("Unable to load FXML view" + fxmlFilePath, exception);
-		}
-		return rootNode;
+	private Object[] loadViewNodeHierarchy(String fxmlFilePath) throws IOException {
+		Parent node = null;
+//		try {			
+			//node = springFXMLLoader.load(fxmlFilePath);
+			Object[] viewAndController = springFXMLLoader.load(fxmlFilePath);
+			node = (Parent)viewAndController[0];
+//		}
+//		catch (Exception exception) {
+//			logAndExit("Unable to load FXML view" + fxmlFilePath, exception);
+//		}
+			
+			
+		//return node;
+		return viewAndController;
 	}
 	
 	private void logAndExit(String errorMsg, Exception exception) {

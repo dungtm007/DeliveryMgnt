@@ -7,96 +7,26 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deliverymgnt.controllers.ManageOrderController">
    <children>
-      <Label layoutX="7.0" layoutY="86.0" text="Customer ID:" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="86.0" />
-      <ChoiceBox layoutX="96.0" layoutY="81.0" prefHeight="27.0" prefWidth="81.0" AnchorPane.leftAnchor="96.0" AnchorPane.topAnchor="81.0" />
-      <Button layoutX="77.0" layoutY="173.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Select">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Button>
-      <TableView layoutX="187.0" layoutY="109.0" prefHeight="435.0" prefWidth="1003.0" AnchorPane.bottomAnchor="56.0" AnchorPane.leftAnchor="187.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="109.0">
+      <TableView fx:id="tableDetails" layoutX="5.0" layoutY="54.0" onMouseClicked="#clickOnTable" prefHeight="534.0" prefWidth="1185.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="54.0">
         <columns>
-          <TableColumn prefWidth="59.0" text="Package" />
-            <TableColumn minWidth="0.0" prefWidth="63.0" text="Size" />
-          <TableColumn minWidth="0.0" prefWidth="152.0" text="Product" />
-            <TableColumn minWidth="0.0" prefWidth="62.0" text="Quantity" />
-            <TableColumn prefWidth="81.0" text="Unit Price" />
-            <TableColumn prefWidth="173.0" text="Courier" />
-            <TableColumn prefWidth="101.0" text="Shipment price" />
-            <TableColumn prefWidth="96.0" text="Arrival Date" />
-            <TableColumn prefWidth="215.0" text="Shipment status" />
+          <TableColumn fx:id="colOrderId" prefWidth="134.0" text="Order Id" />
+            <TableColumn fx:id="colCustomer" minWidth="0.0" prefWidth="187.0" text="Customer" />
+          <TableColumn fx:id="colOrderDate" minWidth="0.0" prefWidth="127.0" text="Order Date" />
+            <TableColumn fx:id="colDeliveryDeadline" minWidth="0.0" prefWidth="135.0" text="Delivery Deadline" />
+            <TableColumn fx:id="colDeliveryType" prefWidth="97.0" text="Delivery Type" />
+            <TableColumn fx:id="colDeliveryAddress" prefWidth="234.0" text="Delivery Address" />
+            <TableColumn fx:id="colTotalPrice" prefWidth="104.0" text="Total Price" />
+            <TableColumn fx:id="colOrderStatus" prefWidth="165.0" text="Order Status" />
         </columns>
       </TableView>
-      <Label layoutX="936.0" layoutY="48.0" prefHeight="17.0" prefWidth="254.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="48.0">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Label>
-      <Label layoutX="825.0" layoutY="551.0" text="Total price:" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="258.0">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Label layoutX="939.0" layoutY="550.0" prefHeight="31.0" prefWidth="248.0" text="\$9999" textAlignment="RIGHT" AnchorPane.bottomAnchor="12.0" AnchorPane.rightAnchor="13.0">
+      <Label alignment="TOP_CENTER" layoutX="471.0" layoutY="14.0" prefHeight="31.0" prefWidth="254.0" snapToPixel="false" text="Order Management" AnchorPane.leftAnchor="471.0" AnchorPane.rightAnchor="475.0" AnchorPane.topAnchor="14.0">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
-      <Label alignment="TOP_CENTER" layoutX="520.0" layoutY="14.0" snapToPixel="false" text="Order" AnchorPane.leftAnchor="520.0" AnchorPane.rightAnchor="519.0" AnchorPane.topAnchor="14.0">
-         <font>
-            <Font size="26.0" />
-         </font>
-      </Label>
-      <Label layoutX="982.0" layoutY="74.0" prefHeight="24.0" prefWidth="186.0" text="mmm-dd-yyyy" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="74.0">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Label>
-      <Label layoutX="982.0" layoutY="48.0" text="Placed date">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Label>
-      <Label layoutX="187.0" layoutY="48.0" text="Destination" AnchorPane.leftAnchor="187.0" AnchorPane.topAnchor="48.0">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Label>
-      <Label layoutX="187.0" layoutY="74.0" prefHeight="24.0" prefWidth="439.0" text="1000 N. 4th St. MR# 185. Fairfield, Iowa 52557" AnchorPane.leftAnchor="187.0" AnchorPane.topAnchor="74.0">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Label>
-      <ChoiceBox layoutX="96.0" layoutY="127.0" prefHeight="27.0" prefWidth="81.0" />
-      <Label layoutX="10.0" layoutY="132.0" text="Order ID:" />
-      <Button layoutX="77.0" layoutY="235.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Edit">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Button>
-      <Label layoutX="10.0" layoutY="14.0" prefHeight="24.0" prefWidth="461.0" text="Confliction and normal notification, in case normal, don't show Edit button" />
-      <Label layoutX="806.0" layoutY="49.0" text="Blocker id">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Label>
-      <Label layoutX="806.0" layoutY="75.0" prefHeight="24.0" prefWidth="90.0" text="999">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Label>
-      <Label layoutX="662.0" layoutY="74.0" prefHeight="24.0" prefWidth="81.0" text="Blocker">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Label>
-      <Label layoutX="662.0" layoutY="48.0" text="Type">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Label>
+      <Label fx:id="lblTest" layoutX="306.0" layoutY="30.0" text="Label" />
    </children>
    <effect>
       <Blend />

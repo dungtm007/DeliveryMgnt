@@ -129,6 +129,10 @@ public class Order {
 	public Set<OrderItem> getOrderItems() {
 		return orderItems;
 	}
+	
+	public double getTotalPrice() {
+		return calculateTotalPrice();
+	}
 
 	@Override
 	public String toString() {

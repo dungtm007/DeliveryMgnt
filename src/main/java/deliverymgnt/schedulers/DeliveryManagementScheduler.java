@@ -19,7 +19,7 @@ import deliverymgnt.domainclasses.deliveryhandlers.DeliveryHandler;
 import deliverymgnt.factories.DeliveryHandlerFactory;
 import deliverymgnt.services.DeliveryService;
 import deliverymgnt.services.OrderService;
-import deliverymgnt.services.PackagingBusiness;
+import deliverymgnt.services.DeliveryBusinessLogic;
 import deliverymgnt.services.WarehouseService;
 
 @Component
@@ -50,7 +50,7 @@ public class DeliveryManagementScheduler {
     	List<Order> orders = orderService.findByOrderStatus(OrderStatus.Entered);
     	for(Order o : orders) {
     		try {
-				PackagingBusiness.processOrder(o, orderService, warehouseService, deliveryService);
+				DeliveryBusinessLogic.processOrder(o, orderService, warehouseService, deliveryService);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

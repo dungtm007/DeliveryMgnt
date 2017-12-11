@@ -21,7 +21,7 @@ import deliverymgnt.domainclasses.PackageSize;
 import deliverymgnt.domainclasses.Warehouse;
 import deliverymgnt.services.impl.GeoComputingServiceImpl;
 
-public class PackagingBusiness {
+public class DeliveryBusinessLogic {
 	
 	// ***********************************************
 	// ** Rules to generate Deliveries and Packages **
@@ -183,9 +183,9 @@ public class PackagingBusiness {
 		order.setOrderStatus(OrderStatus.Packaged);
 	}
 	
-	void Delivering() {} // will be in another scheduling, with DeliveryHandler deliver
+	void selivering() {} // will be in another scheduling, with DeliveryHandler deliver
 	
-	void Tracking() {} // will be in another scheduling, with DeliveryHandler deliver
+	void tracking() {} // will be in another scheduling, with DeliveryHandler deliver
 	
 	// Use for case 1 & 2 (the whole order has only one delivery method)
 	private static Delivery packageForTheSameDeliveryMethod(Order order, DeliveryMethod deliveryMethod, double distance) throws Exception {

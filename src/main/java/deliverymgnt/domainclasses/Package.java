@@ -45,6 +45,9 @@ public class Package {
 	@JoinColumn(name = "delivery_id")
 	private Delivery delivery;
 	
+	@Column(name = "package_status")
+	private PackageStatus packageStatus;
+
 	Package() {
 		this.orderItems = new HashSet<>();
 	}
@@ -101,6 +104,14 @@ public class Package {
 
 	public void setDelivery(Delivery delivery) {
 		this.delivery = delivery;
+	}
+	
+	public PackageStatus getPackageStatus() {
+		return packageStatus;
+	}
+
+	public void setPackageStatus(PackageStatus packageStatus) {
+		this.packageStatus = packageStatus;
 	}
 	
 	public double calculateVolume() {

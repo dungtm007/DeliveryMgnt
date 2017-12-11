@@ -53,7 +53,7 @@ public class Order {
 	@OneToMany(mappedBy="order", fetch=FetchType.EAGER)
 	private Set<OrderItem> orderItems;
 	
-	@OneToMany(mappedBy="order")
+	@OneToMany(mappedBy="order", fetch=FetchType.EAGER)
 	private Set<Delivery> deliveries;
 
 	@Embedded

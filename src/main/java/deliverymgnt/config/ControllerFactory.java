@@ -1,6 +1,6 @@
 package deliverymgnt.config;
 
-import deliverymgnt.controllers.ViewOrderDetailsController;
+import deliverymgnt.controllers.ViewOrderDetailController;
 import deliverymgnt.views.FxmlView;
 
 public class ControllerFactory {
@@ -9,7 +9,7 @@ public class ControllerFactory {
 		
 		
 		if (view == FxmlView.VIEW_ORDER_DETAILS) {
-			ViewOrderDetailsController controller = new ViewOrderDetailsController();
+			ViewOrderDetailController controller = new ViewOrderDetailController();
 			controller.setParams(parameters);
 			return controller;
 		}

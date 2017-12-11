@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import org.slf4j.Logger;
 
-import deliverymgnt.controllers.ViewOrderDetailsController;
+import deliverymgnt.controllers.ViewOrderDetailController;
 import deliverymgnt.domainclasses.UserType;
 import deliverymgnt.views.FxmlView;
 import javafx.application.Platform;
@@ -41,7 +41,7 @@ public class StageManager {
 	public Object switchScene(final FxmlView view) throws IOException {
 		
 		//Parent viewNode = loadViewNodeHierarchy(view.getFxmlFile());
-		Object[] viewAndController = loadViewNodeHierarchy(view.getFxmlFile());
+		Object[] viewAndController = loadViewNode(view.getFxmlFile());
 		Parent viewNode = (Parent) viewAndController[0];
 		
 		if (view == FxmlView.LOGIN) {
@@ -79,10 +79,18 @@ public class StageManager {
 	private void showContent(final Parent contentNode, String title) throws IOException {
 		
 		// Load root layout (if not loaded)
-		if (rootLayout == null) {
-			Object[] viewAndController = loadViewNodeHierarchy(FxmlView.ROOT.getFxmlFile());
-			rootLayout = (BorderPane)viewAndController[0];
-		}
+//		if (userType == UserType.CUSTOMER) {
+//			Object[] viewAndController = loadViewNode(FxmlView.CUSTOMER.getFxmlFile());
+//			rootLayout = (BorderPane)viewAndController[0];
+//		} else if (userType == UserType.MANAGER) {
+//			Object[] viewAndController = loadViewNode(FxmlView.MANAGER.getFxmlFile());
+//			rootLayout = (BorderPane)viewAndController[0];
+//		}
+        if (rootLayout == null) {
+            Object[] viewAndController = loadViewNode(FxmlView.ROOT.getFxmlFile());
+            rootLayout = (BorderPane)viewAndController[0];
+        }
+        
 		Scene scene = prepareScene(rootLayout);
 		primaryStage.setScene(scene); // set scene is root layout
 		
@@ -117,7 +125,7 @@ public class StageManager {
      *
      * @return Parent root node of the FXML document hierarchy
      */
-	private Object[] loadViewNodeHierarchy(String fxmlFilePath) throws IOException {
+	private Object[] loadViewNode(String fxmlFilePath) throws IOException {
 		Parent node = null;
 //		try {			
 			//node = springFXMLLoader.load(fxmlFilePath);

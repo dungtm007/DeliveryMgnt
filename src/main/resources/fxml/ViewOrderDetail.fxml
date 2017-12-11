@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deliverymgnt.controllers.ViewOrderDetailsController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deliverymgnt.controllers.ViewOrderDetailController">
    <children>
       <VBox fx:id="vBoxHeader" prefHeight="745.0" prefWidth="948.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -77,13 +77,13 @@
             </GridPane>
             <ScrollPane prefHeight="602.0" prefWidth="1010.0">
                <content>
-                  <VBox prefHeight="598.0" prefWidth="955.0">
+                  <VBox fx:id="vBoxPkgContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="5000.0" prefWidth="955.0">
                      <children>
-                        <VBox fx:id="vboxPackage01" prefHeight="474.0" prefWidth="955.0">
+                        <VBox fx:id="vBoxPackage01" prefHeight="474.0" prefWidth="955.0">
                            <children>
-                              <HBox prefHeight="96.0" prefWidth="955.0">
+                              <HBox fx:id="hBoxPackageInfo01" prefHeight="100.0" prefWidth="955.0">
                                  <children>
-                                    <Label prefHeight="65.0" prefWidth="257.0" text="Package #1">
+                                    <Label fx:id="lblPackageName01" prefHeight="65.0" prefWidth="257.0" text="Package #1">
                                        <font>
                                           <Font size="30.0" />
                                        </font>
@@ -91,7 +91,7 @@
                                           <Insets bottom="5.0" left="15.0" right="5.0" top="15.0" />
                                        </padding>
                                     </Label>
-                                    <Label prefHeight="85.0" prefWidth="138.0" text="Status:&#10;Delivering" textAlignment="CENTER">
+                                    <Label fx:id="lblPackageStatus01" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="138.0" text="Status:&#10;Delivering" textAlignment="CENTER">
                                        <font>
                                           <Font size="22.0" />
                                        </font>
@@ -102,7 +102,7 @@
                                           <Insets left="200.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <Label prefHeight="85.0" prefWidth="277.0" text="Estimated Arrival:&#10;Dec 23, 2017, 03:00 PM" textAlignment="CENTER">
+                                    <Label fx:id="lblPackageEA01" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="277.0" text="Estimated Arrival:&#10;Dec 23, 2017, 03:00 PM" textAlignment="CENTER">
                                        <font>
                                           <Font size="22.0" />
                                        </font>
@@ -115,30 +115,30 @@
                                     </Label>
                                  </children>
                               </HBox>
-                              <VBox prefHeight="10.0" prefWidth="955.0">
+                              <VBox fx:id="vBoxPackageDelivery01" prefHeight="10.0" prefWidth="955.0">
                                  <children>
-                                    <Label prefHeight="20.0" prefWidth="957.0" text="Package will be delivered to Locker #476">
+                                    <Label fx:id="lblPackageAddress01" prefHeight="20.0" prefWidth="957.0" text="Package will be delivered to Locker #476">
                                        <padding>
                                           <Insets bottom="2.0" left="25.0" right="2.0" top="2.0" />
                                        </padding>
                                     </Label>
-                                    <Label prefHeight="20.0" prefWidth="957.0" text="Delivery is handled by courier system FedEx (Tracking No: #69329832)">
+                                    <Label fx:id="lblPackageDeliveryMethod01" prefHeight="20.0" prefWidth="957.0" text="Delivery is handled by courier system FedEx (Tracking No: #69329832)">
                                        <padding>
                                           <Insets bottom="2.0" left="25.0" right="2.0" top="2.0" />
                                        </padding>
                                     </Label>
                                  </children>
                               </VBox>
-                              <VBox prefHeight="298.0" prefWidth="955.0">
+                              <VBox fx:id="vBoxPackageProducts01" prefHeight="298.0" prefWidth="955.0">
                                  <children>
-                                    <HBox prefHeight="100.0" prefWidth="200.0">
+                                    <HBox fx:id="hBoxProduct0101" prefHeight="100.0" prefWidth="200.0">
                                        <children>
-                                          <ImageView fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView fx:id="imageProduct0101" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
                                              <HBox.margin>
                                                 <Insets bottom="10.0" left="60.0" top="10.0" />
                                              </HBox.margin>
                                           </ImageView>
-                                          <Label prefHeight="20.0" prefWidth="957.0" text="Product Name Kull Candy">
+                                          <Label fx:id="lblProductName0101" prefHeight="20.0" prefWidth="957.0" text="Product Name Kull Candy">
                                              <padding>
                                                 <Insets bottom="2.0" left="25.0" right="2.0" top="2.0" />
                                              </padding>

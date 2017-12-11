@@ -2,6 +2,7 @@ package deliverymgnt.domainclasses;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,7 +26,7 @@ public class OrderItem {
 	@JoinColumn(name="order_id")
 	private Order order;
 	
-	@OneToOne
+	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="product_id")
 	private Product product;
 	

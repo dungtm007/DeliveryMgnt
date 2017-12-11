@@ -86,7 +86,7 @@ public enum FxmlView {
 
 		@Override
 		public String getFxmlFile() {
-			return "/fxml/ViewOrderDetails.fxml";
+			return "/fxml/ViewOrderDetail.fxml";
 		}
     },
     DELIVERY_COST_REPORT {

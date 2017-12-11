@@ -101,6 +101,30 @@ public enum FxmlView {
 			return "/fxml/DeliveryCostReport.fxml";
 		}
     },
+    MANAGE_DRONE {
+    	
+    	@Override
+		public String getTitle() {
+			return getStringFromResourceBundle("manage_drone.title");
+		}
+
+		@Override
+		public String getFxmlFile() {
+			return "/fxml/DroneLayoutManager.fxml";
+		}
+    },
+    MANAGE_LOCKER {
+    	
+    	@Override
+		public String getTitle() {
+			return getStringFromResourceBundle("manage_locker.title");
+		}
+
+		@Override
+		public String getFxmlFile() {
+			return "/fxml/LockerLayoutManager.fxml";
+		}
+    },
     ROOT {
     	
     	@Override

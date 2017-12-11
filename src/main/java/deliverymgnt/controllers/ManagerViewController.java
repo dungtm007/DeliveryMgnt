@@ -47,12 +47,22 @@ public class ManagerViewController implements Initializable {
 
     @FXML
     void showManageLocker(ActionEvent event) {
-
+    		try {
+			stageManager.switchScene(FxmlView.MANAGE_LOCKER);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
     }
 
     @FXML
     void showManageDrone(ActionEvent event) {
-
+    		try {
+			stageManager.switchScene(FxmlView.MANAGE_DRONE);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
     }
 
     @FXML

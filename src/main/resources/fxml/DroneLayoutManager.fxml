@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
@@ -7,34 +8,72 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="723.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="821.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deliverymgnt.controllers.ManageDroneController">
    <children>
-      <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="149.0" text="Add Drone" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="60.0">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Button>
-      <TableView layoutX="190.0" layoutY="59.0" prefHeight="529.0" prefWidth="518.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="190.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="59.0">
-        <columns>
-          <TableColumn prefWidth="59.0" text="ID" />
-            <TableColumn minWidth="0.0" prefWidth="63.0" text="Type" />
-            <TableColumn minWidth="0.0" prefWidth="113.0" text="Status" />
-            <TableColumn minWidth="0.0" prefWidth="133.0" text="From date" />
-            <TableColumn minWidth="0.0" prefWidth="154.0" text="To date" />
-        </columns>
-      </TableView>
-      <Label alignment="TOP_CENTER" layoutX="323.0" layoutY="14.0" snapToPixel="false" text="Drone" AnchorPane.leftAnchor="323.0" AnchorPane.rightAnchor="325.0" AnchorPane.topAnchor="14.0">
-         <font>
-            <Font size="26.0" />
-         </font>
-      </Label>
-      <ChoiceBox layoutX="96.0" layoutY="127.0" prefHeight="27.0" prefWidth="81.0" AnchorPane.leftAnchor="96.0" AnchorPane.topAnchor="127.0" />
-      <Label layoutX="10.0" layoutY="132.0" text="Drone ID:" />
-      <Button layoutX="28.0" layoutY="177.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="149.0" text="Delete Drone" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="177.0">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Button>
+      <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label alignment="TOP_CENTER" prefHeight="84.0" prefWidth="1100.0" snapToPixel="false" text="Drone Management">
+               <font>
+                  <Font size="37.0" />
+               </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="5.0" left="15.0" right="5.0" top="15.0" />
+               </padding>
+            </Label>
+            <TableView fx:id="tableDrone" prefHeight="614.0" prefWidth="1100.0">
+              <columns>
+                <TableColumn fx:id="colId" text="ID" />
+                  <TableColumn fx:id="colName" minWidth="0.0" prefWidth="292.0" text="Name" />
+                  <TableColumn fx:id="colModel" minWidth="0.0" prefWidth="381.0" text="Model" />
+                  <TableColumn fx:id="colStatus" minWidth="0.0" prefWidth="346.0" text="Availability" />
+              </columns>
+            </TableView>
+            <HBox prefHeight="41.0" prefWidth="1042.0" spacing="20.0">
+               <children>
+                  <Label text="New Drone Name:">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="lblNewDroneName" />
+                  <Label text="New Drone Model:">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="lblNewDroneModel" />
+                  <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#showAddWindow" prefHeight="40.0" prefWidth="149.0" text="Add Drone">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets left="150.0" top="15.0" />
+               </padding>
+            </HBox>
+            <HBox prefHeight="46.0" prefWidth="1100.0" spacing="750.0">
+               <children>
+                  <Button fx:id="btnBack" mnemonicParsing="false" onAction="#back2DashBoard" text="&lt; Dashboard">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#showDeleteConfirm" prefHeight="35.0" prefWidth="149.0" text="Delete Drone">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
    </children>
    <effect>
       <Blend />

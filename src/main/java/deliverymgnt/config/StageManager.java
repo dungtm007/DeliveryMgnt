@@ -79,11 +79,8 @@ public class StageManager {
 	private void showContent(final Parent contentNode, String title) throws IOException {
 		
 		// Load root layout (if not loaded)
-		if (userType == UserType.CUSTOMER) {
-			Object[] viewAndController = loadViewNodeHierarchy(FxmlView.CUSTOMER.getFxmlFile());
-			rootLayout = (BorderPane)viewAndController[0];
-		} else if (userType == UserType.MANAGER) {
-			Object[] viewAndController = loadViewNodeHierarchy(FxmlView.MANAGER.getFxmlFile());
+		if (rootLayout == null) {
+			Object[] viewAndController = loadViewNodeHierarchy(FxmlView.ROOT.getFxmlFile());
 			rootLayout = (BorderPane)viewAndController[0];
 		}
 		Scene scene = prepareScene(rootLayout);

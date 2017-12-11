@@ -5,14 +5,4 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="950.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <top>
-      <MenuButton mnemonicParsing="false" text="Menu" BorderPane.alignment="TOP_LEFT">
-        <items>
-          <MenuItem mnemonicParsing="false" text="Create order" />
-          <MenuItem mnemonicParsing="false" text="Track order" />
-          <MenuItem mnemonicParsing="false" text="Orders list" />
-        </items>
-      </MenuButton>
-   </top>
-</BorderPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="950.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />

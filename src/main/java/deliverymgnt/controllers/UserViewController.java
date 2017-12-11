@@ -18,65 +18,44 @@ import deliverymgnt.views.FxmlView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 
 @Controller
 public class UserViewController implements Initializable {
-	private List<String> menu = Arrays.asList("Create order", "Order list", "Log out");
     @FXML
-    private MenuButton btnMenu;
+    private Button btnPlaceOrder;
+
+    @FXML
+    private Button btnViewOrders;
     
     @Lazy
     @Autowired
     private StageManager stageManager;
 
+    @FXML
+    void showPlacedOrder(ActionEvent event) {
+    		try {
+			stageManager.switchScene(FxmlView.CREATE_ORDER);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+
+    @FXML
+    void showViewOrders(ActionEvent event) {
+     	try {
+			stageManager.switchScene(FxmlView.VIEW_ORDER);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+    }
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-		List<MenuItem> menuList = new ArrayList<MenuItem>();
-		for(String i : menu) {
-			menuList.add(new MenuItem(i));
-			btnMenu.getItems().add(menuList.get(menu.indexOf(i)));
-		}
-		// Item 0
-		menuList.get(0).setOnAction(new EventHandler<ActionEvent>() {
-		    @Override
-		    public void handle(ActionEvent event) {
-		    		try {
-						stageManager.switchScene(FxmlView.CREATE_ORDER);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} 
-		    }
-		});
-		
-		// Item 1
-		menuList.get(1).setOnAction(new EventHandler<ActionEvent>() {
-		    @Override
-		    public void handle(ActionEvent event) {
-		    	try {
-					stageManager.switchScene(FxmlView.VIEW_ORDER);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} 
-		    }
-		});
-		
-		// Item 2
-		menuList.get(2).setOnAction(new EventHandler<ActionEvent>() {
-		    @Override
-		    public void handle(ActionEvent event) {
-		    		try {
-						stageManager.switchScene(FxmlView.LOGIN);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} 
-		    }
-		});
 		
 	}
 }

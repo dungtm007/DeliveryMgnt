@@ -56,14 +56,18 @@ public class LoginController implements Initializable {
     		if(user == null || pass == null) {
     			lblLogin.setText("Login Failed.");
     		} else {
-    			UserType type = userService.authenticate(getUsername(), getPassword());
-	    	    	if( type == UserType.CUSTOMER){    		    		
-	    	   		stageManager.switchScene(FxmlView.CREATE_ORDER); 		
-	    	    	}else if(type == UserType.MANAGER) {
-	    	    		stageManager.switchScene(FxmlView.MANAGE_ORDER); 
-	    	    	}else{
-	    	    		lblLogin.setText("Login Failed.");
-	    	    	}
+//    			try {
+					UserType type = userService.authenticate(getUsername(), getPassword());
+					if( type == UserType.CUSTOMER){    		    		
+						stageManager.switchScene(FxmlView.CUSTOMER); 		
+					}else if(type == UserType.MANAGER) {
+						stageManager.switchScene(FxmlView.MANAGER); 
+					}else{
+						lblLogin.setText("Login Failed.");
+					}
+//				} catch (Exception e) {
+//					lblLogin.setText("Login Failed.");
+//				}
     		}
     	
 //    	String result = "";

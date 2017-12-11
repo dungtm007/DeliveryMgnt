@@ -4,9 +4,6 @@ import javafx.fxml.Initializable;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,76 +13,60 @@ import org.springframework.stereotype.Controller;
 import deliverymgnt.config.StageManager;
 import deliverymgnt.views.FxmlView;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.Button;
 
 @Controller
 public class ManagerViewController implements Initializable {
-	private List<String> menu = Arrays.asList("Order Management", "Delivery Cost Report", "Log out");
+
     @FXML
-    private MenuButton btnMenu;
+    private Button btnManageOrder;
+
+    @FXML
+    private Button btnCostReport;
+
+    @FXML
+    private Button btnManageDrone;
+
+    @FXML
+    private Button btnManageLocker;
     
     @Lazy
     @Autowired
     private StageManager stageManager;
 
+    @FXML
+    void showManageOrder(ActionEvent event) {
+    		try {
+			stageManager.switchScene(FxmlView.MANAGE_ORDER);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+
+    @FXML
+    void showManageLocker(ActionEvent event) {
+
+    }
+
+    @FXML
+    void showManageDrone(ActionEvent event) {
+
+    }
+
+    @FXML
+    void showCostReport(ActionEvent event) {
+    		try {
+			stageManager.switchScene(FxmlView.DELIVERY_COST_REPORT);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+    }
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-		List<MenuItem> menuList = new ArrayList<MenuItem>();
-		for(String i : menu) {
-			menuList.add(new MenuItem(i));
-			btnMenu.getItems().add(menuList.get(menu.indexOf(i)));
-		}
-		// Item 0
-		menuList.get(0).setOnAction(new EventHandler<ActionEvent>() {
-		    @Override
-		    public void handle(ActionEvent event) {
-		    		try {
-						stageManager.switchScene(FxmlView.MANAGE_ORDER);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} 
-		    }
-		});
-		
-		// Item 1
-		menuList.get(1).setOnAction(new EventHandler<ActionEvent>() {
-		    @Override
-		    public void handle(ActionEvent event) {
-		    		try {
-						stageManager.switchScene(FxmlView.DELIVERY_COST_REPORT);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} 
-		    }
-		});
-		
-		// Item 2
-		menuList.get(2).setOnAction(new EventHandler<ActionEvent>() {
-		    @Override
-		    public void handle(ActionEvent event) {
-		    		try {
-						stageManager.switchScene(FxmlView.LOGIN);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} 
-		    }
-		});
-		
-//		
-//		// Item 2
-//		menuList.get(1).setOnAction(new EventHandler<ActionEvent>() {
-//		    @Override
-//		    public void handle(ActionEvent event) {
-//		    		stageManager.switchScene(FxmlView.VIEW_ORDER); 
-//		    }
-//		});
-		
+	
 	}
 }

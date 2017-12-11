@@ -100,6 +100,18 @@ public enum FxmlView {
 		public String getFxmlFile() {
 			return "/fxml/DeliveryCostReport.fxml";
 		}
+    },
+    ROOT {
+    	
+    	@Override
+		public String getTitle() {
+			return getStringFromResourceBundle("root.title");
+		}
+
+		@Override
+		public String getFxmlFile() {
+			return "/fxml/RootLayout.fxml";
+		}
     }
 	;
 	

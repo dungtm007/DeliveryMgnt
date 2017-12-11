@@ -84,9 +84,7 @@ public class ManageDroneController implements Initializable {
 	
     @Override
 	public void initialize(URL location, ResourceBundle resources) {
-    		droneList.clear();
-    		droneList.addAll(droneService.findAll());
-    		tableDrone.setItems(droneList);
+    		loadToView();
 		
 		// Add data properties to table
 		colId.setCellValueFactory(new PropertyValueFactory<Drone, Integer>("id"));
@@ -115,25 +113,27 @@ public class ManageDroneController implements Initializable {
     }
 
     @FXML
-    void showAddWindow(ActionEvent event) {
+    void createDrone(ActionEvent event) {
     		String name = lblNewDroneName.getText();
     		String model = lblNewDroneModel.getText();
     		if(name != null &&  model != null) {
     			Drone a = new Drone(name, model, true);
     			if(droneService.save(a) != null) {
-    				droneList.clear();
-	    	    		droneList.addAll(droneService.findAll());
-	    	    		tableDrone.setItems(droneList);
+    				loadToView();
     			}
     		}
     }
 
     @FXML
-    void showDeleteConfirm(ActionEvent event) {
+    void deleteDrone(ActionEvent event) {
     		Drone a = tableDrone.getSelectionModel().getSelectedItem();
     		droneService.delete(a);
+    		loadToView();
+    }
+    
+    void loadToView() {
     		droneList.clear();
-    		droneList.addAll(droneService.findAll());
-    		tableDrone.setItems(droneList);
+		droneList.addAll(droneService.findAll());
+		tableDrone.setItems(droneList);
     }
 }

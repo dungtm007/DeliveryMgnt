@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
@@ -7,26 +8,48 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deliverymgnt.controllers.ManageOrderController">
+<AnchorPane prefHeight="821.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deliverymgnt.controllers.ManageOrderController">
    <children>
-      <TableView fx:id="tableDetails" layoutX="5.0" layoutY="54.0" onMouseClicked="#clickOnTable" prefHeight="534.0" prefWidth="1185.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="54.0">
-        <columns>
-          <TableColumn fx:id="colOrderId" prefWidth="134.0" text="Order Id" />
-            <TableColumn fx:id="colCustomer" minWidth="0.0" prefWidth="187.0" text="Customer" />
-          <TableColumn fx:id="colOrderDate" minWidth="0.0" prefWidth="127.0" text="Order Date" />
-            <TableColumn fx:id="colDeliveryDeadline" minWidth="0.0" prefWidth="135.0" text="Delivery Deadline" />
-            <TableColumn fx:id="colDeliveryType" prefWidth="97.0" text="Delivery Type" />
-            <TableColumn fx:id="colDeliveryAddress" prefWidth="234.0" text="Delivery Address" />
-            <TableColumn fx:id="colTotalPrice" prefWidth="104.0" text="Total Price" />
-            <TableColumn fx:id="colOrderStatus" prefWidth="165.0" text="Order Status" />
-        </columns>
-      </TableView>
-      <Label alignment="TOP_CENTER" layoutX="471.0" layoutY="14.0" prefHeight="31.0" prefWidth="254.0" snapToPixel="false" text="Order Management" AnchorPane.leftAnchor="471.0" AnchorPane.rightAnchor="475.0" AnchorPane.topAnchor="14.0">
-         <font>
-            <Font size="26.0" />
-         </font>
-      </Label>
-      <Label fx:id="lblTest" layoutX="306.0" layoutY="30.0" text="Label" />
+      <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label alignment="TOP_CENTER" prefHeight="84.0" prefWidth="1100.0" snapToPixel="false" text="Order Management">
+               <font>
+                  <Font size="37.0" />
+               </font>
+               <padding>
+                  <Insets bottom="5.0" left="15.0" right="5.0" top="15.0" />
+               </padding>
+            </Label>
+            <TableView fx:id="tableDetails" onMouseClicked="#clickOnTable" prefHeight="596.0" prefWidth="1100.0">
+              <columns>
+                <TableColumn fx:id="colOrderId" prefWidth="94.0" text="Order Id" />
+                  <TableColumn fx:id="colCustomer" minWidth="0.0" prefWidth="129.0" text="Customer" />
+                <TableColumn fx:id="colOrderDate" minWidth="0.0" prefWidth="142.0" text="Order Date" />
+                  <TableColumn fx:id="colDeliveryDeadline" minWidth="0.0" prefWidth="169.0" text="Delivery Deadline" />
+                  <TableColumn fx:id="colDeliveryType" prefWidth="104.0" text="Delivery Type" />
+                  <TableColumn fx:id="colDeliveryAddress" prefWidth="247.0" text="Delivery Address" />
+                  <TableColumn fx:id="colTotalPrice" prefWidth="99.0" text="Total Price" />
+                  <TableColumn fx:id="colOrderStatus" prefWidth="114.0" text="Order Status" />
+              </columns>
+            </TableView>
+            <Button fx:id="btnSelect" mnemonicParsing="false" onAction="#viewOrderDetail" text="Select">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="918.0" top="19.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="btnDashboard" mnemonicParsing="false" onAction="#backToDashboard" text="Dashboard">
+               <VBox.margin>
+                  <Insets left="917.0" top="28.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
    </children>
    <effect>
       <Blend />

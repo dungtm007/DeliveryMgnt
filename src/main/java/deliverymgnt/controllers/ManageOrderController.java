@@ -1,5 +1,6 @@
 package deliverymgnt.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,8 +8,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 
+import deliverymgnt.config.StageManager;
 import deliverymgnt.domainclasses.Address;
 import deliverymgnt.domainclasses.Customer;
 import deliverymgnt.domainclasses.DeliveryType;
@@ -17,6 +20,7 @@ import deliverymgnt.domainclasses.OrderItem;
 import deliverymgnt.domainclasses.OrderStatus;
 import deliverymgnt.services.CustomerService;
 import deliverymgnt.services.OrderService;
+import deliverymgnt.views.FxmlView;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -39,8 +43,11 @@ public class ManageOrderController implements Initializable {
 	@FXML
     private TableView<Order> tableDetails;	
 
+	@FXML
+    private Button btnSelect;
+
     @FXML
-    private Label lblTest;
+    private Button btnDashboard;
     
     @FXML
     private TableColumn<Order, DeliveryType> colDeliveryType;
@@ -72,6 +79,10 @@ public class ManageOrderController implements Initializable {
 	@Autowired
 	private CustomerService customerService;
 	
+	@Lazy
+    @Autowired
+    private StageManager stageManager;
+	
     private List<Customer> listCustomer;
     private Customer selectedCustomer;
     private Order selectedOrder;
@@ -102,19 +113,34 @@ public class ManageOrderController implements Initializable {
 		    @Override 
 		    public void handle(MouseEvent event) {
 		        if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-		            lblTest.setText(String.valueOf(tableDetails.getSelectionModel().getSelectedItem().getId()));                   
+		        		showOrderDetail(tableDetails.getSelectionModel().getSelectedItem());
 		        }
 		    }
 		});
 	}
     
     @FXML
-    void clickOnTable(ActionEvent event) {
-
+    void viewOrderDetail(ActionEvent event) {
+    		showOrderDetail(tableDetails.getSelectionModel().getSelectedItem());
     }
 
     @FXML
-    void editOrder(ActionEvent event) {
-
+    void backToDashboard(ActionEvent event) {
+    	try {
+			stageManager.switchScene(FxmlView.MANAGER);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+    }
+    
+    void showOrderDetail(Order order) {
+    		// TODO: Switch screen to view order detail with order id
+    	try {
+			stageManager.switchScene(FxmlView.VIEW_ORDER_DETAILS);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
     }
 }

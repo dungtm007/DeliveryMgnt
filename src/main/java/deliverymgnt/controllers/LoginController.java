@@ -11,7 +11,9 @@ import org.springframework.stereotype.Controller;
 import deliverymgnt.views.FxmlView;
 import deliverymgnt.config.StageManager;
 import deliverymgnt.domainclasses.Customer;
+import deliverymgnt.domainclasses.UserType;
 import deliverymgnt.services.CustomerService;
+import deliverymgnt.services.UserService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -40,29 +42,43 @@ public class LoginController implements Initializable {
     @Autowired
     private CustomerService customerService;
     
+    @Autowired
+    private UserService userService;
+    
     @Lazy
     @Autowired
     private StageManager stageManager;
     
     @FXML
     private void login(ActionEvent event) throws IOException{
-//    	if(userService.authenticate(getUsername(), getPassword())){
-//    		    		
-//   		stageManager.switchScene(FxmlView.USER);
-//    		
-//    	}else{
-//    		lblLogin.setText("Login Failed.");
-//    	}
+    		String user = getUsername();
+    		String pass = getPassword();
+    		if(user == null || pass == null) {
+    			lblLogin.setText("Login Failed.");
+    		} else {
+    			UserType type = userService.authenticate(getUsername(), getPassword());
+	    	    	if( type == UserType.CUSTOMER){    		    		
+	    	   		stageManager.switchScene(FxmlView.CREATE_ORDER); 		
+	    	    	}else if(type == UserType.MANAGER) {
+	    	    		stageManager.switchScene(FxmlView.MANAGE_ORDER); 
+	    	    	}else{
+	    	    		lblLogin.setText("Login Failed.");
+	    	    	}
+    		}
     	
-    	// switch to Trung's scene
-    	//stageManager.switchScene(FxmlView.CREATE_ORDER);
-    	
-//    	Object ctl = stageManager.switchScene(FxmlView.VIEW_ORDER_DETAILS);
-//    	ViewOrderDetailsController vodController = (ViewOrderDetailsController)ctl;
-//    	vodController.setOrderId(20);
-    	
-    	stageManager.switchScene(FxmlView.DELIVERY_COST_REPORT);
-    	
+//    	String result = "";
+//		
+//		for(Customer cust : customerService.findAll()){
+//			result += cust.toString() + "<br>";
+//		}
+//		
+//		//System.out.println("Hello " + (username != null ? username : "World") + "!");
+//		System.out.println(result);
+//    	
+//		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//		alert.setContentText("123");
+//		alert.show();
+    		//stageManager.switchScene(FxmlView.DELIVERY_COST_REPORT);
     }
     
     public String getPassword() {

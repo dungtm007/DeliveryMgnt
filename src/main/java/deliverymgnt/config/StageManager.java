@@ -8,6 +8,7 @@ import java.util.Objects;
 import org.slf4j.Logger;
 
 import deliverymgnt.controllers.ViewOrderDetailsController;
+import deliverymgnt.domainclasses.UserType;
 import deliverymgnt.views.FxmlView;
 import javafx.application.Platform;
 import javafx.scene.Parent;
@@ -25,6 +26,7 @@ public class StageManager {
 	private final Stage primaryStage;
 	private final SpringFXMLLoader springFXMLLoader;
 	private BorderPane rootLayout;
+	private UserType userType;
 	
 	public StageManager(SpringFXMLLoader springFXMLLoader, Stage stage) {
 		this.springFXMLLoader = springFXMLLoader;
@@ -45,7 +47,12 @@ public class StageManager {
 		if (view == FxmlView.LOGIN) {
 			show(viewNode, view.getTitle());
 		}
+		else if(view == FxmlView.CREATE_ORDER || view == FxmlView.VIEW_ORDER) {
+			userType = UserType.CUSTOMER;
+			showContent(viewNode, view.getTitle());
+		}
 		else {
+			userType = UserType.MANAGER;
 			showContent(viewNode, view.getTitle());
 		}
 		return viewAndController[1];
@@ -72,9 +79,11 @@ public class StageManager {
 	private void showContent(final Parent contentNode, String title) throws IOException {
 		
 		// Load root layout (if not loaded)
-		if (rootLayout == null) {
-			//rootLayout = (BorderPane)loadViewNodeHierarchy(FxmlView.ROOT_LAYOUT_VIEW.getFxmlFile());
-			Object[] viewAndController = loadViewNodeHierarchy(FxmlView.ROOT_LAYOUT_VIEW.getFxmlFile());
+		if (userType == UserType.CUSTOMER) {
+			Object[] viewAndController = loadViewNodeHierarchy(FxmlView.CUSTOMER.getFxmlFile());
+			rootLayout = (BorderPane)viewAndController[0];
+		} else if (userType == UserType.MANAGER) {
+			Object[] viewAndController = loadViewNodeHierarchy(FxmlView.MANAGER.getFxmlFile());
 			rootLayout = (BorderPane)viewAndController[0];
 		}
 		Scene scene = prepareScene(rootLayout);
@@ -110,7 +119,6 @@ public class StageManager {
      * of that hierarchy.
      *
      * @return Parent root node of the FXML document hierarchy
-	 * @throws IOException 
      */
 	private Object[] loadViewNodeHierarchy(String fxmlFilePath) throws IOException {
 		Parent node = null;

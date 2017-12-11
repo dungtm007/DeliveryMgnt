@@ -4,16 +4,27 @@ import java.util.ResourceBundle;
 
 public enum FxmlView {
 	
-	USER {
+	CUSTOMER {
 
 		@Override
 		public String getTitle() {
-			return getStringFromResourceBundle("user.title");
+			return getStringFromResourceBundle("customer.title");
 		}
 
 		@Override
 		public String getFxmlFile() {
-			return "/fxml/User.fxml";
+			return "/fxml/CustomerLayout.fxml";
+		}
+	},
+	MANAGER {
+		@Override
+		public String getTitle() {
+			return getStringFromResourceBundle("manager.title");
+		}
+
+		@Override
+		public String getFxmlFile() {
+			return "/fxml/ManagerLayout.fxml";
 		}
 	},
 	LOGIN {
@@ -65,17 +76,6 @@ public enum FxmlView {
 			return "/fxml/OrderLayoutManager.fxml";
 		}
     		
-    },
-    ROOT_LAYOUT_VIEW {
-    	@Override
-		public String getTitle() {
-			return "Root Layout";
-		}
-
-		@Override
-		public String getFxmlFile() {
-			return "/fxml/RootLayout.fxml";
-		}
     },
     VIEW_ORDER_DETAILS {
     	

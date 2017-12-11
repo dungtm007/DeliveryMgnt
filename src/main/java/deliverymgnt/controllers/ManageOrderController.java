@@ -84,6 +84,7 @@ public class ManageOrderController implements Initializable {
 	
     @Override
 	public void initialize(URL location, ResourceBundle resources) {
+    		orderList.clear();
     		orderList.addAll(orderService.findAll());
 		tableDetails.setItems(orderList);
 		

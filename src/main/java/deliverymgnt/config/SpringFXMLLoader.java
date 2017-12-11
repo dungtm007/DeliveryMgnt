@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import deliverymgnt.controllers.ViewOrderDetailsController;
+import deliverymgnt.controllers.ViewOrderDetailController;
 import javafx.scene.Parent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;

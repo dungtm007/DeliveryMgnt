@@ -144,7 +144,6 @@ public class CreateOrderController implements Initializable {
 		alert.show();
 	}
 	
-	
 	@FXML
 	private void addOrUpdateOrderItemToTable(ActionEvent event) throws IOException {
 
@@ -173,26 +172,16 @@ public class CreateOrderController implements Initializable {
 			if (found != null) {
 				orderItemsList.remove(found);
 				order.getOrderItems().remove(found);
-				//orderItemsList.add(found);
 			}
-			
 		}
-		
-		//else {
-			OrderItem oi = new OrderItem(selProduct, Integer.parseInt(txtAmount.getText()), Double.parseDouble(txtUnitPrice.getText()), order);
-			orderItemsList.add(oi);	
-		//}
-		
+
+		OrderItem oi = new OrderItem(selProduct, Integer.parseInt(txtAmount.getText()), Double.parseDouble(txtUnitPrice.getText()), order);
+		orderItemsList.add(oi);	
 		
 		updateTotalPriceDisplay();
 	}
 	
 	private void updateTotalPriceDisplay() {
-		
-//		double totalPrice = 0.0;
-//		for(OrderItem oi : orderItemsList) {
-//			totalPrice += oi.calculatePrice();
-//		}
 		
 		lblTotalPrice.setText(String.format("%.2f", order.calculateTotalPrice()));
 		lblShippingWeight.setText(String.format("%.2f", order.calculateTotalShippingWeight()));
@@ -281,12 +270,6 @@ public class CreateOrderController implements Initializable {
 		// Temporary get customer
 		customer = customerService.find(1);
 		
-//		Address addr = customer.getAddress();
-//		txtAddress.setText(addr.getAddress());
-//		txtCity.setText(addr.getCity());
-//		txtState.setText(addr.getState());
-//		txtZip.setText(addr.getZip());
-		
 		// Timer
 		timer = new Timer();
 		timer.scheduleAtFixedRate(new TimerTask() {
@@ -318,30 +301,10 @@ public class CreateOrderController implements Initializable {
 		colPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
 	}
 	
-	@FXML
-	private void selectDeliveryDeadline (ActionEvent event) throws IOException {
-		
-//		if (rd2days.isSelected()) {
-//			order.setDeliveryDeadline(LocalDateTime.now().plusDays(2));
-//		}
-//		else if (rd5to7days.isSelected()) {
-//			order.setDeliveryDeadline(LocalDateTime.now().plusDays(7));
-//		}
-//		
-//		System.out.println("Delivery deadline: " + order.getDeliveryDeadline().toString());
-	}
 	
 	@FXML
 	private void selectDeliveryOption (ActionEvent event) throws IOException {
-		
-//		if (rdHome.isSelected()) {
-//			order.setDeliveryOption(DeliveryOption.HomeDelivery);
-//		}
-//		else if (rd5to7days.isSelected()) {
-//			order.setDeliveryOption(DeliveryOption.LockerPickupDelivery);
-//		}
-//		
-//		System.out.println("Delivery option: " + order.getDeliveryOption().toString());
+		// [UPD]
 	}
 	
 	@FXML

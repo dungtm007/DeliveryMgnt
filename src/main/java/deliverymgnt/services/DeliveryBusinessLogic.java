@@ -53,23 +53,21 @@ public class DeliveryBusinessLogic {
 		// Switch order to Processing
 		order.setOrderStatus(OrderStatus.Processing);
 		
-		collecting(order, warehouseService);
-		
+		double distance = findWarehouse(order, warehouseService);
 		DeliveryType type = order.getDeliveryType();
-		double distance = 28.5;
 		double shippingWeight = order.calculateTotalShippingWeight();
 		
 		System.out.println(" >>>>> delivery type: " + type);
 		System.out.println(" >>>>> distance: " + distance);
 		System.out.println(" >>>>> shipping weight: " + shippingWeight);
 		
-		packaging(order, type, shippingWeight, distance, deliveryService);
+		pack(order, type, shippingWeight, distance, deliveryService);
 		
 		orderService.save(order);
 		System.out.println(" >>>>> Process order " + order.getId() +  " successfully!");		
 	}
 	
-	private static void collecting(Order order, WarehouseService warehouseService) {
+	private static double findWarehouse(Order order, WarehouseService warehouseService) {
 		
 		// (UPD) Run a logic to detect the warehouse to collect all products
 		// (UPD) Call Google Map service to calculate distance from that warehouse to delivery address
@@ -105,10 +103,13 @@ public class DeliveryBusinessLogic {
 	
 		if (warehouse != null) {
 			order.setWarehouse(warehouse);
+			return nearestDist;
 		}
+		
+		return -1;
 	}
 	
-	private static void packaging(Order order, DeliveryType type, 
+	private static void pack(Order order, DeliveryType type, 
 			double shippingWeight, double distance, 
 			DeliveryService deliveryService) throws Exception { 
 		
@@ -121,7 +122,7 @@ public class DeliveryBusinessLogic {
 		if (type == DeliveryType.HomeDelivery && distance <= 30 && shippingWeight <= 5) {
 			// 1 SMALL delivery
 			System.out.println("Case 1 entered ...");
-			Delivery delivery = packageForTheSameDeliveryMethod(order, DeliveryMethod.Drone, distance);
+			Delivery delivery = packForTheSameDeliveryMethod(order, DeliveryMethod.Drone, distance);
 			deliveries.add(delivery);
 		}
 
@@ -129,7 +130,7 @@ public class DeliveryBusinessLogic {
 		// 1 delivery for ALL packages
 		else if (type == DeliveryType.LockerPickupDelivery || distance > 30) {
 			System.out.println("Case 2 entered ...");	
-			Delivery delivery = packageForTheSameDeliveryMethod(order, DeliveryMethod.Courier, distance);
+			Delivery delivery = packForTheSameDeliveryMethod(order, DeliveryMethod.Courier, distance);
 			deliveries.add(delivery);
 		}
 		
@@ -154,8 +155,8 @@ public class DeliveryBusinessLogic {
 			}
 			
 			// BUG
-			Delivery droneDelivery = packageForTheSameDeliveryMethod(droneOrderItems.toArray(new OrderItem[0]), DeliveryMethod.Drone, distance);
-			Delivery courierDelivery = packageForTheSameDeliveryMethod(courierOrderItems.toArray(new OrderItem[0]), DeliveryMethod.Courier, distance);
+			Delivery droneDelivery = packForTheSameDeliveryMethod(droneOrderItems.toArray(new OrderItem[0]), DeliveryMethod.Drone, distance);
+			Delivery courierDelivery = packForTheSameDeliveryMethod(courierOrderItems.toArray(new OrderItem[0]), DeliveryMethod.Courier, distance);
 			
 			deliveries.add(droneDelivery);
 			deliveries.add(courierDelivery);
@@ -183,12 +184,12 @@ public class DeliveryBusinessLogic {
 		order.setOrderStatus(OrderStatus.Packaged);
 	}
 	
-	void selivering() {} // will be in another scheduling, with DeliveryHandler deliver
+	void delivering() {} // will be in another scheduling, with DeliveryHandler deliver
 	
 	void tracking() {} // will be in another scheduling, with DeliveryHandler deliver
 	
 	// Use for case 1 & 2 (the whole order has only one delivery method)
-	private static Delivery packageForTheSameDeliveryMethod(Order order, DeliveryMethod deliveryMethod, double distance) throws Exception {
+	private static Delivery packForTheSameDeliveryMethod(Order order, DeliveryMethod deliveryMethod, double distance) throws Exception {
 		
 		DeliveryType type = order.getDeliveryType(); //(option == DeliveryOption.HomeDelivery ? DeliveryType.HomeDelivery : DeliveryType.LockerPickupDelivery);
 		Date deadline = order.getDeliveryDeadline();
@@ -202,7 +203,7 @@ public class DeliveryBusinessLogic {
 		// If Drone delivery    : there is only 1 SMALL PACKAGE (5 lbs) for all order items
 		if (deliveryMethod == DeliveryMethod.Drone) {
 			
-			Package pkg = packageForDroneDelivery(order.getOrderItems().toArray(new OrderItem[0]));
+			Package pkg = packForDroneDelivery(order.getOrderItems().toArray(new OrderItem[0]));
 			delivery.addPackage(pkg);
 		}
 		
@@ -215,7 +216,7 @@ public class DeliveryBusinessLogic {
 			CourierService courierService = days <= 3 ? CourierService.Express : CourierService.Normal;
 			delivery.setCourierService(courierService);
 			
-			List<Package> packages = packageForCourierDelivery(order.getOrderItems().toArray(new OrderItem[0]));
+			List<Package> packages = packForCourierDelivery(order.getOrderItems().toArray(new OrderItem[0]));
 			delivery.addPackages(packages);
 		}
 
@@ -223,7 +224,7 @@ public class DeliveryBusinessLogic {
 	}
 	
 	// Use for case 3: mix of two delivery methods
-	private static Delivery packageForTheSameDeliveryMethod(OrderItem[] orderItems, DeliveryMethod deliveryMethod, double distance) throws Exception {
+	private static Delivery packForTheSameDeliveryMethod(OrderItem[] orderItems, DeliveryMethod deliveryMethod, double distance) throws Exception {
 		
 		Order order = orderItems[0].getOrder();
 		DeliveryType type = order.getDeliveryType();
@@ -244,12 +245,12 @@ public class DeliveryBusinessLogic {
 			CourierService courierService = days <= 3 ? CourierService.Express : CourierService.Normal;
 			delivery.setCourierService(courierService);
 			
-			Package pkg = packageForDroneDelivery(orderItems);
+			Package pkg = packForDroneDelivery(orderItems);
 			delivery.addPackage(pkg);
 		}
 		// If Courier delivery  : there might be more than 1, MULTIPLE PACKAGES, different SIZES
 		else {
-			List<Package> packages = packageForCourierDelivery(orderItems);
+			List<Package> packages = packForCourierDelivery(orderItems);
 			delivery.addPackages(packages);
 		}
         
@@ -257,7 +258,7 @@ public class DeliveryBusinessLogic {
 	}
 	
 	// Use for Drone
-	private static Package packageForDroneDelivery(OrderItem[] orderItems) {
+	private static Package packForDroneDelivery(OrderItem[] orderItems) {
 		Order order = orderItems[0].getOrder();
 		Package p = new Package(PackageSize.Small, order);
     	for(OrderItem oi : orderItems) {
@@ -267,7 +268,7 @@ public class DeliveryBusinessLogic {
 	}
 	
 	// Use for Courier
-	private static List<Package> packageForCourierDelivery(OrderItem[] orderItems) throws Exception {
+	private static List<Package> packForCourierDelivery(OrderItem[] orderItems) throws Exception {
 		// Packaging logic
 		Order order = orderItems[0].getOrder();
 		Hashtable<Integer, Integer> packaging = new Hashtable<>();

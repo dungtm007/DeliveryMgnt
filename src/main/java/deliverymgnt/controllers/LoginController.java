@@ -56,33 +56,23 @@ public class LoginController implements Initializable {
     		if(user == null || pass == null) {
     			lblLogin.setText("Login Failed.");
     		} else {
-//    			try {
-					UserType type = userService.authenticate(getUsername(), getPassword());
-					if( type == UserType.CUSTOMER){    		    		
-						stageManager.switchScene(FxmlView.CUSTOMER); 		
-					}else if(type == UserType.MANAGER) {
-						stageManager.switchScene(FxmlView.MANAGER); 
-					}else{
-						lblLogin.setText("Login Failed.");
-					}
-//				} catch (Exception e) {
-//					lblLogin.setText("Login Failed.");
-//				}
+    			
+    			ViewOrderDetailController controller = (ViewOrderDetailController)
+    					stageManager.switchScene(FxmlView.VIEW_ORDER_DETAILS);
+    			controller.setOrderId(23);
+    			
+//    			UserType type = userService.authenticate(getUsername(), getPassword());
+//	    	    	if( type == UserType.CUSTOMER){    		    		
+//	    	   		stageManager.switchScene(FxmlView.CREATE_ORDER); 		
+//	    	    	}else if(type == UserType.MANAGER) {
+//	    	    		stageManager.switchScene(FxmlView.MANAGE_ORDER); 
+//	    	    	}else{
+//	    	    		lblLogin.setText("Login Failed.");
+//	    	    	}
     		}
+    		
+    		
     	
-//    	String result = "";
-//		
-//		for(Customer cust : customerService.findAll()){
-//			result += cust.toString() + "<br>";
-//		}
-//		
-//		//System.out.println("Hello " + (username != null ? username : "World") + "!");
-//		System.out.println(result);
-//    	
-//		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//		alert.setContentText("123");
-//		alert.show();
-    		//stageManager.switchScene(FxmlView.DELIVERY_COST_REPORT);
     }
     
     public String getPassword() {

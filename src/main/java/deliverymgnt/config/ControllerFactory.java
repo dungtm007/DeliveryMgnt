@@ -7,7 +7,6 @@ public class ControllerFactory {
 
 	public static Object createController(FxmlView view, Object[] parameters) {
 		
-		
 		if (view == FxmlView.VIEW_ORDER_DETAILS) {
 			ViewOrderDetailController controller = new ViewOrderDetailController();
 			controller.setParams(parameters);

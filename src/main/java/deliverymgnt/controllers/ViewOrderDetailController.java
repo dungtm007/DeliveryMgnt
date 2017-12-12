@@ -1,22 +1,27 @@
 package deliverymgnt.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import deliverymgnt.domainclasses.Package;
-
+import deliverymgnt.config.StageManager;
 import deliverymgnt.domainclasses.Delivery;
 import deliverymgnt.domainclasses.DeliveryStatus;
 import deliverymgnt.domainclasses.Order;
 import deliverymgnt.domainclasses.OrderItem;
 import deliverymgnt.services.OrderService;
+import deliverymgnt.views.FxmlView;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
@@ -49,6 +54,17 @@ public class ViewOrderDetailController implements Initializable {
 	@FXML
 	private VBox vBoxPkgContainer;
 	
+	@FXML 
+	private Button btnDashboard;
+	
+	@FXML 
+	private Button btnOrdersList;
+	
+	
+	@Lazy
+    @Autowired
+    private StageManager stageManager;
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
@@ -63,6 +79,12 @@ public class ViewOrderDetailController implements Initializable {
 	public void setOrderId(int orderId) {
 		this.orderId = orderId;
 		this.order = orderService.find(this.orderId);
+		loadOrderIntoView();
+	}
+	
+	// Prepared order should be faster
+	public void setOrder(Order order) {
+		this.order = order;
 		loadOrderIntoView();
 	}
 	
@@ -258,6 +280,24 @@ public class ViewOrderDetailController implements Initializable {
 		
 	}
 	
+	@FXML
+    void backToDashboard(ActionEvent event) {
+    	try {
+			stageManager.switchScene(FxmlView.MANAGER);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+    }
 	
+	@FXML
+    void backToOrdersList(ActionEvent event) {
+    	try {
+			stageManager.switchScene(FxmlView.ORDERS_LIST_MNGR);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+    }
 	
 }

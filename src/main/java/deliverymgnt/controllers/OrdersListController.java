@@ -29,11 +29,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
@@ -48,6 +50,11 @@ public class OrdersListController implements Initializable {
 
     @FXML
     private Button btnDashboard;
+    
+    @FXML
+    private Button btnViewDetails;
+    
+    
     
     @FXML
     private TableColumn<Order, DeliveryType> colDeliveryType;
@@ -91,18 +98,7 @@ public class OrdersListController implements Initializable {
 	@Lazy
     @Autowired
     private StageManager stageManager;
-	
-//    private List<Customer> listCustomer;
-//    private Customer selectedCustomer;
-//    private Order selectedOrder;
-//    
-//    private ObservableList<Order> orderList = FXCollections.observableArrayList();
-//	private ObservableList<OrderItem> orderItem = FXCollections.observableArrayList();
-//	private ObservableList<Customer> customerOb = FXCollections.observableArrayList();
-//	private ObservableList<Package> packageList = FXCollections.observableArrayList();
-//	private ObservableList<Integer> orderId = FXCollections.observableArrayList();
-	
-//	private List<Order>
+
 	private ObservableList<Order> ordersList = FXCollections.observableArrayList();
 	
     @Override
@@ -149,9 +145,20 @@ public class OrdersListController implements Initializable {
 	}
     
     @FXML
-    void viewOrderDetail(ActionEvent event) {
-		//showOrderDetail(tableDetails.getSelectionModel().getSelectedItem());
-    	// Call view order details
+    void openViewOrderDetail(ActionEvent event) throws IOException {
+		
+    	Order order = tableViewOrders.getSelectionModel().getSelectedItem();
+    	
+    	if (order == null) {
+    		Alert alert = new Alert(AlertType.WARNING);
+			alert.setContentText("Please select an order!");
+			alert.showAndWait();
+			return ;
+    	}
+    	
+    	ViewOrderDetailController controller = 
+    			(ViewOrderDetailController) stageManager.switchScene(FxmlView.VIEW_ORDER_DETAILS);
+    	controller.setOrder(order);
     	
     }
 

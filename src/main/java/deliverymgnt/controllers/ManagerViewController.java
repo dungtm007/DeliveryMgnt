@@ -43,7 +43,7 @@ public class ManagerViewController implements Initializable {
     @FXML
     void showManageOrder(ActionEvent event) {
     		try {
-			stageManager.switchScene(FxmlView.MANAGE_ORDER);
+			stageManager.switchScene(FxmlView.ORDERS_LIST_MNGR);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

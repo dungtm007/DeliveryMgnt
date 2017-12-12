@@ -75,7 +75,6 @@ public enum FxmlView {
 		public String getFxmlFile() {
 			return "/fxml/OrderLayoutManager.fxml";
 		}
-    		
     },
 	ORDERS_LIST_MNGR {
 
@@ -86,7 +85,7 @@ public enum FxmlView {
 
 		@Override
 		public String getFxmlFile() {
-			return "/fxml/OrdersList.fxml";
+			return "/fxml/OrdersList2.fxml";
 		}
     		
     },
@@ -99,7 +98,7 @@ public enum FxmlView {
 
 		@Override
 		public String getFxmlFile() {
-			return "/fxml/ViewOrderDetail.fxml";
+			return "/fxml/ViewOrderDetail2.fxml";
 		}
     },
     DELIVERY_COST_REPORT {

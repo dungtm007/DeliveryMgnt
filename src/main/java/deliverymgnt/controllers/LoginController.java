@@ -57,9 +57,13 @@ public class LoginController implements Initializable {
     			lblLogin.setText("Login Failed.");
     		} else {
     			
-    			ViewOrderDetailController controller = (ViewOrderDetailController)
-    					stageManager.switchScene(FxmlView.VIEW_ORDER_DETAILS);
-    			controller.setOrderId(23);
+    			OrdersListController controller = (OrdersListController)
+    					stageManager.switchScene(FxmlView.ORDERS_LIST_MNGR);
+    			//controller.setOrderId(23);
+    			
+//    			ViewOrderDetailController controller = (ViewOrderDetailController)
+//    					stageManager.switchScene(FxmlView.VIEW_ORDER_DETAILS);
+//    			controller.setOrderId(23);
     			
 //    			UserType type = userService.authenticate(getUsername(), getPassword());
 //	    	    	if( type == UserType.CUSTOMER){    		    		

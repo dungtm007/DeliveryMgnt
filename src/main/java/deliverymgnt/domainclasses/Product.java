@@ -39,6 +39,9 @@ public class Product {
 	@Column(name = "price")
 	private double price;
 	
+	@Column(name = "product_img_source")
+	private String productImageSource;
+
 	@ManyToMany
 	private Set<Warehouse> warehouses;
 
@@ -116,6 +119,14 @@ public class Product {
 		return warehouses;
 	}
 
+	public String getProductImageSource() {
+		return productImageSource;
+	}
+
+	public void setProductImageSource(String productImageSource) {
+		this.productImageSource = productImageSource;
+	}
+	
 	public double calculateVolume() {
 		return width * length * height; 
 	}

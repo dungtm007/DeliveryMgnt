@@ -24,7 +24,7 @@ public enum FxmlView {
 
 		@Override
 		public String getFxmlFile() {
-			return "/fxml/ManagerLayout.fxml";
+			return "/fxml/ManagerLayout2.fxml";
 		}
 	},
 	LOGIN {
@@ -74,6 +74,19 @@ public enum FxmlView {
 		@Override
 		public String getFxmlFile() {
 			return "/fxml/OrderLayoutManager.fxml";
+		}
+    		
+    },
+	ORDERS_LIST_MNGR {
+
+		@Override
+		public String getTitle() {
+			return getStringFromResourceBundle("manage_order.title");
+		}
+
+		@Override
+		public String getFxmlFile() {
+			return "/fxml/OrdersList.fxml";
 		}
     		
     },

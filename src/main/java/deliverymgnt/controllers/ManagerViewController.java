@@ -15,6 +15,8 @@ import deliverymgnt.views.FxmlView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 @Controller
 public class ManagerViewController implements Initializable {
@@ -30,6 +32,9 @@ public class ManagerViewController implements Initializable {
 
     @FXML
     private Button btnManageLocker;
+    
+    @FXML
+    private ImageView imgLogo;
     
     @Lazy
     @Autowired
@@ -77,6 +82,9 @@ public class ManagerViewController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-	
+		String imagePath = "/pictures/delivery_management.png";
+	    Image image = new Image(imagePath);
+	    imgLogo.setImage(image);
+
 	}
 }

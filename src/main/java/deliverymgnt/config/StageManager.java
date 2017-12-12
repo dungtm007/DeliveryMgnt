@@ -49,11 +49,13 @@ public class StageManager {
 		}
 		else if(view == FxmlView.CREATE_ORDER || view == FxmlView.VIEW_ORDER) {
 			userType = UserType.CUSTOMER;
-			showContent(viewNode, view.getTitle());
+			//showContent(viewNode, view.getTitle());
+			show(viewNode, view.getTitle());
 		}
 		else {
 			userType = UserType.MANAGER;
-			showContent(viewNode, view.getTitle());
+			//showContent(viewNode, view.getTitle());
+			show(viewNode, view.getTitle());
 		}
 		return viewAndController[1];
 	}

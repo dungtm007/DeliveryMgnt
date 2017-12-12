@@ -229,7 +229,7 @@ public class ViewOrderDetailController implements Initializable {
 					hBoxProduct.setId(hBoxProductId);
 					vBoxPackageProducts.getChildren().add(hBoxProduct);
 					// ------imageProduct0101
-					String imageSource = "http://www.zappos.com/images/743/7433394/7769-677438-p.jpg";
+					String imageSource = oi.getProduct().getProductImageSource();
 					Image img = new Image(imageSource);
 				    ImageView imageProduct = new ImageView(img);
 				    String imageProductId = "imageProduct" + packageId + productId;

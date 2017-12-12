@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="828.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deliverymgnt.controllers.CreateOrderController">
+   <children>
+      <TextField fx:id="txtAmount" layoutX="135.0" layoutY="193.0" prefHeight="27.0" prefWidth="221.0" AnchorPane.leftAnchor="135.0" AnchorPane.topAnchor="193.0" />
+      <Label layoutX="33.0" layoutY="147.0" text="Product:" AnchorPane.leftAnchor="33.0" AnchorPane.topAnchor="147.0">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Label layoutX="32.0" layoutY="195.0" text="Amount:" AnchorPane.leftAnchor="32.0" AnchorPane.topAnchor="195.0">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Label layoutX="33.0" layoutY="239.0" text="Unit Price:" AnchorPane.leftAnchor="33.0" AnchorPane.topAnchor="239.0">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <ChoiceBox fx:id="ddlProducts" layoutX="135.0" layoutY="145.0" onInputMethodTextChanged="#selectProduct" prefHeight="27.0" prefWidth="221.0" AnchorPane.leftAnchor="135.0" AnchorPane.topAnchor="145.0" />
+      <Button fx:id="btnAdd" layoutX="182.0" layoutY="281.0" mnemonicParsing="false" onAction="#addOrUpdateOrderItemToTable" prefHeight="42.0" prefWidth="174.0" text="Add/Update &gt;&gt;">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Button>
+      <TableView fx:id="tableOrderItems" layoutX="400.0" layoutY="135.0" prefHeight="299.0" prefWidth="690.0" AnchorPane.bottomAnchor="394.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="135.0">
+        <columns>
+          <TableColumn fx:id="colProduct" prefWidth="265.0" text="Product" />
+          <TableColumn fx:id="colAmount" minWidth="0.0" prefWidth="175.0" text="Quantity" />
+            <TableColumn fx:id="colUnitPrice" minWidth="0.0" prefWidth="175.0" text="Unit Price" />
+            <TableColumn fx:id="colPrice" prefWidth="175.0" text="Price" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <Label layoutX="755.0" layoutY="94.0" text="Current date:" AnchorPane.rightAnchor="235.0" AnchorPane.topAnchor="94.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="936.0" layoutY="48.0" prefHeight="17.0" prefWidth="254.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="48.0">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="778.0" layoutY="452.0" text="Total Price:" AnchorPane.bottomAnchor="341.0" AnchorPane.rightAnchor="206.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblTotalPrice" layoutX="924.0" layoutY="449.0" prefHeight="40.0" prefWidth="166.0" text="0" textAlignment="RIGHT" AnchorPane.bottomAnchor="339.0" AnchorPane.rightAnchor="10.0">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnPlaceOrder" layoutX="873.0" layoutY="649.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#placeOrder" prefHeight="192.0" prefWidth="225.0" text="Place Order" AnchorPane.bottomAnchor="124.0" AnchorPane.rightAnchor="2.0">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Button>
+      <Label layoutX="31.0" layoutY="511.0" prefHeight="24.0" prefWidth="98.0" text="Delivery In:" AnchorPane.bottomAnchor="290.0">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <RadioButton fx:id="rd2days" layoutX="139.0" layoutY="511.0" mnemonicParsing="false" onAction="#selectDeliveryDeadline" text="2 days" AnchorPane.bottomAnchor="290.0">
+         <toggleGroup>
+            <ToggleGroup fx:id="toggleDeliveryDeadline" />
+         </toggleGroup>
+         <font>
+            <Font size="18.0" />
+         </font></RadioButton>
+      <RadioButton fx:id="rd5to7days" layoutX="227.0" layoutY="512.0" mnemonicParsing="false" onAction="#selectDeliveryDeadline" text="5 - 7 days" toggleGroup="$toggleDeliveryDeadline" AnchorPane.bottomAnchor="289.0">
+         <font>
+            <Font size="18.0" />
+         </font></RadioButton>
+      <Label layoutX="31.0" layoutY="556.0" prefHeight="24.0" prefWidth="98.0" text="Delivery At: " AnchorPane.bottomAnchor="245.0">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <RadioButton fx:id="rdLocker" layoutX="227.0" layoutY="555.0" mnemonicParsing="false" onAction="#selectDeliveryOption" text="Locker pickup" AnchorPane.bottomAnchor="246.0">
+         <toggleGroup>
+            <ToggleGroup fx:id="toggleDeliveryOption" />
+         </toggleGroup>
+         <font>
+            <Font size="18.0" />
+         </font></RadioButton>
+      <RadioButton fx:id="rdHome" layoutX="138.0" layoutY="556.0" mnemonicParsing="false" onAction="#selectDeliveryOption" text="Home" toggleGroup="$toggleDeliveryOption" AnchorPane.bottomAnchor="245.0">
+         <font>
+            <Font size="18.0" />
+         </font></RadioButton>
+      <Label alignment="TOP_CENTER" layoutX="410.0" layoutY="21.0" prefHeight="38.0" prefWidth="285.0" snapToPixel="false" text="Create Order" textAlignment="CENTER" AnchorPane.leftAnchor="410.0" AnchorPane.rightAnchor="405.0" AnchorPane.topAnchor="21.0">
+         <font>
+            <Font size="38.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtUnitPrice" layoutX="135.0" layoutY="237.0" prefHeight="27.0" prefWidth="221.0" />
+      <Label layoutX="400.0" layoutY="555.0" prefHeight="24.0" prefWidth="71.0" text="Address:">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Label layoutX="400.0" layoutY="594.0" prefHeight="24.0" prefWidth="71.0" text="City:">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Label layoutX="400.0" layoutY="632.0" prefHeight="24.0" prefWidth="71.0" text="State:">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Label layoutX="400.0" layoutY="674.0" prefHeight="24.0" prefWidth="71.0" text="Zip:">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Pane fx:id="pnLocker" layoutX="19.0" layoutY="592.0" prefHeight="169.0" prefWidth="350.0">
+         <children>
+            <ChoiceBox fx:id="ddlLocker" layoutX="114.0" layoutY="19.0" onInputMethodTextChanged="#selectProduct" prefHeight="31.0" prefWidth="200.0" />
+            <Label fx:id="lblSelectedLocker" layoutX="14.0" layoutY="58.0" prefHeight="69.0" prefWidth="299.0" text="SELECTED LOCKER">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+            <Label layoutX="16.0" layoutY="21.0" prefHeight="24.0" prefWidth="71.0" text="Locker:">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+         </children>
+      </Pane>
+      <TextField fx:id="txtAddress" layoutX="492.0" layoutY="554.0" prefHeight="27.0" prefWidth="221.0" />
+      <TextField fx:id="txtCity" layoutX="492.0" layoutY="592.0" prefHeight="27.0" prefWidth="221.0" />
+      <TextField fx:id="txtState" layoutX="492.0" layoutY="630.0" prefHeight="27.0" prefWidth="221.0" />
+      <TextField fx:id="txtZip" layoutX="492.0" layoutY="672.0" prefHeight="27.0" prefWidth="221.0" />
+      <CheckBox fx:id="chkUseCustomerAddress" layoutX="406.0" layoutY="511.0" mnemonicParsing="false" onAction="#useCustomerAddress" selected="false" text="Use customer address">
+         <font>
+            <Font size="18.0" />
+         </font></CheckBox>
+      <Label layoutX="38.0" layoutY="353.0" text="Shipping Weight:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblShippingWeight" layoutX="191.0" layoutY="353.0" text="w">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="38.0" layoutY="387.0" text="Order Status:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblOrderStatus" layoutX="190.0" layoutY="387.0" text="s">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnDashboard" alignment="CENTER" layoutX="873.0" layoutY="771.0" mnemonicParsing="false" onAction="#backToDashboard" prefHeight="55.0" prefWidth="225.0" text="Dashboard">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
+      <Separator layoutX="28.0" layoutY="493.0" prefHeight="1.0" prefWidth="334.0" />
+      <Separator layoutX="400.0" layoutY="493.0" prefHeight="3.0" prefWidth="684.0" />
+      <Separator layoutX="33.0" layoutY="119.0" prefHeight="1.0" prefWidth="334.0" />
+   </children>
+   <effect>
+      <Blend />
+   </effect>
+</AnchorPane>

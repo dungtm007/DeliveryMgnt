@@ -64,9 +64,7 @@ public class Address {
 
 	@Override
 	public String toString() {
-		return address;
-		// TODO: temporary rem
-		//return address.trim() + ", " + city.trim() + ", " + state.trim() + " " + zip.trim();
+		return address.trim() + ", " + city.trim() + ", " + state.trim() + " " + zip.trim();
 	}
 	
 	

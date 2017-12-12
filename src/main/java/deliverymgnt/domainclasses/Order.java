@@ -1,6 +1,9 @@
 package deliverymgnt.domainclasses;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
@@ -87,6 +90,10 @@ public class Order {
 	public Date getOrderDate() {
 		return orderDate;
 	}
+	
+	public String getOrderDateFormat() {
+		return new SimpleDateFormat("yyyy-MM-dd\nh:mm a").format(orderDate);
+	}
 
 	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
@@ -94,6 +101,10 @@ public class Order {
 
 	public Date getDeliveryDeadline() {
 		return deliveryDeadline;
+	}
+	
+	public String getDeliveryDeadlineFormat() {
+		return new SimpleDateFormat("yyyy-MM-dd\nh:mm a").format(deliveryDeadline);
 	}
 
 	public void setDeliveryDeadline(Date deliveryDeadline) {
@@ -226,6 +237,35 @@ public class Order {
 	
 	public String getOrderNo() {
 		return "ODR" + String.format("%05d", id);
+	}
+	
+	// For binding data to front-end
+	public String getPackagesShortSummary() {
+		String summary = "";
+		int count = 0;
+		for(Delivery d : deliveries) {
+			for(Package p : d.getPackages()) {
+				count++;
+				summary += "Package " + count + ": " + d.getDeliveryStatus() + "\n";
+				
+			}
+		}
+		summary = Integer.toString(count) + " package(s)" + "\n" + "-----" + "\n" + summary;
+		return summary;
+	}
+	
+	// For binding data to front-end
+	public String getDeliveryMethods() {
+		List<String> methodsList = new ArrayList<>();
+		for(Delivery d : deliveries) {
+			methodsList.add(d.getDeliveryMethod().toString());
+		}
+		Collections.sort(methodsList);
+		String methods = "";;
+		for(String m : methodsList) {
+			methods += m + "\n";	
+		}
+		return methods;
 	}
 	
 	public boolean hasProduct(Product product) {

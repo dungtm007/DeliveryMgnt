@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="543.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deliverymgnt.controllers.ManagerViewController">
+   <children>
+      <VBox prefHeight="502.0" prefWidth="1100.0" AnchorPane.bottomAnchor="87.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="92.0" prefWidth="1100.0" text="Delivery Manager Dashboard">
+               <font>
+                  <Font name="System Bold" size="38.0" />
+               </font>
+               <padding>
+                  <Insets bottom="5.0" left="15.0" right="5.0" top="15.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets bottom="30.0" top="20.0" />
+               </VBox.margin>
+            </Label>
+            <HBox prefHeight="431.0" prefWidth="1100.0">
+               <children>
+                  <ImageView fx:id="imgLogo" fitHeight="400.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <VBox prefHeight="150.0" prefWidth="650.0">
+                     <children>
+                        <Button fx:id="btnManageOrder" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#showManageOrder" prefHeight="80.0" prefWidth="600.0" text="Manage Order">
+                           <font>
+                              <Font size="37.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnCostReport" alignment="CENTER" mnemonicParsing="false" onAction="#showCostReport" prefHeight="80.0" prefWidth="600.0" text="Delivery Cost Report">
+                           <font>
+                              <Font size="37.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnManageLocker" alignment="CENTER" mnemonicParsing="false" onAction="#showManageLocker" prefHeight="80.0" prefWidth="600.0" text="Manage Locker">
+                           <font>
+                              <Font size="37.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnManageDrone" alignment="CENTER" mnemonicParsing="false" onAction="#showManageDrone" prefHeight="80.0" prefWidth="600.0" text="Manage Drone">
+                           <font>
+                              <Font size="37.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="40.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets top="40.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

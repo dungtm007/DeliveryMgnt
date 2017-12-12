@@ -47,7 +47,7 @@ public enum FxmlView {
 
 		@Override
 		public String getFxmlFile() {
-			return "/fxml/CreateOrderLayout.fxml";
+			return "/fxml/CreateOrderLayout3.fxml";
 		}
     		
     },

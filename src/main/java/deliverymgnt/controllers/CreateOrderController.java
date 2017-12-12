@@ -10,9 +10,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 
 import antlr.StringUtils;
+import deliverymgnt.config.StageManager;
 import deliverymgnt.domainclasses.Address;
 import deliverymgnt.domainclasses.Customer;
 import deliverymgnt.domainclasses.DeliveryType;
@@ -23,6 +25,7 @@ import deliverymgnt.domainclasses.Product;
 import deliverymgnt.services.CustomerService;
 import deliverymgnt.services.OrderService;
 import deliverymgnt.services.ProductService;
+import deliverymgnt.views.FxmlView;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -36,6 +39,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -120,6 +124,9 @@ public class CreateOrderController implements Initializable {
 	@FXML
 	private CheckBox chkUseCustomerAddress;
 	
+	@FXML
+	private Pane pnLocker;
+	
 	@Autowired
 	private CustomerService customerService;
 	
@@ -128,6 +135,10 @@ public class CreateOrderController implements Initializable {
 	
 	@Autowired
 	private ProductService productService;
+	
+	@Lazy
+    @Autowired
+    private StageManager stageManager;
 	
 	private ObservableList<Product> productsList = FXCollections.observableArrayList();
 	private ObservableList<OrderItem> orderItemsList = FXCollections.observableArrayList();
@@ -179,6 +190,14 @@ public class CreateOrderController implements Initializable {
 		orderItemsList.add(oi);	
 		
 		updateTotalPriceDisplay();
+	}
+	
+	@FXML
+	private void removeOrderItemFromTable(ActionEvent event) throws IOException {
+		
+		OrderItem orderItem = tableOrderItems.getSelectionModel().getSelectedItem();
+		orderItemsList.remove(orderItem);
+		order.getOrderItems().remove(orderItem);
 	}
 	
 	private void updateTotalPriceDisplay() {
@@ -264,6 +283,7 @@ public class CreateOrderController implements Initializable {
             }
         });
 		
+		orderItemsList.clear();
 		tableOrderItems.setItems(orderItemsList);
 		setColumnProperties();
 		
@@ -304,7 +324,17 @@ public class CreateOrderController implements Initializable {
 	
 	@FXML
 	private void selectDeliveryOption (ActionEvent event) throws IOException {
-		// [UPD]
+		pnLocker.setVisible(rdLocker.isSelected());
+	}
+	
+	@FXML
+	private void selectDeliveryDeadline (ActionEvent event) throws IOException {
+		
+	}
+	
+	@FXML
+	private void backToDashboard (ActionEvent event) throws IOException {
+		stageManager.switchScene(FxmlView.MANAGER);
 	}
 	
 	@FXML

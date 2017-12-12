@@ -178,7 +178,7 @@
             </ScrollPane>
             <Pane prefHeight="55.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="btnOrdersList" layoutX="613.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="55.0" prefWidth="225.0" text="Orders List">
+                  <Button fx:id="btnOrdersList" layoutX="613.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#backToOrdersList" prefHeight="55.0" prefWidth="225.0" text="Orders List">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>

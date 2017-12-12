@@ -59,7 +59,7 @@
             <Font size="28.0" />
          </font>
       </Label>
-      <Button fx:id="btnPlaceOrder" layoutX="873.0" layoutY="649.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#placeOrder" prefHeight="192.0" prefWidth="225.0" text="Place Order" AnchorPane.bottomAnchor="124.0" AnchorPane.rightAnchor="2.0">
+      <Button fx:id="btnPlaceOrder" layoutX="853.0" layoutY="512.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#placeOrder" prefHeight="192.0" prefWidth="225.0" text="Place Order" AnchorPane.bottomAnchor="124.0" AnchorPane.rightAnchor="22.0">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
@@ -116,7 +116,7 @@
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Pane fx:id="pnLocker" layoutX="19.0" layoutY="592.0" prefHeight="169.0" prefWidth="350.0">
+      <Pane fx:id="pnLocker" layoutX="19.0" layoutY="592.0" prefHeight="169.0" prefWidth="350.0" visible="false">
          <children>
             <ChoiceBox fx:id="ddlLocker" layoutX="114.0" layoutY="19.0" onInputMethodTextChanged="#selectProduct" prefHeight="31.0" prefWidth="200.0" />
             <Label fx:id="lblSelectedLocker" layoutX="14.0" layoutY="58.0" prefHeight="69.0" prefWidth="299.0" text="SELECTED LOCKER">
@@ -129,10 +129,10 @@
                </font></Label>
          </children>
       </Pane>
-      <TextField fx:id="txtAddress" layoutX="492.0" layoutY="554.0" prefHeight="27.0" prefWidth="221.0" />
-      <TextField fx:id="txtCity" layoutX="492.0" layoutY="592.0" prefHeight="27.0" prefWidth="221.0" />
-      <TextField fx:id="txtState" layoutX="492.0" layoutY="630.0" prefHeight="27.0" prefWidth="221.0" />
-      <TextField fx:id="txtZip" layoutX="492.0" layoutY="672.0" prefHeight="27.0" prefWidth="221.0" />
+      <TextField fx:id="txtAddress" layoutX="492.0" layoutY="554.0" prefHeight="31.0" prefWidth="285.0" />
+      <TextField fx:id="txtCity" layoutX="492.0" layoutY="592.0" prefHeight="31.0" prefWidth="285.0" />
+      <TextField fx:id="txtState" layoutX="492.0" layoutY="630.0" prefHeight="31.0" prefWidth="285.0" />
+      <TextField fx:id="txtZip" layoutX="492.0" layoutY="672.0" prefHeight="31.0" prefWidth="285.0" />
       <CheckBox fx:id="chkUseCustomerAddress" layoutX="406.0" layoutY="511.0" mnemonicParsing="false" onAction="#useCustomerAddress" selected="false" text="Use customer address">
          <font>
             <Font size="18.0" />
@@ -157,7 +157,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="btnDashboard" alignment="CENTER" layoutX="873.0" layoutY="771.0" mnemonicParsing="false" onAction="#backToDashboard" prefHeight="55.0" prefWidth="225.0" text="Dashboard">
+      <Button fx:id="btnDashboard" alignment="CENTER" layoutX="853.0" layoutY="759.0" mnemonicParsing="false" onAction="#backToDashboard" prefHeight="55.0" prefWidth="225.0" text="Dashboard">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
@@ -165,6 +165,11 @@
       <Separator layoutX="28.0" layoutY="493.0" prefHeight="1.0" prefWidth="334.0" />
       <Separator layoutX="400.0" layoutY="493.0" prefHeight="3.0" prefWidth="684.0" />
       <Separator layoutX="33.0" layoutY="119.0" prefHeight="1.0" prefWidth="334.0" />
+      <Button fx:id="btnRemove" layoutX="400.0" layoutY="441.0" mnemonicParsing="false" onAction="#removeOrderItemFromTable" prefHeight="42.0" prefWidth="174.0" text="&lt;&lt; Remove">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Button>
    </children>
    <effect>
       <Blend />

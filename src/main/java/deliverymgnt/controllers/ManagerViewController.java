@@ -53,7 +53,8 @@ public class ManagerViewController implements Initializable {
     @FXML
     void showManageLocker(ActionEvent event) {
     		try {
-			stageManager.switchScene(FxmlView.MANAGE_LOCKER);
+			//stageManager.switchScene(FxmlView.MANAGE_LOCKER);
+			stageManager.switchScene(FxmlView.CREATE_ORDER);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -85,6 +86,5 @@ public class ManagerViewController implements Initializable {
 		String imagePath = "/pictures/delivery_management.png";
 	    Image image = new Image(imagePath);
 	    imgLogo.setImage(image);
-
 	}
 }

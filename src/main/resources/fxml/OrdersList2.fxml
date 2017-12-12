@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deliverymgnt.controllers.OrdersListController">
+<AnchorPane prefHeight="800.0" prefWidth="1570.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deliverymgnt.controllers.OrdersListController">
    <children>
       <TableView fx:id="tableViewOrders" layoutX="43.0" layoutY="129.0" prefHeight="584.0" prefWidth="1321.0" AnchorPane.bottomAnchor="87.0" AnchorPane.leftAnchor="43.0" AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="129.0">
         <columns>
@@ -22,17 +22,17 @@
             <TableColumn fx:id="colOrderStatus" minWidth="0.0" prefWidth="92.0" text="Order&#10;Status" />
         </columns>
       </TableView>
-      <Label alignment="TOP_CENTER" layoutX="355.0" layoutY="36.0" prefHeight="55.0" prefWidth="550.0" snapToPixel="false" text="Orders &amp; Deliveries" AnchorPane.leftAnchor="355.0" AnchorPane.rightAnchor="295.0" AnchorPane.topAnchor="36.0">
+      <Label fx:id="lblTitle" alignment="TOP_CENTER" layoutX="355.0" layoutY="36.0" prefHeight="55.0" prefWidth="550.0" snapToPixel="false" text="Orders &amp; Deliveries" AnchorPane.leftAnchor="355.0" AnchorPane.rightAnchor="295.0" AnchorPane.topAnchor="36.0">
          <font>
-            <Font size="38.0" />
+            <Font name="System Bold" size="39.0" />
          </font>
       </Label>
-      <Button fx:id="btnDashboard" layoutX="1139.0" layoutY="724.0" mnemonicParsing="false" onAction="#backToDashboard" prefHeight="55.0" prefWidth="225.0" text="Dashboard">
+      <Button fx:id="btnDashboard" layoutX="1309.0" layoutY="724.0" mnemonicParsing="false" onAction="#backToDashboard" prefHeight="55.0" prefWidth="225.0" text="Dashboard">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Button>
-      <Button fx:id="btnViewDetails" layoutX="892.0" layoutY="724.0" mnemonicParsing="false" onAction="#openViewOrderDetail" prefHeight="55.0" prefWidth="225.0" text="View Details">
+      <Button fx:id="btnViewDetails" layoutX="1060.0" layoutY="724.0" mnemonicParsing="false" onAction="#openViewOrderDetail" prefHeight="55.0" prefWidth="225.0" text="View Details">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>

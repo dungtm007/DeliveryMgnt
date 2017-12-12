@@ -40,7 +40,6 @@ public class StageManager {
 	
 	public Object switchScene(final FxmlView view) throws IOException {
 		
-		//Parent viewNode = loadViewNodeHierarchy(view.getFxmlFile());
 		Object[] viewAndController = loadViewNode(view.getFxmlFile());
 		Parent viewNode = (Parent) viewAndController[0];
 		
@@ -49,12 +48,10 @@ public class StageManager {
 		}
 		else if(view == FxmlView.CREATE_ORDER || view == FxmlView.VIEW_ORDER) {
 			userType = UserType.CUSTOMER;
-			//showContent(viewNode, view.getTitle());
 			show(viewNode, view.getTitle());
 		}
 		else {
 			userType = UserType.MANAGER;
-			//showContent(viewNode, view.getTitle());
 			show(viewNode, view.getTitle());
 		}
 		return viewAndController[1];

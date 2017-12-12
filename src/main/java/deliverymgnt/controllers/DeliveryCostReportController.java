@@ -31,6 +31,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 
@@ -61,6 +62,9 @@ public class DeliveryCostReportController implements Initializable {
 	
 	@FXML
 	private Label lblTotalCost;
+	
+	@FXML
+	private Button btnDashboard;
 	
 	@FXML 
 	private TableView<Delivery> tableViewDeliveries;
@@ -145,7 +149,7 @@ public class DeliveryCostReportController implements Initializable {
 	
 	@FXML
 	private void backToDashboard(ActionEvent event) throws IOException {
-		stageManager.switchScene(FxmlView.CREATE_ORDER);
+		stageManager.switchScene(FxmlView.MANAGER);
 	}
 	
 	private void loadDeliveriesLast7Days() {
@@ -159,11 +163,6 @@ public class DeliveryCostReportController implements Initializable {
 		Date last7Days = new Date(today.getYear(), today.getMonth(), today.getDate(), 0, 0, 0);
 		last7Days.setDate(today.getDate() - 6);
 		
-//		System.out.println("<<<<<<<<<<<<<");
-//		System.out.println(last7Days);
-//		System.out.println(today);
-//		System.out.println("<<<<<<<<<<<<<");
-		
 		deliveries = deliveryService.findByStartTimeGreaterThanEqualAndStartTimeLessThanEqual(last7Days, today);
 		deliveriesList.setAll(deliveries);
 		calculateAndDisplayTotalCost();
@@ -172,12 +171,13 @@ public class DeliveryCostReportController implements Initializable {
 	private void setColumnProperties() {
 		
 		colOrderNo.setCellValueFactory(new PropertyValueFactory<>("orderNo"));
-		colOrderDate.setCellValueFactory(new PropertyValueFactory<>("orderDate"));
+		colOrderDate.setCellValueFactory(new PropertyValueFactory<>("orderDateFormat"));
 		colDeliveryNo.setCellValueFactory(new PropertyValueFactory<>("deliveryNo"));
 		colStatus.setCellValueFactory(new PropertyValueFactory<>("deliveryStatus"));
-		colShippedDate.setCellValueFactory(new PropertyValueFactory<>("startTime"));
-		colArrivalDate.setCellValueFactory(new PropertyValueFactory<>("actualArrivalTime"));
-		colCost.setCellValueFactory(new PropertyValueFactory<>("deliveryCost"));
+		colShippedDate.setCellValueFactory(new PropertyValueFactory<>("startTimeFormat"));
+		colArrivalDate.setCellValueFactory(new PropertyValueFactory<>("actualArrivalTimeFormat"));
+		colCost.setCellValueFactory(new PropertyValueFactory<>("deliveryCostFormat"));
+		tableViewDeliveries.setStyle("-fx-font-size: 15");
 	}
 	
 	private void calculateAndDisplayTotalCost() {
@@ -185,6 +185,7 @@ public class DeliveryCostReportController implements Initializable {
 		for(Delivery d : deliveries) {
 			totalCost += d.getDeliveryCost(); 
 		}
-		lblTotalCost.setText(Double.toString(totalCost));
+		
+		lblTotalCost.setText("$ " + String.format("%.2f", totalCost));
 	}
 }

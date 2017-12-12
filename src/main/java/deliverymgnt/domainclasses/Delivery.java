@@ -1,5 +1,6 @@
 package deliverymgnt.domainclasses;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -125,6 +126,10 @@ public class Delivery {
 	public Date getStartTime() {
 		return startTime;
 	}
+	
+	public String getStartTimeFormat() {
+		return new SimpleDateFormat("yyyy-MM-dd hh:mm").format(startTime);
+	}
 
 	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
@@ -133,7 +138,7 @@ public class Delivery {
 	public Date getEstimatedArrivalTime() {
 		return estimatedArrivalTime;
 	}
-
+	
 	public void setEstimatedArrivalTime(Date estimatedArrivalTime) {
 		this.estimatedArrivalTime = estimatedArrivalTime;
 	}
@@ -216,6 +221,10 @@ public class Delivery {
 	public double getDeliveryCost() {
 		return deliveryCost;
 	}
+	
+	public String getDeliveryCostFormat() {
+		return String.format("$ %.2f", deliveryCost);
+	}
 
 	public void setDeliveryCost(double deliveryCost) {
 		this.deliveryCost = deliveryCost;
@@ -223,6 +232,10 @@ public class Delivery {
 	
 	public Date getActualArrivalTime() {
 		return actualArrivalTime;
+	}
+	
+	public String getActualArrivalTimeFormat() {
+		return new SimpleDateFormat("yyyy-MM-dd hh:mm").format(actualArrivalTime);
 	}
 
 	public void setActualArrivalTime(Date actualArrivalTime) {
@@ -245,6 +258,10 @@ public class Delivery {
 		return order.getOrderDate();
 	}
 	
+	public String getOrderDateFormat() {
+		return order.getOrderDateFormat();
+	}
+	
 	public String getDeliveryNo() {
 		return "DLV" + String.format("%05d", id);
 	}
@@ -259,6 +276,4 @@ public class Delivery {
 			addPackage(pkg);
 		}
 	}
-	
-	
 }

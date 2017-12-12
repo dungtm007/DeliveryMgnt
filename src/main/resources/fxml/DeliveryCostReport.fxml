@@ -7,11 +7,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="821.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deliverymgnt.controllers.DeliveryCostReportController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="821.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deliverymgnt.controllers.DeliveryCostReportController">
    <children>
-      <VBox fx:id="vboxContriner" layoutX="7.0" layoutY="7.0" prefHeight="794.0" prefWidth="1089.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox fx:id="vboxContriner" layoutX="7.0" layoutY="7.0" prefHeight="794.0" prefWidth="1300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label prefHeight="84.0" prefWidth="1100.0" text="                                    Delivery Cost Report" textAlignment="JUSTIFY">
+            <Label alignment="CENTER" prefHeight="75.0" prefWidth="1284.0" text="Delivery Cost Report" textAlignment="JUSTIFY">
                <font>
                   <Font size="38.0" />
                </font>
@@ -26,7 +26,7 @@
                         <ToggleGroup fx:id="togglePeriod" />
                      </toggleGroup>
                      <VBox.margin>
-                        <Insets left="250.0" top="10.0" />
+                        <Insets left="400.0" top="10.0" />
                      </VBox.margin>
                      <font>
                         <Font size="20.0" />
@@ -37,7 +37,7 @@
                         <Font size="20.0" />
                      </font>
                      <VBox.margin>
-                        <Insets left="250.0" top="10.0" />
+                        <Insets left="400.0" top="10.0" />
                      </VBox.margin>
                   </RadioButton>
                   <HBox fx:id="boxFromTo" disable="true" prefHeight="41.0" prefWidth="800.0">
@@ -78,41 +78,41 @@
                         </Button>
                      </children>
                      <VBox.margin>
-                        <Insets left="250.0" top="10.0" />
+                        <Insets left="400.0" top="10.0" />
                      </VBox.margin>
                   </HBox>
                </children>
             </VBox>
-            <TableView fx:id="tableViewDeliveries" prefHeight="488.0" prefWidth="1100.0">
+            <TableView fx:id="tableViewDeliveries" prefHeight="488.0" prefWidth="1280.0">
               <columns>
-                <TableColumn fx:id="colOrderNo" prefWidth="126.0" text="Order #" />
-                  <TableColumn fx:id="colOrderDate" prefWidth="184.0" text="Order Date" />
-                <TableColumn fx:id="colDeliveryNo" prefWidth="147.0" text="Delivery #" />
-                  <TableColumn fx:id="colStatus" prefWidth="145.0" text="Status" />
-                  <TableColumn fx:id="colShippedDate" prefWidth="187.0" text="Shipped Date" />
-                  <TableColumn fx:id="colArrivalDate" prefWidth="183.0" text="Arrival Date" />
-                  <TableColumn fx:id="colCost" prefWidth="124.0" text="Cost" />
+                <TableColumn fx:id="colOrderNo" prefWidth="141.0" text="Order #" />
+                  <TableColumn fx:id="colOrderDate" prefWidth="251.0" text="Order Date" />
+                <TableColumn fx:id="colDeliveryNo" prefWidth="145.0" text="Delivery #" />
+                  <TableColumn fx:id="colStatus" prefWidth="151.0" text="Status" />
+                  <TableColumn fx:id="colShippedDate" prefWidth="231.0" text="Shipped Date" />
+                  <TableColumn fx:id="colArrivalDate" prefWidth="212.0" text="Arrival Date" />
+                  <TableColumn fx:id="colCost" prefWidth="121.0" text="Cost" />
               </columns>
             </TableView>
             <HBox prefHeight="54.0" prefWidth="1100.0">
                <children>
-                  <Label prefHeight="65.0" prefWidth="175.0" text="Total Cost: ">
+                  <Label prefHeight="65.0" prefWidth="220.0" text="Total Cost: ">
                      <font>
-                        <Font size="30.0" />
+                        <Font name="System Bold" size="30.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="750.0" />
+                        <Insets left="850.0" />
                      </HBox.margin>
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="lblTotalCost" text="100">
+                  <Label fx:id="lblTotalCost" prefHeight="65.0" prefWidth="205.0" text="100">
                      <font>
-                        <Font size="30.0" />
+                        <Font name="System Bold" size="30.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="40.0" />
+                        <Insets />
                      </HBox.margin>
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -120,12 +120,12 @@
                   </Label>
                </children>
             </HBox>
-            <Button fx:id="btnDashboard" alignment="CENTER" mnemonicParsing="false" onAction="#backToDashboard" prefHeight="54.0" prefWidth="224.0" text="Dashboard">
+            <Button fx:id="btnDashboard" mnemonicParsing="false" onAction="#backToDashboard" prefHeight="55.0" prefWidth="225.0" text="Dashboard">
                <font>
-                  <Font size="20.0" />
+                  <Font name="System Bold" size="20.0" />
                </font>
                <VBox.margin>
-                  <Insets left="900.0" top="20.0" />
+                  <Insets bottom="15.0" left="1065.0" />
                </VBox.margin>
             </Button>
          </children>

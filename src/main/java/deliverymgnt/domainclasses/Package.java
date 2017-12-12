@@ -39,7 +39,8 @@ public class Package {
 		inverseJoinColumns = @JoinColumn(name = "order_item_id"))
 	private Set<OrderItem> orderItems;
 
-	// there should be an attribute Tracking ID
+	// there should be an attribute Tracking ID 
+	// (next release?)
 	
 	@ManyToOne
 	@JoinColumn(name = "delivery_id")

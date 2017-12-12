@@ -239,6 +239,9 @@ public class CreateOrderController implements Initializable {
 		alert.showAndWait();
 		
 		// Switch to Dashboard
+		if (timer != null) {
+    		timer.cancel();
+    	}
 		UserViewController controller = (UserViewController)stageManager.switchScene(FxmlView.CUSTOMER);
 		controller.setCustomer(this.customer);
 	}
@@ -415,6 +418,11 @@ public class CreateOrderController implements Initializable {
 	
 	@FXML
 	private void backToDashboard (ActionEvent event) throws IOException {
+		
+		if (timer != null) {
+    		timer.cancel();
+    	}
+		
 		stageManager.switchScene(FxmlView.CUSTOMER);
 	}
 	

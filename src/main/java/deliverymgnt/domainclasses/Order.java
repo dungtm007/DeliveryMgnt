@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -96,7 +97,7 @@ public class Order {
 	}
 	
 	public String getOrderDateFormat() {
-		return new SimpleDateFormat("yyyy-MM-dd\nh:mm a").format(orderDate);
+		return new SimpleDateFormat("yyyy-MM-dd hh:mm").format(orderDate);
 	}
 
 	public void setOrderDate(Date orderDate) {
@@ -108,7 +109,7 @@ public class Order {
 	}
 	
 	public String getDeliveryDeadlineFormat() {
-		return new SimpleDateFormat("yyyy-MM-dd\nhh:mm").format(deliveryDeadline);
+		return new SimpleDateFormat("yyyy-MM-dd hh:mm").format(deliveryDeadline);
 	}
 
 	public void setDeliveryDeadline(Date deliveryDeadline) {
@@ -280,8 +281,9 @@ public class Order {
 		for(Delivery d : deliveries) {
 			methodsList.add(d.getDeliveryMethod().toString());
 		}
-		Collections.sort(methodsList);
-		String methods = "";;
+		List<String> nonDupMethodsList = methodsList.stream().distinct().collect(Collectors.toList());
+		Collections.sort(nonDupMethodsList);
+		String methods = "";
 		for(String m : methodsList) {
 			methods += m + "\n";	
 		}

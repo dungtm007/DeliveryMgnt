@@ -28,6 +28,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
@@ -47,6 +48,9 @@ public class OrdersListController implements Initializable {
     
     @FXML
     private Button btnViewDetails;
+    
+    @FXML
+    private Label lblTitle;
     
     @FXML
     private TableColumn<Order, DeliveryType> colDeliveryType;
@@ -96,31 +100,14 @@ public class OrdersListController implements Initializable {
 	
     @Override
 	public void initialize(URL location, ResourceBundle resources) {
-    
-    
-    	ordersList.setAll(orderService.findAll());
-    	tableViewOrders.setItems(ordersList);
-    	setColumnProperties();
-    	setTimerToRefreshData();
+
+    	lblTitle.setStyle("-fx-text-fill: blue");
+    	tableViewOrders.setStyle("-fx-font-size: 15");
     	
-		// Add data properties to table
-//		colCustomer.setCellValueFactory(new PropertyValueFactory<Order,Customer>("customer"));
-//		colDeliveryAddress.setCellValueFactory(new PropertyValueFactory<Order,Address>("deliveryAddress"));
-//		colDeliveryDeadline.setCellValueFactory(new PropertyValueFactory<Order,Date>("deliveryDeadline"));
-//		colDeliveryType.setCellValueFactory(new PropertyValueFactory<Order,DeliveryType>("deliveryType"));
-//		colOrderDate.setCellValueFactory(new PropertyValueFactory<Order,Date>("orderDate"));
-//		colOrderId.setCellValueFactory(new PropertyValueFactory<Order,Integer>("id"));
-//		colOrderStatus.setCellValueFactory(new PropertyValueFactory<Order,OrderStatus>("orderStatus"));
-//		colTotalPrice.setCellValueFactory(new PropertyValueFactory<Order,Double>("totalPrice"));
-//		
-//		tableDetails.setOnMousePressed(new EventHandler<MouseEvent>() {
-//		    @Override 
-//		    public void handle(MouseEvent event) {
-//		        if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-//		        		showOrderDetail(tableDetails.getSelectionModel().getSelectedItem());
-//		        }
-//		    }
-//		});
+    	loadDataForTableView();
+    	setColumnProperties();
+    	setDefaultSorting();
+    	setTimerToRefreshData();
 	}
     
     private void setTimerToRefreshData() {
@@ -140,8 +127,14 @@ public class OrdersListController implements Initializable {
 					}
 				});
 			}
-		}, 0, 10000);
+		}, 0, 15000);
 	}
+    
+    private void loadDataForTableView() {
+    	ordersList.clear();
+    	ordersList.setAll(orderService.findAll());
+    	tableViewOrders.setItems(ordersList);
+    }
     
 	private void setColumnProperties(){
 		
@@ -155,9 +148,16 @@ public class OrdersListController implements Initializable {
 		colOrderStatus.setCellValueFactory(new PropertyValueFactory<>("orderStatus"));
 		
 		colPackages.setStyle("-fx-text-fill: blue; -fx-font-weight:bold;");
-		colMethods.setStyle("-fx-text-fill: orange; -fx-font-weight:bold;");
+		colMethods.setStyle("-fx-text-fill: #E58817; -fx-font-weight:bold;");
+		colOrderStatus.setStyle("-fx-font-weight:bold;");
 	}
     
+	private void setDefaultSorting() {
+		colOrderId.setSortType(TableColumn.SortType.DESCENDING);
+		tableViewOrders.getSortOrder().add(colOrderId);
+		tableViewOrders.sort();
+	}
+	
     @FXML
     void openViewOrderDetail(ActionEvent event) throws IOException {
 		
@@ -170,15 +170,23 @@ public class OrdersListController implements Initializable {
 			return ;
     	}
     	
+    	// Cancel Timer
+    	if (timer != null) {
+    		timer.cancel();
+    	}
     	ViewOrderDetailController controller = 
     			(ViewOrderDetailController) stageManager.switchScene(FxmlView.VIEW_ORDER_DETAILS);
     	controller.setOrder(order);
-    	
     }
 
     @FXML
     void backToDashboard(ActionEvent event) {
     	try {
+    		
+    		if (timer != null) {
+        		timer.cancel();
+        	}
+    		
 			stageManager.switchScene(FxmlView.MANAGER);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -187,8 +195,11 @@ public class OrdersListController implements Initializable {
     }
     
     void showOrderDetail(Order order) {
-    		// TODO: Switch screen to view order detail with order id
+		// TODO: Switch screen to view order detail with order id
     	try {
+    		if (timer != null) {
+        		timer.cancel();
+        	}
 			stageManager.switchScene(FxmlView.VIEW_ORDER_DETAILS);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

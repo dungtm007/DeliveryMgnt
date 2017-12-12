@@ -108,7 +108,7 @@ public class Order {
 	}
 	
 	public String getDeliveryDeadlineFormat() {
-		return new SimpleDateFormat("yyyy-MM-dd\nh:mm a").format(deliveryDeadline);
+		return new SimpleDateFormat("yyyy-MM-dd\nhh:mm").format(deliveryDeadline);
 	}
 
 	public void setDeliveryDeadline(Date deliveryDeadline) {

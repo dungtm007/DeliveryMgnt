@@ -284,10 +284,12 @@ public class CreateOrderController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		List<Product> products = productService.findAll();
+		productsList.clear();
 		productsList.addAll(products);
 		ddlProducts.setItems(productsList);
 		
 		List<Locker> lockers = lockerService.findAll();
+		lockersList.clear();
 		lockersList.addAll(lockers);
 		ddlLockers.setItems(lockersList);
 		

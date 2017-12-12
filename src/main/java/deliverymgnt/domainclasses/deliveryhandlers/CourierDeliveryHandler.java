@@ -107,16 +107,26 @@ public class CourierDeliveryHandler implements DeliveryHandler {
 	@Override
 	public double calculateDeliveryCost(Delivery delivery) {
 
-		double totalShippingWeight = 0.0;
-		
-		for(Package p : delivery.getPackages()) {
-			double shippingWeight = p.calculateShippingWeight();
-			totalShippingWeight += shippingWeight;
+		try {
+			double totalShippingWeight = 0.0;
+			
+			for(Package p : delivery.getPackages()) {
+				double shippingWeight = p.calculateShippingWeight();
+				totalShippingWeight += shippingWeight;
+			}
+			
+			// Ask the CourierSystem and pass the service (dollars per pound), totalChargedWeight and distance
+			double totalPrice = CourierSystem.calculateDeliveryCost(delivery.getCourieService(), totalShippingWeight, delivery.getDistance()); 
+			
+			return totalPrice;
 		}
-		
-		// Ask the CourierSystem and pass the service (dollars per pound), totalChargedWeight and distance
-		double totalPrice = CourierSystem.calculateDeliveryCost(delivery.getCourieService(), totalShippingWeight, delivery.getDistance()); 
-		
-		return totalPrice;
+		catch(Exception e) {
+			System.out.println(">>>>>> Error: Delivery" + delivery.getId());
+			Set<Package> ps = delivery.getPackages();
+			if (ps == null) {
+				System.out.println("Packages null");
+			}
+		}
+		return 0;
 	}
 }

@@ -54,18 +54,18 @@
                         <Insets top="35.0" />
                      </GridPane.margin>
                   </HBox>
-                  <Label fx:id="lblOrderStatus" alignment="CENTER" prefHeight="73.0" prefWidth="372.0" text="Status: Delivering" underline="true" GridPane.columnIndex="1">
+                  <Label fx:id="lblOrderStatus" prefHeight="73.0" prefWidth="372.0" text="Status: Delivering" underline="true" GridPane.columnIndex="1">
                      <font>
                         <Font size="36.0" />
                      </font>
                      <padding>
-                        <Insets bottom="5.0" left="15.0" right="5.0" top="15.0" />
+                        <Insets bottom="5.0" left="22.0" right="5.0" top="15.0" />
                      </padding>
                      <GridPane.margin>
                         <Insets top="35.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label prefHeight="50.0" prefWidth="689.0" text="Collected from Lincoln warehouse 349 Westminton Avenue, IA, 52557" textFill="#bc5e11" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                  <Label fx:id="lblWarehouse" prefHeight="50.0" prefWidth="1056.0" text="Collected from Lincoln warehouse 349 Westminton Avenue, IA, 52557" textFill="#bc5e11" GridPane.columnSpan="2" GridPane.rowIndex="2">
                      <font>
                         <Font name="System Bold Italic" size="20.0" />
                      </font>
@@ -84,15 +84,15 @@
                            <children>
                               <HBox fx:id="hBoxPackageInfo01" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="1050.0">
                                  <children>
-                                    <Label fx:id="lblPackageName01" prefHeight="65.0" prefWidth="257.0" text="Package #1">
+                                    <Label fx:id="lblPackageName01" prefHeight="65.0" prefWidth="227.0" text="Package #1">
                                        <font>
                                           <Font name="System Bold" size="30.0" />
                                        </font>
                                        <padding>
-                                          <Insets bottom="5.0" left="15.0" right="5.0" top="15.0" />
+                                          <Insets bottom="5.0" left="15.0" top="15.0" />
                                        </padding>
                                     </Label>
-                                    <Label fx:id="lblPackageStatus01" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="138.0" text="Status:&#10;Delivering" textAlignment="CENTER" textFill="#ea4314">
+                                    <Label fx:id="lblPackageStatus01" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="130.0" text="Status:&#10;Delivering" textAlignment="CENTER" textFill="#ea4314">
                                        <font>
                                           <Font name="System Bold" size="22.0" />
                                        </font>
@@ -100,10 +100,10 @@
                                           <Insets bottom="5.0" left="15.0" right="5.0" top="10.0" />
                                        </padding>
                                        <HBox.margin>
-                                          <Insets left="200.0" />
+                                          <Insets left="10.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <Label fx:id="lblPackageEA01" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="345.0" text="Estimated Arrival:&#10;Dec 23, 2017, 03:00 PM" textAlignment="CENTER">
+                                    <Label fx:id="lblPackageEA01" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="263.0" text="Estimated Arrival:&#10;Dec 23, 2017, 03:00 PM" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="22.0" />
                                        </font>
@@ -111,7 +111,18 @@
                                           <Insets bottom="5.0" left="15.0" right="5.0" top="10.0" />
                                        </padding>
                                        <HBox.margin>
-                                          <Insets left="80.0" />
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label fx:id="lblPackageEA011" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="263.0" text="Actual Arrival:&#10;Dec 23, 2017, 03:00 PM" textAlignment="CENTER">
+                                       <font>
+                                          <Font name="System Bold" size="22.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets bottom="5.0" left="15.0" right="5.0" top="10.0" />
+                                       </padding>
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
                                        </HBox.margin>
                                     </Label>
                                  </children>

@@ -45,6 +45,12 @@ public final class CourierSystem {
 		distanceZone1Weights.put(24, 38.41);
 		distanceZone1Weights.put(25, 39.67);
 		// ...
+		distanceZone1Weights.put(26, 40.85);
+		distanceZone1Weights.put(27,  42.16 );
+		distanceZone1Weights.put(28,  43.52 );
+		distanceZone1Weights.put(29, 44.72 );
+		distanceZone1Weights.put(30,  45.50 );
+		
 		
 	
 		// Zone 2: 151 - 300 miles
@@ -74,6 +80,12 @@ public final class CourierSystem {
 		distanceZone2Weights.put(24,  46.02);
 		distanceZone2Weights.put(25,  47.32);
 		// ...
+		distanceZone2Weights.put(26, 48.63);
+		distanceZone2Weights.put(27, 50.05);
+		distanceZone2Weights.put(28, 51.69);
+		distanceZone2Weights.put(29, 52.66);
+		distanceZone2Weights.put(30, 54.08);
+		
 		
 		return mappings;
 	}
@@ -114,6 +126,11 @@ public final class CourierSystem {
 		distanceZone1Weights.put(24, 12.65);
 		distanceZone1Weights.put(25, 12.79);
 		// ...
+		distanceZone1Weights.put(26, 13.28);
+		distanceZone1Weights.put(27, 13.60);
+		distanceZone1Weights.put(28, 13.84);
+		distanceZone1Weights.put(29, 14.13);
+		distanceZone1Weights.put(30, 14.28);
 		
 	
 		// Zone 2: 151 - 300 miles
@@ -143,7 +160,11 @@ public final class CourierSystem {
 		distanceZone2Weights.put(24, 14.63);
 		distanceZone2Weights.put(25,  14.93);
 		// ...
-		
+		distanceZone2Weights.put(26, 15.30);
+		distanceZone2Weights.put(27, 15.67);
+		distanceZone2Weights.put(28, 16.19);
+		distanceZone2Weights.put(29, 16.50);
+		distanceZone2Weights.put(30, 16.75);
 		
 		return mappings;
 	}

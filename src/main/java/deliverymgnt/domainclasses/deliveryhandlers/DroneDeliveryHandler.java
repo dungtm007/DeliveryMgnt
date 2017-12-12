@@ -73,7 +73,7 @@ public class DroneDeliveryHandler implements DeliveryHandler {
 		delivery.setEstimatedArrivalTime(estimatedArrival);
 	
 		// Drone start (update Drone status inside)
-		// (UPD) ...
+		// (Will be available in next release)
 		
 		// set delivery status is Delivering
 		delivery.setDeliveryStatus(DeliveryStatus.Delivering);

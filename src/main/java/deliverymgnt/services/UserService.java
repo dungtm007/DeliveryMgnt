@@ -8,5 +8,5 @@ import deliverymgnt.generic.GenericService;
 
 @Service
 public interface UserService extends GenericService<User> {
-	UserType authenticate(String user, String password);
+	User authenticate(String user, String password);
 }

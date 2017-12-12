@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -12,11 +14,14 @@ import org.springframework.stereotype.Controller;
 import deliverymgnt.domainclasses.Package;
 import deliverymgnt.config.StageManager;
 import deliverymgnt.domainclasses.Delivery;
+import deliverymgnt.domainclasses.DeliveryMethod;
 import deliverymgnt.domainclasses.DeliveryStatus;
+import deliverymgnt.domainclasses.DeliveryType;
 import deliverymgnt.domainclasses.Order;
 import deliverymgnt.domainclasses.OrderItem;
 import deliverymgnt.services.OrderService;
 import deliverymgnt.views.FxmlView;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -60,6 +65,7 @@ public class ViewOrderDetailController implements Initializable {
 	@FXML 
 	private Button btnOrdersList;
 	
+	private Timer timer;
 	
 	@Lazy
     @Autowired
@@ -92,9 +98,32 @@ public class ViewOrderDetailController implements Initializable {
 
 		lblOrderNo.setText(Integer.toString(this.order.getId()));
 		
-		lblOrderStatus.setText( this.order.getOrderStatus().toString());
+		lblOrderStatus.setText("Status: " + this.order.getOrderStatus().toString());
 		
 		loadPackages();
+		
+		//setTimerToRefreshData();
+	}
+	
+	private void setTimerToRefreshData() {
+		// Timer
+		timer = new Timer();
+		timer.scheduleAtFixedRate(new TimerTask() {
+			
+			@Override
+			public void run() {
+				Platform.runLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						// ...
+						// 
+						
+						
+					}
+				});
+			}
+		}, 0, 6000);
 	}
 	
 	private void loadPackages() {
@@ -213,7 +242,14 @@ public class ViewOrderDetailController implements Initializable {
 				Label lblPackageAddress = new Label();
 				String lblPackageAddressId = "lblPackageAddress" + packageId;
 				lblPackageAddress.setId(lblPackageAddressId);
-				lblPackageAddress.setText(d.getDeliveryAddress().toString() + " asdadasdaf asfsasdgdsgsgsdgdg");
+				
+				// UPD
+				if (d.getDeliveryType() == DeliveryType.HomeDelivery) {
+					lblPackageAddress.setText("Package will be delivered to " + d.getDeliveryAddress().toString());
+				}
+				else {
+					lblPackageAddress.setText("Package will be delivered to " + d.getLocker().toString());
+				}
 				lblPackageAddress.setFont(Font.font("System", FontWeight.BOLD, 19));
 				lblPackageAddress.setTextFill(Color.web("#bc5e11"));
 				lblPackageAddress.setPadding(new Insets(2, 2, 2, 25));
@@ -225,7 +261,12 @@ public class ViewOrderDetailController implements Initializable {
 				Label lblPackageDeliveryMethod = new Label();
 				String lblPackageDeliveryMethodId = "lblPackageDeliveryMethod" + packageId;
 				lblPackageDeliveryMethod.setId(lblPackageDeliveryMethodId);
-				lblPackageDeliveryMethod.setText(d.getDeliveryMethod().toString());
+				if (d.getDeliveryMethod() == DeliveryMethod.Courier) {
+					lblPackageDeliveryMethod.setText("Delivery is handled by Courier Vendor");	
+				}
+				else {
+					lblPackageDeliveryMethod.setText("Delivery is handled by our Drone Delivery(TM)");
+				}
 				lblPackageDeliveryMethod.setFont(Font.font("System", FontWeight.BOLD, 19));
 				lblPackageDeliveryMethod.setTextFill(Color.web("#bc5e11"));
 				lblPackageDeliveryMethod.setPadding(new Insets(2, 2, 2, 25));

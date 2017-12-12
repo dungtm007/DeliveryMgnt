@@ -2,7 +2,10 @@ package deliverymgnt.domainclasses;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,6 +21,10 @@ public class User {
 	@Column(name = "type")
 	private UserType type;
 	
+	@OneToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="customer_id")
+	private Customer customer;
+
 	public User() {
 		
 	}
@@ -34,5 +41,14 @@ public class User {
 	
 	public UserType getUserType() {
 		return type;
+	}
+	
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 }

@@ -129,4 +129,9 @@ public class Locker {
 		}
 		return occupied;
 	}
+	
+	@Override
+	public String toString() {
+		return "Locker #LCK" + String.format("%05d", id) + " -"  + lockerAddress.toString();
+	}
 }

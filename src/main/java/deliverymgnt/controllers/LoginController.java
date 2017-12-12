@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import deliverymgnt.views.FxmlView;
 import deliverymgnt.config.StageManager;
 import deliverymgnt.domainclasses.Customer;
+import deliverymgnt.domainclasses.User;
 import deliverymgnt.domainclasses.UserType;
 import deliverymgnt.services.CustomerService;
 import deliverymgnt.services.UserService;
@@ -51,28 +52,31 @@ public class LoginController implements Initializable {
     
     @FXML
     private void login(ActionEvent event) throws IOException{
-    		String user = getUsername();
-    		String pass = getPassword();
-    		if(user == null || pass == null) {
-    			lblLogin.setText("Login Failed.");
-    		} else {
-    			
-//    			OrdersListController controller = (OrdersListController)
-//				stageManager.switchScene(FxmlView.MANAGER);
-
-    			
-    			UserType type = userService.authenticate(getUsername(), getPassword());
-	    	    	if( type == UserType.CUSTOMER){    		    		
-	    	   		stageManager.switchScene(FxmlView.CREATE_ORDER); 		
-	    	    	}else if(type == UserType.MANAGER) {
-	    	    		stageManager.switchScene(FxmlView.MANAGER); 
-	    	    	}else{
-	    	    		lblLogin.setText("Login Failed.");
-	    	    	}
-    		}
     		
-    		
-    	
+    	String username = getUsername();
+		String password = getPassword();
+		
+		if(username == null || password == null) {
+			lblLogin.setText("Please enter username and password!");
+		} 
+		else {
+			
+			User user = userService.authenticate(getUsername(), getPassword());
+			
+	    	if(user.getUserType() == UserType.CUSTOMER) {    		    		
+	    		
+	    		UserViewController controller = (UserViewController)stageManager.switchScene(FxmlView.CUSTOMER);
+	    		controller.setCustomer(user.getCustomer());
+	    		
+	    	} else if(user.getUserType() == UserType.MANAGER) {
+	    		
+	    		stageManager.switchScene(FxmlView.MANAGER);
+	    		
+	    	} else {
+	    		
+	    		lblLogin.setText("Login Failed.");
+	    	}
+		}
     }
     
     public String getPassword() {

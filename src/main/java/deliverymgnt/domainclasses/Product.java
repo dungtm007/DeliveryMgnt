@@ -148,26 +148,6 @@ public class Product {
 				+ "Price: $" + price;
 	}
 
-//	@Override
-//	public int hashCode() {
-//		final int prime = 31;
-//		int result = 1;
-//		long temp;
-//		temp = Double.doubleToLongBits(height);
-//		result = prime * result + (int) (temp ^ (temp >>> 32));
-//		result = prime * result + id;
-//		temp = Double.doubleToLongBits(length);
-//		result = prime * result + (int) (temp ^ (temp >>> 32));
-//		result = prime * result + ((name == null) ? 0 : name.hashCode());
-//		temp = Double.doubleToLongBits(price);
-//		result = prime * result + (int) (temp ^ (temp >>> 32));
-//		temp = Double.doubleToLongBits(weight);
-//		result = prime * result + (int) (temp ^ (temp >>> 32));
-//		temp = Double.doubleToLongBits(width);
-//		result = prime * result + (int) (temp ^ (temp >>> 32));
-//		return result;
-//	}
-
 	@Override
 	public boolean equals(Object obj) {
 		

@@ -18,13 +18,18 @@ import deliverymgnt.config.StageManager;
 import deliverymgnt.domainclasses.Address;
 import deliverymgnt.domainclasses.Customer;
 import deliverymgnt.domainclasses.DeliveryType;
+import deliverymgnt.domainclasses.Locker;
 import deliverymgnt.domainclasses.Order;
 import deliverymgnt.domainclasses.OrderItem;
 import deliverymgnt.domainclasses.OrderStatus;
 import deliverymgnt.domainclasses.Product;
+import deliverymgnt.domainclasses.Warehouse;
 import deliverymgnt.services.CustomerService;
+import deliverymgnt.services.GeoComputingService;
+import deliverymgnt.services.LockerService;
 import deliverymgnt.services.OrderService;
 import deliverymgnt.services.ProductService;
+import deliverymgnt.services.impl.GeoComputingServiceImpl;
 import deliverymgnt.views.FxmlView;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -52,8 +57,11 @@ import javafx.scene.control.TableView;
 @Controller
 public class CreateOrderController implements Initializable {
 	
-	@FXML // product
+	@FXML
 	private ChoiceBox<Product> ddlProducts;
+	
+	@FXML
+	private ChoiceBox<Locker> ddlLockers;
 	
 	@FXML
 	private TextField txtAmount;
@@ -66,6 +74,9 @@ public class CreateOrderController implements Initializable {
 	
 	@FXML
 	private Label lblTotalPrice;
+	
+	@FXML
+	private Label lblSelectedLocker;
 	
 	@FXML
 	private TableView<OrderItem> tableOrderItems;
@@ -136,17 +147,22 @@ public class CreateOrderController implements Initializable {
 	@Autowired
 	private ProductService productService;
 	
+	@Autowired
+	private LockerService lockerService;
+	
 	@Lazy
     @Autowired
     private StageManager stageManager;
 	
 	private ObservableList<Product> productsList = FXCollections.observableArrayList();
 	private ObservableList<OrderItem> orderItemsList = FXCollections.observableArrayList();
+	private ObservableList<Locker> lockersList = FXCollections.observableArrayList();
 	
 	private Order order;
 	private Customer customer;
-	
 	private Timer timer;
+	private Locker nearestLocker;
+	
 	
 	@FXML
     private void selectProduct(ActionEvent event) throws IOException {
@@ -198,6 +214,7 @@ public class CreateOrderController implements Initializable {
 		OrderItem orderItem = tableOrderItems.getSelectionModel().getSelectedItem();
 		orderItemsList.remove(orderItem);
 		order.getOrderItems().remove(orderItem);
+		updateTotalPriceDisplay();
 	}
 	
 	private void updateTotalPriceDisplay() {
@@ -219,9 +236,11 @@ public class CreateOrderController implements Initializable {
 		
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.setContentText("Your order is placed successfully!");
-		alert.show();
+		alert.showAndWait();
 		
-		btnPlaceOrder.setText("Update Order");
+		// Switch to Dashboard
+		UserViewController controller = (UserViewController)stageManager.switchScene(FxmlView.CUSTOMER);
+		controller.setCustomer(this.customer);
 	}
 	
 	private boolean validateOrderBeforePlacement() {
@@ -268,6 +287,12 @@ public class CreateOrderController implements Initializable {
 		productsList.addAll(products);
 		ddlProducts.setItems(productsList);
 		
+		List<Locker> lockers = lockerService.findAll();
+		lockersList.addAll(lockers);
+		ddlLockers.setItems(lockersList);
+		
+		pnLocker.setVisible(false);
+		
 		ddlProducts.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Product>() {
             @Override
             public void changed(ObservableValue<? extends Product> observable, Product product1, Product product2) {
@@ -283,12 +308,23 @@ public class CreateOrderController implements Initializable {
             }
         });
 		
+		ddlLockers.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Locker>() {
+            @Override
+            public void changed(ObservableValue<? extends Locker> observable, Locker locker1, Locker locker2) {
+            	
+                lblSelectedLocker.setText(locker2.toString());
+                Address lockerAddr = locker2.getLockerAddress();
+                txtAddress.setText(lockerAddr.getAddress());
+                txtCity.setText(lockerAddr.getCity());
+                txtState.setText(lockerAddr.getState());
+                txtZip.setText(lockerAddr.getZip());
+                
+            }
+        });
+		
 		orderItemsList.clear();
 		tableOrderItems.setItems(orderItemsList);
 		setColumnProperties();
-		
-		// Temporary get customer
-		customer = customerService.find(1);
 		
 		// Timer
 		timer = new Timer();
@@ -324,7 +360,50 @@ public class CreateOrderController implements Initializable {
 	
 	@FXML
 	private void selectDeliveryOption (ActionEvent event) throws IOException {
-		pnLocker.setVisible(rdLocker.isSelected());
+		
+		boolean isLockerDelivery = rdLocker.isSelected();
+		pnLocker.setVisible(isLockerDelivery);
+		txtAddress.setEditable(!isLockerDelivery);
+		txtCity.setEditable(!isLockerDelivery);
+		txtState.setEditable(!isLockerDelivery);
+		txtZip.setEditable(!isLockerDelivery);
+		chkUseCustomerAddress.setDisable(isLockerDelivery);
+		
+		if (isLockerDelivery) {
+			if (nearestLocker == null) {
+				// Search for nearest locker to customer address
+				String customerAddress = customer.getAddress().toString();
+				
+				// Find the nearest warehouse with delivery address
+				GeoComputingService googleMapSvc = new GeoComputingServiceImpl();
+				double nearestDist = Double.MAX_VALUE;
+				
+				for(Locker locker : lockersList) {
+					String lockerAddress = locker.getLockerAddress().toString();
+					double dist = googleMapSvc.computeDistance(customerAddress, lockerAddress);
+					
+					System.out.println(">>>>>");
+					System.out.println(" Distance from customer address (" + customerAddress  + ")");
+					System.out.println(" to locker address (" + lockerAddress  + ") is:");
+					System.out.println("    " + dist + " miles");
+					System.out.println(">>>>>");
+					
+					if (dist < nearestDist) {
+						nearestDist = dist;
+						nearestLocker = locker;
+					} 
+				}
+			}
+			
+			if (nearestLocker != null) {
+				// set selected locker's address to address textboxes
+				Address lockerAddr = nearestLocker.getLockerAddress();
+				txtAddress.setText(lockerAddr.getAddress());
+				txtCity.setText(lockerAddr.getCity());
+				txtState.setText(lockerAddr.getState());
+				txtZip.setText(lockerAddr.getZip());
+			}
+		}
 	}
 	
 	@FXML
@@ -334,7 +413,7 @@ public class CreateOrderController implements Initializable {
 	
 	@FXML
 	private void backToDashboard (ActionEvent event) throws IOException {
-		stageManager.switchScene(FxmlView.MANAGER);
+		stageManager.switchScene(FxmlView.CUSTOMER);
 	}
 	
 	@FXML
@@ -380,12 +459,28 @@ public class CreateOrderController implements Initializable {
 		order.setDeliveryAddress(deliveryAddress);
 	}
 	
+	private void setLockerForOrderIfAny() {
+		if (rdLocker.isSelected()) {
+			Locker selectedLocker = ddlLockers.getSelectionModel().getSelectedItem();
+			if (selectedLocker != null) {
+				order.setLocker(selectedLocker);
+			}
+			else {
+				order.setLocker(nearestLocker);
+			}
+		}
+	}
+	
 	private void reviewOrderBeforePlacement() {
 		order.setOrderDate(new Date());
 		setDeliveryDeadlineForOrder();
 		setDeliveryTypeForOrder();
 		setDeliveryAddressForOrder();
+		setLockerForOrderIfAny();
 		order.setOrderStatus(OrderStatus.Entered);
 	}
 	
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 }

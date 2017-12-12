@@ -13,6 +13,7 @@ import deliverymgnt.domainclasses.Delivery;
 import deliverymgnt.domainclasses.DeliveryMethod;
 import deliverymgnt.domainclasses.DeliveryStatus;
 import deliverymgnt.domainclasses.DeliveryType;
+import deliverymgnt.domainclasses.Locker;
 import deliverymgnt.domainclasses.Order;
 import deliverymgnt.domainclasses.OrderItem;
 import deliverymgnt.domainclasses.OrderStatus;
@@ -68,9 +69,6 @@ public class DeliveryBusinessLogic {
 	}
 	
 	private static double findWarehouse(Order order, WarehouseService warehouseService) {
-		
-		// (UPD) Run a logic to detect the warehouse to collect all products
-		// (UPD) Call Google Map service to calculate distance from that warehouse to delivery address
 		
 		Address addr = order.getDeliveryAddress();
 		String deliveryAddress = addr.toString();
@@ -200,6 +198,11 @@ public class DeliveryBusinessLogic {
 				order.getDeliveryAddress(),
 				deadline, distance, distance);
 		
+		Locker locker = order.getLocker();
+		if (locker != null) {
+			delivery.setLocker(locker);
+		}
+		
 		// If Drone delivery    : there is only 1 SMALL PACKAGE (5 lbs) for all order items
 		if (deliveryMethod == DeliveryMethod.Drone) {
 			
@@ -236,6 +239,11 @@ public class DeliveryBusinessLogic {
 				order.getDeliveryAddress(),
 				deadline, distance, distance);
 
+		Locker locker = order.getLocker();
+		if (locker != null) {
+			delivery.setLocker(locker);
+		}
+		
 		// If Drone delivery    : there is only 1 SMALL PACKAGE (5 lbs) for all order items
 		if (deliveryMethod == DeliveryMethod.Drone) {
 			

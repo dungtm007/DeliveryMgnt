@@ -53,6 +53,10 @@ public class Order {
 	@JoinColumn(name="warehouse_id")
 	private Warehouse warehouse;
 	
+	@ManyToOne
+	@JoinColumn(name = "locker_id")
+	private Locker locker;
+	
 	@OneToMany(mappedBy="order", fetch=FetchType.EAGER)
 	private Set<OrderItem> orderItems;
 	
@@ -134,6 +138,14 @@ public class Order {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	public Locker getLocker() {
+		return locker;
+	}
+
+	public void setLocker(Locker locker) {
+		this.locker = locker;
+	}
 
 	public void setOrderItems(Set<OrderItem> orderItems) {
 		this.orderItems = orderItems;
@@ -213,6 +225,14 @@ public class Order {
 
 	public DeliveryType getDeliveryType() {
 		return deliveryType;
+	}
+	
+	public String getDeliveryTypeShortDesc() {
+		if (deliveryType == DeliveryType.HomeDelivery) {
+			return "Home";
+		} else {
+			return "Locker Pickup";
+		}
 	}
 
 	public void setDeliveryType(DeliveryType deliveryType) {

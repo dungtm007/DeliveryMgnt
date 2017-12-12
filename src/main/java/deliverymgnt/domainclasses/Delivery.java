@@ -75,6 +75,10 @@ public class Delivery {
 	@JoinColumn(name = "order_id")
 	private Order order;
 	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "locker_id")
+	private Locker locker;
+
 	@OneToMany(mappedBy = "delivery", fetch=FetchType.EAGER)
 	private Set<Package> packages;
 	
@@ -172,8 +176,17 @@ public class Delivery {
 	public Order getOrder() {
 		return order;
 	}
+	
 	public void setOrder(Order order) {
 		this.order = order;
+	}
+	
+	public Locker getLocker() {
+		return locker;
+	}
+
+	public void setLocker(Locker locker) {
+		this.locker = locker;
 	}
 	
 	public Set<Package> getPackages() {

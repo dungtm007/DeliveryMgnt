@@ -93,15 +93,14 @@ public class CourierDeliveryHandler implements DeliveryHandler {
 		
 		// If this is Locker Delivery
 		// Run Locker allocation business
-		if (delivery.getDeliveryType() == DeliveryType.LockerPickupDelivery) {
-			// (UPD) ...
-			delivery.setDeliveryStatus(DeliveryStatus.Delivered);
-		}
+		// (Will be available in next release)
+//		if (delivery.getDeliveryType() == DeliveryType.LockerPickupDelivery) {
+//			delivery.setDeliveryStatus(DeliveryStatus.Delivered);
+//		}
 		
 		// Update cost
 		double cost = calculateDeliveryCost(delivery);
 		delivery.setDeliveryCost(cost);
-		
 		deliveryService.save(delivery);
 	}
 

@@ -140,7 +140,7 @@ public class OrdersListController implements Initializable {
 					}
 				});
 			}
-		}, 0, 6000);
+		}, 0, 10000);
 	}
     
 	private void setColumnProperties(){

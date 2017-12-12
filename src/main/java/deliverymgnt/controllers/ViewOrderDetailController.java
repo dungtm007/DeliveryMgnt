@@ -2,6 +2,8 @@ package deliverymgnt.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import deliverymgnt.domainclasses.Package;
+import deliverymgnt.domainclasses.Warehouse;
 import deliverymgnt.config.StageManager;
 import deliverymgnt.domainclasses.Delivery;
 import deliverymgnt.domainclasses.DeliveryMethod;
@@ -35,7 +38,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
@@ -64,6 +66,9 @@ public class ViewOrderDetailController implements Initializable {
 	
 	@FXML 
 	private Button btnOrdersList;
+	
+	@FXML
+	private Label lblWarehouse;
 	
 	private Timer timer;
 	
@@ -97,11 +102,12 @@ public class ViewOrderDetailController implements Initializable {
 	private void loadOrderIntoView() {
 
 		lblOrderNo.setText(Integer.toString(this.order.getId()));
-		
 		lblOrderStatus.setText("Status: " + this.order.getOrderStatus().toString());
-		
+		Warehouse wh = order.getWarehouse();
+		String whName = wh != null ? wh.getName() : "";
+		String whAddress = wh != null ? wh.getWarehouseAddress().toString() : "";
+		lblWarehouse.setText("Collected from warehouse " + whName + " - " + whAddress);
 		loadPackages();
-		
 		//setTimerToRefreshData();
 	}
 	
@@ -170,16 +176,15 @@ public class ViewOrderDetailController implements Initializable {
 				hBoxPackageInfo.setPrefWidth(1050);
 				hBoxPackageInfo.minWidth(Control.USE_PREF_SIZE);
 				hBoxPackageInfo.maxWidth(Control.USE_PREF_SIZE);
-				
 				// ----lblPackageName01
 				Label lblPackageName = new Label();
 				String lblPackageNameId = "lblPackageName" + packageId;
 				lblPackageName.setId(lblPackageNameId);
 				lblPackageName.setText("Package #" + packageId);
 				hBoxPackageInfo.getChildren().add(lblPackageName);
-				lblPackageName.setPadding(new Insets(15, 5, 5, 15));
+				lblPackageName.setPadding(new Insets(15, 0, 5, 15));
 				lblPackageName.setFont(Font.font("System", FontWeight.BOLD, 30));
-				lblPackageName.setPrefWidth(257);
+				lblPackageName.setPrefWidth(227);
 				// ----lblPackageStatus01
 				Label lblPackageStatus = new Label();
 				String lblPackageStatusId = "lblPackageStatus" + packageId;
@@ -196,13 +201,13 @@ public class ViewOrderDetailController implements Initializable {
 					lblPackageStatus.setTextFill(Color.web("#ea4314"));
 				}
 				hBoxPackageInfo.getChildren().add(lblPackageStatus);
-				HBox.setMargin(lblPackageStatus, new Insets(0, 0, 0, 200));
+				HBox.setMargin(lblPackageStatus, new Insets(0, 0, 0, 10));
 				lblPackageStatus.setFont(Font.font("System", FontWeight.BOLD, 22));
 				lblPackageStatus.setPadding(new Insets(10, 5, 5, 15));
 				lblPackageStatus.setPrefHeight(100);
 				lblPackageStatus.setMinHeight(Control.USE_PREF_SIZE);
 				lblPackageStatus.setMaxHeight(Control.USE_PREF_SIZE);
-				lblPackageStatus.setPrefWidth(138);
+				lblPackageStatus.setPrefWidth(130);
 				lblPackageStatus.setMinWidth(Control.USE_PREF_SIZE);
 				lblPackageStatus.setMaxWidth(Control.USE_PREF_SIZE);
 				lblPackageStatus.setTextAlignment(TextAlignment.CENTER);
@@ -210,9 +215,12 @@ public class ViewOrderDetailController implements Initializable {
 				Label lblPackageEA = new Label();
 				String lblPackageEAId = "lblPackageEA" + packageId;
 				lblPackageEA.setId(lblPackageEAId);
-				lblPackageEA.setText(d.getEstimatedArrivalTime().toString());
+				String estimatedArrivalStr = "Estimated Arrival:\n";
+				Date dea = d.getEstimatedArrivalTime();
+				String deaFormat = dea != null ? new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(dea) : "";
+				lblPackageEA.setText(estimatedArrivalStr + deaFormat);
 				hBoxPackageInfo.getChildren().add(lblPackageEA);
-				HBox.setMargin(lblPackageEA, new Insets(0, 0, 0, 80));
+				HBox.setMargin(lblPackageEA, new Insets(0, 0, 0, 10));
 				lblPackageEA.setFont(Font.font("System", FontWeight.BOLD, 22));
 				if (dStatus == DeliveryStatus.Delivered ||
 						dStatus == DeliveryStatus.Finished) {
@@ -227,11 +235,38 @@ public class ViewOrderDetailController implements Initializable {
 				lblPackageEA.setPrefHeight(100);
 				lblPackageEA.setMinHeight(Control.USE_PREF_SIZE);
 				lblPackageEA.setMaxHeight(Control.USE_PREF_SIZE);
-				lblPackageEA.setPrefWidth(277);
+				lblPackageEA.setPrefWidth(263);
 				lblPackageEA.setMinWidth(Control.USE_PREF_SIZE);
 				lblPackageEA.setMaxWidth(Control.USE_PREF_SIZE);
 				lblPackageEA.setTextAlignment(TextAlignment.CENTER);
-				
+				// ----lblPackageAA
+				Label lblPackageAA = new Label();
+				String lblPackageAAId = "lblPackageAA" + packageId;
+				lblPackageAA.setId(lblPackageAAId);
+				String actualArrivalStr = "Actual Arrival:\n";
+				Date daa = d.getActualArrivalTime();
+				String daaFormat = daa != null ? new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(daa) : "";
+				lblPackageAA.setText(actualArrivalStr + daaFormat);
+				hBoxPackageInfo.getChildren().add(lblPackageAA);
+				HBox.setMargin(lblPackageAA, new Insets(0, 0, 0, 10));
+				lblPackageAA.setFont(Font.font("System", FontWeight.BOLD, 22));
+				if (dStatus == DeliveryStatus.Delivered ||
+						dStatus == DeliveryStatus.Finished) {
+					lblPackageAA.setTextFill(Color.web("#258604"));
+				} else if (dStatus == DeliveryStatus.Delivering) {
+					lblPackageAA.setTextFill(Color.web("#2f3ad6"));
+				}
+				else {
+					lblPackageAA.setTextFill(Color.web("#ea4314"));
+				}
+				lblPackageAA.setPadding(new Insets(10, 5, 5, 15));
+				lblPackageAA.setPrefHeight(100);
+				lblPackageAA.setMinHeight(Control.USE_PREF_SIZE);
+				lblPackageAA.setMaxHeight(Control.USE_PREF_SIZE);
+				lblPackageAA.setPrefWidth(263);
+				lblPackageAA.setMinWidth(Control.USE_PREF_SIZE);
+				lblPackageAA.setMaxWidth(Control.USE_PREF_SIZE);
+				lblPackageAA.setTextAlignment(TextAlignment.CENTER);
 				// --vBoxPackageDelivery01
 				VBox vBoxPackageDelivery = new VBox();
 				String vBoxPackageDeliveryId = "vBoxPackageDelivery" + packageId;
@@ -307,7 +342,7 @@ public class ViewOrderDetailController implements Initializable {
 					lblProductName.setId(lblProductNameId);
 					lblProductName.setText(oi.getProduct().getName());
 					hBoxProduct.getChildren().add(lblProductName);
-					lblProductName.setFont(Font.font("System", 16));
+					lblProductName.setFont(Font.font("System", 17));
 					HBox.setMargin(lblProductName, new Insets(10, 0, 10, 0));
 					lblProductName.setPadding(new Insets(2, 2, 2, 25));
 				}

@@ -125,7 +125,7 @@ public class ManageLockerController implements Initializable {
     				&&  bigBox != null && validateNum(bigBox)
     				&& mediumBox != null && validateNum(mediumBox)
     				&& smallBox != null && validateNum(smallBox)) {
-    			Locker a = new Locker(add, 
+    			Locker a = new Locker(new Address(add,null,null,null), 
     					Integer.valueOf(bigBox), 
     					Integer.valueOf(mediumBox),
     					Integer.valueOf(smallBox));

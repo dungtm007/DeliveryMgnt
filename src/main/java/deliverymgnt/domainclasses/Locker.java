@@ -2,7 +2,10 @@ package deliverymgnt.domainclasses;
 
 import java.util.Set;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,8 +27,14 @@ public class Locker {
 	@Column(name="id")
 	private int id;
 
-	@Column(name="address")
-	private String address;
+	@Embedded
+	@AttributeOverrides({
+		@AttributeOverride(name = "address", column = @Column(name = "locker_addr_address")),
+		@AttributeOverride(name = "city", column = @Column(name = "locker_addr_city")),
+		@AttributeOverride(name = "state", column = @Column(name = "locker_addr_state")),                       
+        @AttributeOverride(name = "zip", column = @Column(name = "locker_addr_zip"))
+    })
+	private Address lockerAddress;
 	
 	@Column(name="large_boxes")
 	private int numOfLargeBox;
@@ -35,7 +44,7 @@ public class Locker {
 	
 	@Column(name="small_boxes")
 	private int numOfSmallBox;
-	
+
 	@OneToMany(mappedBy="locker")
 	private Set<Box> boxes;  
 	
@@ -43,8 +52,8 @@ public class Locker {
 		
 	}
 	
-	public Locker(String address, int numOfLargeBox, int numOfMediumBox, int numOfSmallBox) {
-		this.address = address;
+	public Locker(Address address, int numOfLargeBox, int numOfMediumBox, int numOfSmallBox) {
+		this.lockerAddress = address;
 		// there should be corresponding boxes created
 		this.numOfLargeBox = numOfLargeBox;
 		this.numOfMediumBox = numOfMediumBox;
@@ -59,12 +68,12 @@ public class Locker {
 		this.id = id;
 	}
 
-	public String getAddress() {
-		return address;
+	public Address getLockerAddress() {
+		return lockerAddress;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setLockerAddress(Address lockerAddress) {
+		this.lockerAddress = lockerAddress;
 	}
 
 	public int getNumOfLargeBox() {

@@ -1,0 +1,57 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.6.5
+-- Dumped by pg_dump version 9.6.5
+
+-- Started on 2017-12-11 21:53:19
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET search_path = public, pg_catalog;
+
+--
+-- TOC entry 2193 (class 0 OID 33990)
+-- Dependencies: 205
+-- Data for Name: products; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO products (id, height, length, name, price, weight, width, product_img_source) VALUES (2, 3.6200000000000001, 2.9100000000000001, 'Python case', 12.76, 0.27000000000000002, 6.0499999999999998, '/pictures/productImg02.jpg');
+INSERT INTO products (id, height, length, name, price, weight, width, product_img_source) VALUES (1, 12.199999999999999, 5, 'Hibernate Shoes', 17.489999999999998, 1.3999999999999999, 7.0300000000000002, '/pictures/productImg01.jpg');
+INSERT INTO products (id, height, length, name, price, weight, width, product_img_source) VALUES (3, 1.8999999999999999, 6.7000000000000002, 'Mars T-Shirt', 4.2000000000000002, 0.82999999999999996, 1.3999999999999999, '/pictures/productImg03.jpg');
+INSERT INTO products (id, height, length, name, price, weight, width, product_img_source) VALUES (6, 14.300000000000001, 12.5, 'Beard head', 15.6, 0.69999999999999996, 1.3999999999999999, '/pictures/productImg06.jpg');
+INSERT INTO products (id, height, length, name, price, weight, width, product_img_source) VALUES (5, 1.5, 15, 'Kitchen floating shelf
+', 7.0499999999999998, 2.6000000000000001, 4.6500000000000004, '/pictures/productImg05.jpg');
+INSERT INTO products (id, height, length, name, price, weight, width, product_img_source) VALUES (8, 1.3, 2.7999999999999998, 'Men''s Casual Outdoor & Indoor Flip-Flops ', 14.99, 2.1000000000000001, 13.1, '/pictures/productImg08.jpg');
+INSERT INTO products (id, height, length, name, price, weight, width, product_img_source) VALUES (7, 12, 4.5, 'Truck toy
+', 21.84, 1.5, 5.2000000000000002, '/pictures/productImg07.jpg');
+INSERT INTO products (id, height, length, name, price, weight, width, product_img_source) VALUES (10, 15.4, 9.5, 'Hammermill Paper
+', 32, 17, 6.7000000000000002, '/pictures/productImg10.jpg');
+INSERT INTO products (id, height, length, name, price, weight, width, product_img_source) VALUES (9, 2.8999999999999999, 8.9000000000000004, 'Phillips OneBlade
+', 63.689999999999998, 0.25, 5.0999999999999996, '/pictures/productImg09.jpg');
+INSERT INTO products (id, height, length, name, price, weight, width, product_img_source) VALUES (4, 4.5, 3.6499999999999999, 'Alexa remote control', 45.729999999999997, 1.2, 3.2000000000000002, '/pictures/productImg04.png');
+
+
+--
+-- TOC entry 2198 (class 0 OID 0)
+-- Dependencies: 204
+-- Name: products_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('products_id_seq', 1, false);
+
+
+-- Completed on 2017-12-11 21:53:19
+
+--
+-- PostgreSQL database dump complete
+--
+

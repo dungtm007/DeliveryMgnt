@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -281,11 +282,12 @@ public class Order {
 		for(Delivery d : deliveries) {
 			methodsList.add(d.getDeliveryMethod().toString());
 		}
-		List<String> nonDupMethodsList = methodsList.stream().distinct().collect(Collectors.toList());
-		Collections.sort(nonDupMethodsList);
 		String methods = "";
-		for(String m : methodsList) {
-			methods += m + "\n";	
+		if (methodsList.contains(DeliveryMethod.Courier.toString())) {
+			methods += "Courier" + "\n";
+		}
+		if (methodsList.contains(DeliveryMethod.Drone.toString())) {
+			methods += "Drone" + "\n";
 		}
 		return methods;
 	}

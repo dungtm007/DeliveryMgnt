@@ -29,10 +29,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 
 @Controller
 public class OrdersListController implements Initializable {
@@ -53,43 +56,43 @@ public class OrdersListController implements Initializable {
     private Label lblTitle;
     
     @FXML
-    private TableColumn<Order, DeliveryType> colDeliveryType;
+    private TableColumn<Order, String> colDeliveryType;
 
     @FXML
-    private TableColumn<Order, Address> colDeliveryAddress;
+    private TableColumn<Order, String> colDistance;
     
     @FXML
-    private TableColumn<Order, Address> colMethods;
+    private TableColumn<Order, String> colMethods;
     
     @FXML
-    private TableColumn<Order, Address> colPackages;
+    private TableColumn<Order, String> colPackages;
     
     @FXML
-    private TableColumn<Order, Address> colViewDetails;
+    private TableColumn<Order, String> colShippingWeight;
 
     @FXML
-    private TableColumn<Order, Date> colOrderDate;
+    private TableColumn<Order, String> colOrderDate;
 
     @FXML
-    private TableColumn<Order, Date> colDeliveryDeadline;
+    private TableColumn<Order, String> colDeliveryDeadline;
 
     @FXML
     private TableColumn<Order, OrderStatus> colOrderStatus;
 
     @FXML
-    private TableColumn<Order, Double> colTotalPrice;
+    private TableColumn<Order, String> colTotalPrice;
 
     @FXML
-    private TableColumn<Order, Customer> colCustomer;
+    private TableColumn<Order, String> colDelivery;
 
     @FXML
-    private TableColumn<Order, Integer> colOrderId;
+    private TableColumn<Order, String> colOrderId;
+    
+    @FXML
+    private AnchorPane apMain;
     
     @Autowired
 	private OrderService orderService;
-	
-	@Autowired
-	private CustomerService customerService;
 	
 	@Lazy
     @Autowired
@@ -101,9 +104,7 @@ public class OrdersListController implements Initializable {
     @Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-    	lblTitle.setStyle("-fx-text-fill: blue");
-    	tableViewOrders.setStyle("-fx-font-size: 15");
-    	
+    	tableViewOrders.setStyle("-fx-font-size: 17");
     	loadDataForTableView();
     	setColumnProperties();
     	setDefaultSorting();
@@ -142,14 +143,23 @@ public class OrdersListController implements Initializable {
 		colOrderDate.setCellValueFactory(new PropertyValueFactory<>("OrderDateFormat"));
 		colDeliveryDeadline.setCellValueFactory(new PropertyValueFactory<>("deliveryDeadlineFormat"));
 		colDeliveryType.setCellValueFactory(new PropertyValueFactory<>("deliveryTypeShortDesc"));
-		colDeliveryAddress.setCellValueFactory(new PropertyValueFactory<>("deliveryAddress"));
+		colDistance.setCellValueFactory(new PropertyValueFactory<>("distanceFormat"));
+		colShippingWeight.setCellValueFactory(new PropertyValueFactory<>("shippingWeight"));
 		colPackages.setCellValueFactory(new PropertyValueFactory<>("packagesShortSummary"));
 		colMethods.setCellValueFactory(new PropertyValueFactory<>("deliveryMethods"));
 		colOrderStatus.setCellValueFactory(new PropertyValueFactory<>("orderStatus"));
 		
+		colOrderId.setStyle("-fx-underline: true;");
+		colOrderDate.setStyle("-fx-underline: true;");
+		
 		colPackages.setStyle("-fx-text-fill: blue; -fx-font-weight:bold;");
 		colMethods.setStyle("-fx-text-fill: #E58817; -fx-font-weight:bold;");
-		colOrderStatus.setStyle("-fx-font-weight:bold;");
+		colOrderStatus.setStyle("-fx-font-weight:bold; -fx-underline: true;");
+
+		colDeliveryDeadline.setStyle("-fx-font-weight:bold;");
+		colDeliveryType.setStyle("-fx-font-weight:bold;");
+		colShippingWeight.setStyle("-fx-font-weight:bold;");
+		colDistance.setStyle("-fx-font-weight:bold;");
 	}
     
 	private void setDefaultSorting() {

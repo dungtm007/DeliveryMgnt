@@ -214,6 +214,10 @@ public class Delivery {
 		return distance;
 	}
 	
+	public String getDistanceFormat() {
+		return distance + " mile(s)";
+	}
+	
 	public void setDistance(double distance) {
 		this.distance = distance;
 	}

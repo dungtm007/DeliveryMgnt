@@ -63,6 +63,7 @@ public class Order {
 	
 	@OneToMany(mappedBy="order", fetch=FetchType.EAGER)
 	private Set<Delivery> deliveries;
+	
 
 	@Embedded
 	@AttributeOverrides({
@@ -268,7 +269,6 @@ public class Order {
 			for(Package p : d.getPackages()) {
 				count++;
 				summary += "Package " + count + ": " + d.getDeliveryStatus() + "\n";
-				
 			}
 		}
 		summary = Integer.toString(count) + " package(s)" + "\n" + "-----" + "\n" + summary;
@@ -290,12 +290,26 @@ public class Order {
 		return methods;
 	}
 	
+	// For binding data to front-end
+	public String getDistanceFormat() {
+		double distance = 0.0;
+		for(Delivery d : getDeliveries()) {
+			distance = d.getDistance();
+			break;
+		}
+		return distance + " mile(s)";	
+	}
+	
+	// For binding data to front-end
+	public String getShippingWeight() {
+		return String.format("%.2f", calculateTotalShippingWeight()) + " lb(s)";
+	}
+	
 	public boolean hasProduct(Product product) {
 		for(OrderItem oi : orderItems) {
 			if (oi.getProduct().equals(product)) {
 				return true;
 			}
-				
 		}
 		return false;
 	}

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
@@ -8,31 +9,39 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1570.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deliverymgnt.controllers.OrdersListController">
+<AnchorPane fx:id="apMain" prefHeight="800.0" prefWidth="1570.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deliverymgnt.controllers.OrdersListController">
    <children>
-      <TableView fx:id="tableViewOrders" layoutX="43.0" layoutY="129.0" prefHeight="584.0" prefWidth="1321.0" AnchorPane.bottomAnchor="87.0" AnchorPane.leftAnchor="43.0" AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="129.0">
+      <TableView fx:id="tableViewOrders" layoutX="23.0" layoutY="129.0" prefHeight="584.0" prefWidth="1525.0" AnchorPane.bottomAnchor="87.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="129.0">
         <columns>
           <TableColumn fx:id="colOrderId" prefWidth="105.0" text="Order Id" />
           <TableColumn fx:id="colOrderDate" minWidth="0.0" prefWidth="171.0" text="Date" />
-            <TableColumn fx:id="colDeliveryDeadline" minWidth="0.0" prefWidth="171.0" text="Delivery&#10;Deadline" />
-            <TableColumn fx:id="colDeliveryType" prefWidth="119.0" text="Type" />
-            <TableColumn fx:id="colDeliveryAddress" prefWidth="317.0" text="Address" />
-            <TableColumn fx:id="colPackages" prefWidth="185.0" text="Packages" />
-            <TableColumn fx:id="colMethods" minWidth="0.0" prefWidth="158.0" text="Applied&#10;Deliveries" />
-            <TableColumn fx:id="colOrderStatus" minWidth="0.0" prefWidth="92.0" text="Order&#10;Status" />
+            <TableColumn fx:id="colDelivery" prefWidth="1080.0" text="Delivery">
+               <columns>
+                  <TableColumn fx:id="colDeliveryDeadline" minWidth="0.0" prefWidth="171.0" text="Deadline" />
+                  <TableColumn fx:id="colDeliveryType" prefWidth="128.0" text="Type" />
+                  <TableColumn fx:id="colShippingWeight" prefWidth="161.0" text="Shipping&#10;Weight" />
+                  <TableColumn fx:id="colDistance" prefWidth="128.0" text="Distance" />
+                  <TableColumn fx:id="colPackages" prefWidth="288.0" text="Packages" />
+                  <TableColumn fx:id="colMethods" minWidth="0.0" prefWidth="158.0" text="Applied&#10;Deliveries" />
+               </columns>
+            </TableColumn>
+            <TableColumn fx:id="colOrderStatus" minWidth="0.0" prefWidth="126.0" text="Order&#10;Status" />
         </columns>
       </TableView>
       <Label fx:id="lblTitle" alignment="TOP_CENTER" layoutX="355.0" layoutY="36.0" prefHeight="55.0" prefWidth="550.0" snapToPixel="false" text="Orders &amp; Deliveries" AnchorPane.leftAnchor="355.0" AnchorPane.rightAnchor="295.0" AnchorPane.topAnchor="36.0">
          <font>
             <Font name="System Bold" size="39.0" />
          </font>
+         <effect>
+            <Blend />
+         </effect>
       </Label>
-      <Button fx:id="btnDashboard" layoutX="1309.0" layoutY="724.0" mnemonicParsing="false" onAction="#backToDashboard" prefHeight="55.0" prefWidth="225.0" text="Dashboard">
+      <Button fx:id="btnDashboard" layoutX="1323.0" layoutY="724.0" mnemonicParsing="false" onAction="#backToDashboard" prefHeight="55.0" prefWidth="225.0" text="Dashboard">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Button>
-      <Button fx:id="btnViewDetails" layoutX="1060.0" layoutY="724.0" mnemonicParsing="false" onAction="#openViewOrderDetail" prefHeight="55.0" prefWidth="225.0" text="View Details">
+      <Button fx:id="btnViewDetails" layoutX="1080.0" layoutY="724.0" mnemonicParsing="false" onAction="#openViewOrderDetail" prefHeight="55.0" prefWidth="225.0" text="View Details">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>

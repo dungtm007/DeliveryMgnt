@@ -139,9 +139,6 @@ public class CreateOrderController implements Initializable {
 	private Pane pnLocker;
 	
 	@Autowired
-	private CustomerService customerService;
-	
-	@Autowired
 	private OrderService orderService;
 	
 	@Autowired

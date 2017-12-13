@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import deliverymgnt.domainclasses.Delivery;
+import deliverymgnt.domainclasses.DeliveryMethod;
 import deliverymgnt.domainclasses.DeliveryStatus;
 import deliverymgnt.domainclasses.Order;
 import deliverymgnt.domainclasses.Package;
@@ -82,6 +83,11 @@ public class DeliveryServiceImpl implements DeliveryService {
 	@Override
 	public List<Delivery> findByStartTimeGreaterThanEqualAndStartTimeLessThanEqual(Date fromDate, Date toDate) {
 		return deliveryRepository.findByStartTimeGreaterThanEqualAndStartTimeLessThanEqual(fromDate, toDate);
+	}
+	
+	@Override
+	public List<Delivery> findByStartTimeGreaterThanEqualAndStartTimeLessThanEqualAndDeliveryMethod(Date fromDate, Date toDate, DeliveryMethod method) {
+		return deliveryRepository.findByStartTimeGreaterThanEqualAndStartTimeLessThanEqualAndDeliveryMethod(fromDate, toDate, method);
 	}
 
 }

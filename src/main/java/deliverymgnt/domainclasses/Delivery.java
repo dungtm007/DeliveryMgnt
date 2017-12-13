@@ -128,7 +128,7 @@ public class Delivery {
 	}
 	
 	public String getStartTimeFormat() {
-		return new SimpleDateFormat("yyyy-MM-dd hh:mm").format(startTime);
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(startTime);
 	}
 
 	public void setStartTime(Date startTime) {
@@ -234,12 +234,20 @@ public class Delivery {
 		this.deliveryCost = deliveryCost;
 	}
 	
+	public String getDeliveryTypeShortDesc() {
+		if (deliveryType == DeliveryType.HomeDelivery) {
+			return "Home";
+		} else {
+			return "Locker Pickup";
+		}
+	}
+	
 	public Date getActualArrivalTime() {
 		return actualArrivalTime;
 	}
 	
 	public String getActualArrivalTimeFormat() {
-		return new SimpleDateFormat("yyyy-MM-dd hh:mm").format(actualArrivalTime);
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(actualArrivalTime);
 	}
 
 	public void setActualArrivalTime(Date actualArrivalTime) {

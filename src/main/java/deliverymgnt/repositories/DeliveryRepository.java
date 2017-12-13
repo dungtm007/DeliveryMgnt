@@ -1,6 +1,7 @@
 package deliverymgnt.repositories;
 
 import deliverymgnt.domainclasses.Delivery;
+import deliverymgnt.domainclasses.DeliveryMethod;
 import deliverymgnt.domainclasses.DeliveryStatus;
 import org.springframework.stereotype.Repository;
 
@@ -14,4 +15,5 @@ public interface DeliveryRepository extends JpaRepository<Delivery, Integer> {
 	List<Delivery> findByDeliveryStatus(DeliveryStatus deliveryStatus);
 	List<Delivery> findByOrderId(int orderId);
 	List<Delivery> findByStartTimeGreaterThanEqualAndStartTimeLessThanEqual(Date fromDate, Date toDate);
+	List<Delivery> findByStartTimeGreaterThanEqualAndStartTimeLessThanEqualAndDeliveryMethod(Date fromDate, Date toDate, DeliveryMethod method);
 }

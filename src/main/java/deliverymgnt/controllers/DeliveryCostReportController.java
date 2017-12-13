@@ -13,7 +13,9 @@ import org.springframework.stereotype.Controller;
 
 import deliverymgnt.config.StageManager;
 import deliverymgnt.domainclasses.Delivery;
+import deliverymgnt.domainclasses.DeliveryMethod;
 import deliverymgnt.domainclasses.DeliveryStatus;
+import deliverymgnt.domainclasses.DeliveryType;
 import deliverymgnt.domainclasses.Order;
 import deliverymgnt.domainclasses.OrderItem;
 import deliverymgnt.services.DeliveryService;
@@ -32,6 +34,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 
@@ -90,6 +93,18 @@ public class DeliveryCostReportController implements Initializable {
 	@FXML
 	private TableColumn<Delivery, Double> colCost;
 	
+	@FXML
+	private TableColumn<Delivery, String> colDistance;
+	
+	@FXML
+	private TableColumn<Delivery, String> colMethod;
+	
+	@FXML
+	private CheckBox chkDrone;
+	
+	@FXML
+	private CheckBox chkCourier;
+	
 	@Lazy
     @Autowired
     private StageManager stageManager;
@@ -97,9 +112,11 @@ public class DeliveryCostReportController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
+		deliveriesList.clear();
 		tableViewDeliveries.setItems(deliveriesList);
+		tableViewDeliveries.setStyle("-fx-font-size: 17");
 		setColumnProperties();
-		loadDeliveriesLast7Days();
+		loadDeliveriesLast7Days(null);
 	}
 	
 	@FXML
@@ -108,13 +125,85 @@ public class DeliveryCostReportController implements Initializable {
 		boxFromTo.setDisable(viewLast7Days);
 		
 		if (viewLast7Days) {
-			loadDeliveriesLast7Days();
+			loadDeliveriesLast7Days(null);
 		}
 	}
 	
 	@FXML
 	private void loadDeliveriesFromPeriod (ActionEvent event) throws IOException {
-				
+		
+		DeliveryMethod method = null;
+		if (!chkCourier.isSelected() && !chkDrone.isSelected()) {
+			clearData();
+			return;
+		}
+		if (chkCourier.isSelected() && !chkDrone.isSelected()) {
+			method = DeliveryMethod.Courier;
+		}
+		else if (!chkCourier.isSelected() && chkDrone.isSelected()) {
+			method = DeliveryMethod.Drone;
+		}
+		loadDeliveriesByDates(method);
+	}
+	
+	@FXML
+	private void backToDashboard(ActionEvent event) throws IOException {
+		stageManager.switchScene(FxmlView.MANAGER);
+	}
+	
+	@FXML
+	private void filterByMethod (ActionEvent event) throws IOException {
+		
+		DeliveryMethod method = null;
+		
+		if (chkDrone.isSelected() && !chkCourier.isSelected()) {
+			method = DeliveryMethod.Drone;
+		}
+		else if (!chkDrone.isSelected() && chkCourier.isSelected()) {
+			method = DeliveryMethod.Courier;
+		}
+		
+		if (method == null && !chkDrone.isSelected()) {
+			clearData();
+		}
+		else {
+			if (rdLast7Days.isSelected()) {
+				loadDeliveriesLast7Days(method);
+			}
+			else {
+				loadDeliveriesByDates(method);
+			}
+		}
+	}
+	
+	private void clearData() {
+		deliveriesList.clear();
+		calculateAndDisplayTotalCost();
+	}
+	
+	private void loadDeliveriesLast7Days(DeliveryMethod method) {
+		
+		Date today = new Date();
+		today.setHours(0);
+		today.setMinutes(0);
+		today.setSeconds(0);
+		today.setDate(today.getDate() + 1);
+		
+		Date last7Days = new Date(today.getYear(), today.getMonth(), today.getDate(), 0, 0, 0);
+		last7Days.setDate(today.getDate() - 6);
+		
+		if (method == null) {
+			deliveries = deliveryService.findByStartTimeGreaterThanEqualAndStartTimeLessThanEqual(last7Days, today);
+		}
+		else {
+			deliveries = deliveryService.findByStartTimeGreaterThanEqualAndStartTimeLessThanEqualAndDeliveryMethod(last7Days, today, method);
+		}
+		
+		deliveriesList.setAll(deliveries);
+		calculateAndDisplayTotalCost();
+	}
+	
+	private void loadDeliveriesByDates(DeliveryMethod method) {
 		LocalDate from = dpFrom.getValue();
 		LocalDate to = dpTo.getValue();
 	
@@ -142,28 +231,13 @@ public class DeliveryCostReportController implements Initializable {
 		System.out.println(toDate);
 		System.out.println("<<<<<<<<<<<<<");
 		
-		deliveries = deliveryService.findByStartTimeGreaterThanEqualAndStartTimeLessThanEqual(fromDate, toDate);
-		deliveriesList.setAll(deliveries);
-		calculateAndDisplayTotalCost();
-	}
-	
-	@FXML
-	private void backToDashboard(ActionEvent event) throws IOException {
-		stageManager.switchScene(FxmlView.MANAGER);
-	}
-	
-	private void loadDeliveriesLast7Days() {
+		if (method == null) {
+			deliveries = deliveryService.findByStartTimeGreaterThanEqualAndStartTimeLessThanEqual(fromDate, toDate);
+		}
+		else {
+			deliveries = deliveryService.findByStartTimeGreaterThanEqualAndStartTimeLessThanEqualAndDeliveryMethod(fromDate, toDate, method);
+		}
 		
-		Date today = new Date();
-		today.setHours(0);
-		today.setMinutes(0);
-		today.setSeconds(0);
-		today.setDate(today.getDate() + 1);
-		
-		Date last7Days = new Date(today.getYear(), today.getMonth(), today.getDate(), 0, 0, 0);
-		last7Days.setDate(today.getDate() - 6);
-		
-		deliveries = deliveryService.findByStartTimeGreaterThanEqualAndStartTimeLessThanEqual(last7Days, today);
 		deliveriesList.setAll(deliveries);
 		calculateAndDisplayTotalCost();
 	}
@@ -177,7 +251,16 @@ public class DeliveryCostReportController implements Initializable {
 		colShippedDate.setCellValueFactory(new PropertyValueFactory<>("startTimeFormat"));
 		colArrivalDate.setCellValueFactory(new PropertyValueFactory<>("actualArrivalTimeFormat"));
 		colCost.setCellValueFactory(new PropertyValueFactory<>("deliveryCostFormat"));
-		tableViewDeliveries.setStyle("-fx-font-size: 15");
+		
+		colMethod.setCellValueFactory(new PropertyValueFactory<>("deliveryMethod"));
+		colDistance.setCellValueFactory(new PropertyValueFactory<>("distanceFormat"));
+		
+		colDeliveryNo.setStyle("-fx-underline: true;");
+		colOrderNo.setStyle("-fx-underline: true;");
+
+		colDistance.setStyle("-fx-font-weight:bold;");
+		colMethod.setStyle("-fx-font-weight:bold;");
+		colCost.setStyle("-fx-font-weight:bold;");
 	}
 	
 	private void calculateAndDisplayTotalCost() {

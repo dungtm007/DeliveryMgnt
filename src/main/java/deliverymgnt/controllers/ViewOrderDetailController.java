@@ -257,7 +257,7 @@ public class ViewOrderDetailController implements Initializable {
 				lblPackageEA.setId(lblPackageEAId);
 				String estimatedArrivalStr = "Estimated Arrival:\n";
 				Date dea = d.getEstimatedArrivalTime();
-				String deaFormat = dea != null ? new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(dea) : "";
+				String deaFormat = dea != null ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(dea) : "";
 				lblPackageEA.setText(estimatedArrivalStr + deaFormat);
 				lblPackageEA.setFont(Font.font("System", FontWeight.BOLD, 20));
 				HBox.setMargin(lblPackageEA, new Insets(0, 0, 0, 0));
@@ -288,7 +288,7 @@ public class ViewOrderDetailController implements Initializable {
 				Date daa = d.getActualArrivalTime();
 				if (daa != null) {
 					String actualArrivalStr = "Actual Arrival:\n";
-					String daaFormat = daa != null ? new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(daa) : "";
+					String daaFormat = daa != null ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(daa) : "";
 					lblPackageAA.setText(actualArrivalStr + daaFormat);
 				}
 				else {

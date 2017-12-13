@@ -99,7 +99,7 @@ public class Order {
 	}
 	
 	public String getOrderDateFormat() {
-		return new SimpleDateFormat("yyyy-MM-dd hh:mm").format(orderDate);
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(orderDate);
 	}
 
 	public void setOrderDate(Date orderDate) {
@@ -111,7 +111,7 @@ public class Order {
 	}
 	
 	public String getDeliveryDeadlineFormat() {
-		return new SimpleDateFormat("yyyy-MM-dd hh:mm").format(deliveryDeadline);
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(deliveryDeadline);
 	}
 
 	public void setDeliveryDeadline(Date deliveryDeadline) {

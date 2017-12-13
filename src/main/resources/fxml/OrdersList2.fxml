@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="apMain" prefHeight="800.0" prefWidth="1570.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deliverymgnt.controllers.OrdersListController">
+<AnchorPane fx:id="apMain" prefHeight="800.0" prefWidth="1467.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deliverymgnt.controllers.OrdersListController">
    <children>
-      <TableView fx:id="tableViewOrders" layoutX="23.0" layoutY="129.0" prefHeight="584.0" prefWidth="1525.0" AnchorPane.bottomAnchor="87.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="129.0">
+      <TableView fx:id="tableViewOrders" layoutX="-1.0" layoutY="99.0" prefHeight="614.0" prefWidth="1467.0" AnchorPane.bottomAnchor="87.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="99.0">
         <columns>
           <TableColumn fx:id="colOrderId" prefWidth="105.0" text="Order Id" />
           <TableColumn fx:id="colOrderDate" minWidth="0.0" prefWidth="171.0" text="Date" />
@@ -28,7 +28,7 @@
             <TableColumn fx:id="colOrderStatus" minWidth="0.0" prefWidth="126.0" text="Order&#10;Status" />
         </columns>
       </TableView>
-      <Label fx:id="lblTitle" alignment="TOP_CENTER" layoutX="355.0" layoutY="36.0" prefHeight="55.0" prefWidth="550.0" snapToPixel="false" text="Orders &amp; Deliveries" AnchorPane.leftAnchor="355.0" AnchorPane.rightAnchor="295.0" AnchorPane.topAnchor="36.0">
+      <Label fx:id="lblTitle" alignment="TOP_CENTER" layoutX="355.0" layoutY="27.0" prefHeight="55.0" prefWidth="550.0" snapToPixel="false" text="Orders &amp; Deliveries" AnchorPane.leftAnchor="355.0" AnchorPane.rightAnchor="295.0" AnchorPane.topAnchor="27.0">
          <font>
             <Font name="System Bold" size="39.0" />
          </font>
@@ -36,12 +36,12 @@
             <Blend />
          </effect>
       </Label>
-      <Button fx:id="btnDashboard" layoutX="1323.0" layoutY="724.0" mnemonicParsing="false" onAction="#backToDashboard" prefHeight="55.0" prefWidth="225.0" text="Dashboard">
+      <Button fx:id="btnDashboard" layoutX="1233.0" layoutY="724.0" mnemonicParsing="false" onAction="#backToDashboard" prefHeight="55.0" prefWidth="225.0" text="Dashboard">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Button>
-      <Button fx:id="btnViewDetails" layoutX="1080.0" layoutY="724.0" mnemonicParsing="false" onAction="#openViewOrderDetail" prefHeight="55.0" prefWidth="225.0" text="View Details">
+      <Button fx:id="btnViewDetails" layoutX="994.0" layoutY="724.0" mnemonicParsing="false" onAction="#openViewOrderDetail" prefHeight="55.0" prefWidth="225.0" text="View Details">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>

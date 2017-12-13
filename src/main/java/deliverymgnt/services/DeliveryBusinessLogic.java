@@ -34,7 +34,7 @@ public class DeliveryBusinessLogic {
 	// Large: >= 13 -> 20 (6.3 kg - 9 kg)
 	
 	// ***********************************************
-	// ** Analyze mechanism **************************
+	// ** Analysis mechanism **************************
 	// ***********************************************
 	// *** Delivery type
 	// ****** Home         -> Drone | Courier
@@ -106,8 +106,14 @@ public class DeliveryBusinessLogic {
 		}
 	
 		if (warehouse != null) {
+			System.out.println(">>>>> Selected warehouse: ");
+			System.out.println(">>>>>   name: " + warehouse.getName());
+			System.out.println(">>>>>   distance" + nearestDist);
+			
 			order.setWarehouse(warehouse);
 			return nearestDist;
+		} else {
+			System.out.println(">>>>> NO WAREHOUSE");
 		}
 		
 		return -1;

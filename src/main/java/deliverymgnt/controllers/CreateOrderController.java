@@ -283,6 +283,8 @@ public class CreateOrderController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
+		order = new Order();
+		
 		List<Product> products = productService.findAll();
 		productsList.clear();
 		productsList.addAll(products);
@@ -420,7 +422,9 @@ public class CreateOrderController implements Initializable {
     		timer.cancel();
     	}
 		
-		stageManager.switchScene(FxmlView.CUSTOMER);
+		//stageManager.switchScene(FxmlView.CUSTOMER);
+		UserViewController controller = (UserViewController)stageManager.switchScene(FxmlView.CUSTOMER);
+		controller.setCustomer(this.customer);
 	}
 	
 	@FXML

@@ -413,6 +413,9 @@ public class ViewOrderDetailController implements Initializable {
 	@FXML
     void backToDashboard(ActionEvent event) {
     	try {
+    		if (timer != null) {
+        		timer.cancel();
+        	}
 			stageManager.switchScene(FxmlView.MANAGER);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -423,6 +426,9 @@ public class ViewOrderDetailController implements Initializable {
 	@FXML
     void backToOrdersList(ActionEvent event) {
     	try {
+    		if (timer != null) {
+        		timer.cancel();
+        	}
 			stageManager.switchScene(FxmlView.ORDERS_LIST_MNGR);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

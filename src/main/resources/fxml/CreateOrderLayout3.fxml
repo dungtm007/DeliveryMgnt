@@ -147,16 +147,6 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="38.0" layoutY="387.0" text="Order Status:">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label fx:id="lblOrderStatus" layoutX="190.0" layoutY="387.0" text="s">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
       <Button fx:id="btnDashboard" alignment="CENTER" layoutX="853.0" layoutY="759.0" mnemonicParsing="false" onAction="#backToDashboard" prefHeight="55.0" prefWidth="225.0" text="Dashboard">
          <font>
             <Font name="System Bold" size="20.0" />

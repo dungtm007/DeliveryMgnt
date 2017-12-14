@@ -55,10 +55,13 @@ public class DeliveryBusinessLogic {
 		order.setOrderStatus(OrderStatus.Processing);
 		
 		double distance = findWarehouse(order, warehouseService);
-		// (UPD)
-		// ... consider to set maximum distance here
+		
+		// for maximum configuration 
 		if (distance > 50.0) {
 			distance = 50.0;
+		}
+		else if (distance < 1) {
+			distance = 1;
 		}
 		
 		DeliveryType type = order.getDeliveryType();

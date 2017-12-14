@@ -2,15 +2,11 @@ package deliverymgnt.domainclasses;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -65,7 +61,6 @@ public class Order {
 	@OneToMany(mappedBy="order", fetch=FetchType.EAGER)
 	private Set<Delivery> deliveries;
 	
-
 	@Embedded
 	@AttributeOverrides({
 		@AttributeOverride(name = "address", column = @Column(name = "delivery_addr_address")),

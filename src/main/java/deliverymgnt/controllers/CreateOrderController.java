@@ -2,12 +2,9 @@ package deliverymgnt.controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -157,9 +154,7 @@ public class CreateOrderController implements Initializable {
 	
 	private Order order;
 	private Customer customer;
-	private Timer timer;
 	private Locker nearestLocker;
-	
 	
 	@FXML
     private void selectProduct(ActionEvent event) throws IOException {
@@ -236,9 +231,6 @@ public class CreateOrderController implements Initializable {
 		alert.showAndWait();
 		
 		// Switch to Dashboard
-		if (timer != null) {
-    		timer.cancel();
-    	}
 		UserViewController controller = (UserViewController)stageManager.switchScene(FxmlView.CUSTOMER);
 		controller.setCustomer(this.customer);
 	}
@@ -329,28 +321,6 @@ public class CreateOrderController implements Initializable {
 		orderItemsList.clear();
 		tableOrderItems.setItems(orderItemsList);
 		setColumnProperties();
-		
-		// Timer
-//		timer = new Timer();
-//		timer.scheduleAtFixedRate(new TimerTask() {
-//			
-//			@Override
-//			public void run() {
-//				Platform.runLater(new Runnable() {
-//					
-//					@Override
-//					public void run() {
-//						if (order != null) {
-//							int id = order.getId();
-//							if (id > 0) {
-//								Order updatedOrder = orderService.find(id);
-//								lblOrderStatus.setText(updatedOrder.getOrderStatus().toString());
-//							}
-//						}
-//					}
-//				});
-//			}
-//		}, 0, 8000);
 	}
 	
 	private void setColumnProperties(){
@@ -418,11 +388,6 @@ public class CreateOrderController implements Initializable {
 	@FXML
 	private void backToDashboard (ActionEvent event) throws IOException {
 		
-		if (timer != null) {
-    		timer.cancel();
-    	}
-		
-		//stageManager.switchScene(FxmlView.CUSTOMER);
 		UserViewController controller = (UserViewController)stageManager.switchScene(FxmlView.CUSTOMER);
 		controller.setCustomer(this.customer);
 	}

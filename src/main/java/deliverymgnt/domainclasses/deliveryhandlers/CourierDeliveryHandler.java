@@ -1,7 +1,6 @@
 package deliverymgnt.domainclasses.deliveryhandlers;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,20 +8,13 @@ import org.springframework.stereotype.Component;
 
 import deliverymgnt.domainclasses.CourierSystem;
 import deliverymgnt.domainclasses.Delivery;
-import deliverymgnt.domainclasses.CourierService;
 import deliverymgnt.domainclasses.DeliveryStatus;
-import deliverymgnt.domainclasses.DeliveryType;
 import deliverymgnt.domainclasses.Order;
 import deliverymgnt.domainclasses.OrderStatus;
 import deliverymgnt.domainclasses.Package;
-import deliverymgnt.factories.CourierSystemFactory;
 import deliverymgnt.services.DeliveryService;
 import deliverymgnt.services.OrderService;
 
-
-// CAN BE CONSIDERED TO STATIC class & methods SO AT ANY TIME,
-// DELIVERY CAN CALL calculateDeliveryCost
-// AND BACKGROUND JOB CAN CALL deliver and arrive
 
 @Component
 public class CourierDeliveryHandler implements DeliveryHandler {
@@ -91,9 +83,11 @@ public class CourierDeliveryHandler implements DeliveryHandler {
 		delivery.setActualArrivalTime(new Date());
 		delivery.setDeliveryStatus(DeliveryStatus.Finished);
 		
+		// (next release)
+		// ...
 		// If this is Locker Delivery
 		// Run Locker allocation business
-		// (Will be available in next release)
+		// ...
 //		if (delivery.getDeliveryType() == DeliveryType.LockerPickupDelivery) {
 //			delivery.setDeliveryStatus(DeliveryStatus.Delivered);
 //		}

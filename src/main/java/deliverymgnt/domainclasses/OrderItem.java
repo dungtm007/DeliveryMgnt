@@ -40,12 +40,6 @@ public class OrderItem {
 		
 	}
 	
-//	public OrderItem(Product product, int amount, double unitPrice) {
-//		this.product = product;
-//		this.amount = amount;
-//		this.unitPrice = unitPrice;
-//	}
-	
 	public OrderItem(Product product, int amount, double unitPrice, Order order) {
 		this.product = product;
 		this.amount = amount;

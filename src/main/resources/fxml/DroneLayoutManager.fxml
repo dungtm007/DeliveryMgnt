@@ -49,6 +49,9 @@
                      <font>
                         <Font size="19.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets left="28.0" />
+                     </HBox.margin>
                   </Button>
                </children>
                <padding>
@@ -57,15 +60,13 @@
             </HBox>
             <HBox prefHeight="46.0" prefWidth="1100.0" spacing="750.0">
                <children>
-                  <Button fx:id="btnBack" mnemonicParsing="false" onAction="#back2DashBoard" text="&lt; Dashboard">
+                  <Button fx:id="btnDashboard" mnemonicParsing="false" onAction="#backToDashboard" prefHeight="55.0" prefWidth="225.0" text="Dashboard">
                      <font>
-                        <Font size="19.0" />
+                        <Font name="System Bold" size="20.0" />
                      </font>
-                  </Button>
-                  <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#deleteDrone" prefHeight="35.0" prefWidth="149.0" text="Delete Drone">
-                     <font>
-                        <Font size="19.0" />
-                     </font>
+                     <HBox.margin>
+                        <Insets left="869.0" />
+                     </HBox.margin>
                   </Button>
                </children>
                <VBox.margin>

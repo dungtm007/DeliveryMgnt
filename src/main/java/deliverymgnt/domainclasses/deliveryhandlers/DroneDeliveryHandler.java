@@ -19,15 +19,13 @@ import deliverymgnt.domainclasses.ReservedDroneStatus;
 import deliverymgnt.services.DeliveryService;
 import deliverymgnt.services.OrderService;
 
-//CAN BE CONSIDERED TO STATIC class & methods SO AT ANY TIME,
-//DELIVERY CAN CALL calculateDeliveryCost
-//AND BACKGROUND JOB CAN CALL deliver and arrive
 
-// ASSUMPTION: Drone is always available
+// (this release) Assumption: Drone is always available
+// (next release) integrating with Drone allocation (reserve) logic
+
 @Component
 public class DroneDeliveryHandler implements DeliveryHandler {
 
-	// private Drone drone;
 	// maximum weight: 5 lbs
 	// maximum package: 2 SMALL packages
 	// maximum distance: 30 miles
@@ -41,21 +39,6 @@ public class DroneDeliveryHandler implements DeliveryHandler {
 	
 	@Autowired
 	private OrderService orderService;
-	
-	public void deliver(List<Package> packages) {
-		
-		// Select a drone, and create a reserve
-		Drone drone = new Drone(); 
-		Delivery delivery = packages.get(0).getDelivery();
-		
-		// A drone has velocity 10 mph
-		ReservedDrone reservedDrone = new ReservedDrone(drone, packages.get(0).getDelivery(), new Date(), new Date(), ReservedDroneStatus.InUse);
-
-		// Drone start (update Drone status inside)
-		
-		// Update Delivery status
-		
-	}
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -73,7 +56,8 @@ public class DroneDeliveryHandler implements DeliveryHandler {
 		delivery.setEstimatedArrivalTime(estimatedArrival);
 	
 		// Drone start (update Drone status inside)
-		// (Will be available in next release)
+		// (next release)
+		// ...
 		
 		// set delivery status is Delivering
 		delivery.setDeliveryStatus(DeliveryStatus.Delivering);

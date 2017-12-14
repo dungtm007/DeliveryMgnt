@@ -77,14 +77,6 @@ public class StageManager {
 	 * */
 	private void showContent(final Parent contentNode, String title) throws IOException {
 		
-		// Load root layout (if not loaded)
-//		if (userType == UserType.CUSTOMER) {
-//			Object[] viewAndController = loadViewNode(FxmlView.CUSTOMER.getFxmlFile());
-//			rootLayout = (BorderPane)viewAndController[0];
-//		} else if (userType == UserType.MANAGER) {
-//			Object[] viewAndController = loadViewNode(FxmlView.MANAGER.getFxmlFile());
-//			rootLayout = (BorderPane)viewAndController[0];
-//		}
         if (rootLayout == null) {
             Object[] viewAndController = loadViewNode(FxmlView.ROOT.getFxmlFile());
             rootLayout = (BorderPane)viewAndController[0];
@@ -125,18 +117,13 @@ public class StageManager {
      * @return Parent root node of the FXML document hierarchy
      */
 	private Object[] loadViewNode(String fxmlFilePath) throws IOException {
+		
 		Parent node = null;
-//		try {			
-			//node = springFXMLLoader.load(fxmlFilePath);
-			Object[] viewAndController = springFXMLLoader.load(fxmlFilePath);
-			node = (Parent)viewAndController[0];
-//		}
-//		catch (Exception exception) {
-//			logAndExit("Unable to load FXML view" + fxmlFilePath, exception);
-//		}
+		
+		//node = springFXMLLoader.load(fxmlFilePath);
+		Object[] viewAndController = springFXMLLoader.load(fxmlFilePath);
+		node = (Parent)viewAndController[0];
 			
-			
-		//return node;
 		return viewAndController;
 	}
 	

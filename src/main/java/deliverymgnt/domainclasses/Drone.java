@@ -70,7 +70,6 @@ public class Drone {
 	public void arrive() {
 		// update delivery status: Delivered
 		// (background process will update it to Finished)
-		// 
 	}
 	
 	public void comeBack() {

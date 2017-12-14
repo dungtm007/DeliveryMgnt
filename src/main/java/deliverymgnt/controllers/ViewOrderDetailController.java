@@ -4,13 +4,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import javax.swing.GroupLayout.Alignment;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -127,7 +124,6 @@ public class ViewOrderDetailController implements Initializable {
 					public void run() {
 						// ...
 						// 
-						
 						
 					}
 				});
@@ -401,7 +397,7 @@ public class ViewOrderDetailController implements Initializable {
 					lblProductName.setPadding(new Insets(2, 2, 2, 25));
 				}
 				
-				// Add seperator
+				// Add separator
 				Separator sep = new Separator();
 				sep.setPrefWidth(750);
 				vBoxPkgContainer.getChildren().add(sep);

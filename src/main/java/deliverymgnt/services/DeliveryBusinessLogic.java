@@ -204,7 +204,7 @@ public class DeliveryBusinessLogic {
 	// Use for case 1 & 2 (the whole order has only one delivery method)
 	private static Delivery packForTheSameDeliveryMethod(Order order, DeliveryMethod deliveryMethod, double distance) throws Exception {
 		
-		DeliveryType type = order.getDeliveryType(); //(option == DeliveryOption.HomeDelivery ? DeliveryType.HomeDelivery : DeliveryType.LockerPickupDelivery);
+		DeliveryType type = order.getDeliveryType(); 
 		Date deadline = order.getDeliveryDeadline();
 		
 		Delivery delivery = new Delivery(order, 

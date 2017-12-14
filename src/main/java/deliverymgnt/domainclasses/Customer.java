@@ -29,6 +29,7 @@ public class Customer {
 	
 	@Embedded
 	private Address address;
+	
 	@OneToMany(mappedBy="customer")
 	private Set<Order> orders;
 
@@ -58,14 +59,6 @@ public class Customer {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-
-//	public String getAddress() {
-//		return address;
-//	}
-//
-//	public void setAddress(String address) {
-//		this.address = address;
-//	}
 	
 	public Address getAddress() {
 		return address;

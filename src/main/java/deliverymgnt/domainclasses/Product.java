@@ -50,7 +50,7 @@ public class Product {
 	}
 	
 	public Product(String name, double width, double length, double height, double weight, double price) {
-		super();
+		
 		this.name = name;
 		this.width = width;
 		this.length = length;

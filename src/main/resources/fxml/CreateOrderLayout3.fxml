@@ -142,7 +142,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="lblShippingWeight" layoutX="191.0" layoutY="353.0" text="w">
+      <Label fx:id="lblShippingWeight" layoutX="191.0" layoutY="353.0">
          <font>
             <Font size="18.0" />
          </font>

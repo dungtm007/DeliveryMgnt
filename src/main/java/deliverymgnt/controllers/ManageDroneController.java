@@ -51,6 +51,9 @@ public class ManageDroneController implements Initializable {
 
     @FXML
     private Button btnAdd;
+    
+    @FXML
+    private Button btnDashboard;
 
     @FXML
     private TableView<Drone> tableDrone;
@@ -103,7 +106,7 @@ public class ManageDroneController implements Initializable {
 	}
     
     @FXML
-    void back2DashBoard(ActionEvent event) {
+    void backToDashboard(ActionEvent event) {
     	try {
 			stageManager.switchScene(FxmlView.MANAGER);
 		} catch (IOException e) {

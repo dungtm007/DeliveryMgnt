@@ -18,7 +18,7 @@ public class DroneServiceImpl implements DroneService {
 	public Drone save(Drone entity) {
 		// TODO Auto-generated method stub
 		List<Drone> list = droneRepository.findAll();
-		entity.setId(list.get(list.size() - 1).getId() + 1);
+		//entity.setId(list.get(list.size() - 1).getId() + 1);
 		return droneRepository.save(entity);
 	}
 

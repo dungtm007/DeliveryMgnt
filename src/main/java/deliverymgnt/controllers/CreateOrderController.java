@@ -331,26 +331,26 @@ public class CreateOrderController implements Initializable {
 		setColumnProperties();
 		
 		// Timer
-		timer = new Timer();
-		timer.scheduleAtFixedRate(new TimerTask() {
-			
-			@Override
-			public void run() {
-				Platform.runLater(new Runnable() {
-					
-					@Override
-					public void run() {
-						if (order != null) {
-							int id = order.getId();
-							if (id > 0) {
-								Order updatedOrder = orderService.find(id);
-								lblOrderStatus.setText(updatedOrder.getOrderStatus().toString());
-							}
-						}
-					}
-				});
-			}
-		}, 0, 8000);
+//		timer = new Timer();
+//		timer.scheduleAtFixedRate(new TimerTask() {
+//			
+//			@Override
+//			public void run() {
+//				Platform.runLater(new Runnable() {
+//					
+//					@Override
+//					public void run() {
+//						if (order != null) {
+//							int id = order.getId();
+//							if (id > 0) {
+//								Order updatedOrder = orderService.find(id);
+//								lblOrderStatus.setText(updatedOrder.getOrderStatus().toString());
+//							}
+//						}
+//					}
+//				});
+//			}
+//		}, 0, 8000);
 	}
 	
 	private void setColumnProperties(){

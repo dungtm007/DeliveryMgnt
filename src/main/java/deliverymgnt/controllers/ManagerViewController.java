@@ -53,8 +53,7 @@ public class ManagerViewController implements Initializable {
     @FXML
     void showManageLocker(ActionEvent event) {
     		try {
-			//stageManager.switchScene(FxmlView.MANAGE_LOCKER);
-			stageManager.switchScene(FxmlView.CREATE_ORDER);
+			stageManager.switchScene(FxmlView.MANAGE_LOCKER);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

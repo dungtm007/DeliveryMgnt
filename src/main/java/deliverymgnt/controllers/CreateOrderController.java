@@ -362,7 +362,7 @@ public class CreateOrderController implements Initializable {
 					System.out.println("    " + dist + " miles");
 					System.out.println(">>>>>");
 					
-					if (dist < nearestDist) {
+					if (dist > -1 && dist < nearestDist) {
 						nearestDist = dist;
 						nearestLocker = locker;
 					} 

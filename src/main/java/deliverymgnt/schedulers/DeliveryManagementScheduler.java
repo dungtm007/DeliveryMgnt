@@ -61,13 +61,13 @@ public class DeliveryManagementScheduler {
     	
     	List<Delivery> deliveries = deliveryService.findByDeliveryStatus(DeliveryStatus.Entered);
     	
-    	for(Delivery d : deliveries) {
+    	for(Delivery delivery : deliveries) {
 
-			DeliveryMethod method = d.getDeliveryMethod();
+			DeliveryMethod method = delivery.getDeliveryMethod();
 			DeliveryHandler deliveryHdlr = DeliveryHandlerFactory.getDeliveryHandler(method);
-			deliveryHdlr.deliver(d, deliveryService, orderService);
+			deliveryHdlr.deliver(delivery, deliveryService, orderService);
 			
-    		log.info("Delivery {} status: {}", d.getId(), d.getDeliveryStatus());
+    		log.info("Delivery {} status: {}", delivery.getId(), delivery.getDeliveryStatus());
     	}
     }
     
@@ -75,13 +75,13 @@ public class DeliveryManagementScheduler {
     	
     	List<Delivery> deliveries = deliveryService.findByDeliveryStatus(DeliveryStatus.Delivering);
     	
-    	for(Delivery d : deliveries) {
+    	for(Delivery delivery : deliveries) {
     		
-			DeliveryMethod method = d.getDeliveryMethod();
+			DeliveryMethod method = delivery.getDeliveryMethod();
 			DeliveryHandler deliveryHdlr = DeliveryHandlerFactory.getDeliveryHandler(method);
-			deliveryHdlr.track(d, deliveryService, orderService);
+			deliveryHdlr.track(delivery, deliveryService, orderService);
     			
-    		log.info("Delivery {} status: {}", d.getId(), d.getDeliveryStatus());
+    		log.info("Delivery {} status: {}", delivery.getId(), delivery.getDeliveryStatus());
     	}
     }
     

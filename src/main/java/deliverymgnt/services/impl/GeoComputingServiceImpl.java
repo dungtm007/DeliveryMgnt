@@ -32,15 +32,17 @@ public class GeoComputingServiceImpl implements GeoComputingService {
 			        .units(Unit.IMPERIAL)
 			        .language("en")
 			        .await();
-			ret = trix.rows[0].elements[0].distance.inMeters;
+			if (trix.rows[0].elements[0].distance != null) {
+				ret = trix.rows[0].elements[0].distance.inMeters;
+			}
+			else {
+				ret = -1;
+			}
 		} catch (ApiException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return ret / 1000; // convert to miles
